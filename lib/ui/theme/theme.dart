@@ -1,15 +1,24 @@
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
 class CustomThemes extends ChangeNotifier {
   static bool _isDark = false;
-  ThemeMode get currentTheme => _isDark ? ThemeMode.dark : ThemeMode.light;
 
-  void changeTheme() {
+  Future<ThemeMode> get currentTheme async {
+    _isDark = await SharedPrefrencesHelper.getTheme;
+    if (_isDark) return ThemeMode.dark;
+    return ThemeMode.light;
+  }
+
+  void changeTheme() async {
     _isDark = !_isDark;
+    await SharedPrefrencesHelper.setTheme(_isDark);
     notifyListeners();
   }
+
+  bool get isDark => _isDark;
 
   static ThemeData get lightTheme {
     return ThemeData(
@@ -57,6 +66,7 @@ class CustomThemes extends ChangeNotifier {
       primaryColor: CustomColors.blue,
       scaffoldBackgroundColor: CustomColors.black,
       fontFamily: 'Exo',
+      colorScheme: ColorScheme.dark(),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           // shape:

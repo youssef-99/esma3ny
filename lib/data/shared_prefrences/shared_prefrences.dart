@@ -7,6 +7,30 @@ import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefrencesHelper {
+  static setLanguage(isEnglish) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool('isEnglish', isEnglish);
+  }
+
+  static get getLocale async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('isEnglish') == null
+        ? true
+        : sharedPreferences.getBool('isEnglish');
+  }
+
+  static setTheme(isDark) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool('theme', isDark);
+  }
+
+  static get getTheme async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('theme') == null
+        ? false
+        : sharedPreferences.getBool('theme');
+  }
+
   static storeToken(String token) async {
     // SharedPreferences.setMockInitialValues({});
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

@@ -1,5 +1,10 @@
+import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
+import 'package:esma3ny/ui/provider/language_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
+import 'package:esma3ny/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -7,6 +12,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
+  bool _checked = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,31 +25,97 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: ListView(
         children: [
-          ListTile(
-            leading: CircleAvatar(backgroundImage: NetworkImage('')),
-            title: Text('Name'),
-          ),
-          Divider(),
-          customListTile(Icons.person, 'Profile'),
-          customListTile(Icons.brightness_4, 'Mode'),
-          customListTile(Icons.language, 'Language'),
-          customListTile(Icons.phone, 'Contact Us'),
-          customListTile(Icons.error_outline_outlined, 'About Us'),
-          customListTile(Icons.logout, 'Log out'),
+          // ListTile(
+          //   leading: CircleAvatar(backgroundImage: NetworkImage('')),
+          //   title: Text('Name'),
+          // ),
+          // Divider(),
+          customListTile(Icons.person, 'Profile',
+              () => Navigator.pushNamed(context, 'client_profile'), null),
+          Consumer<CustomThemes>(
+              builder: (context, state, child) => customListTile(
+                    Icons.brightness_4,
+                    'Mode',
+                    () async {},
+                    Switch(
+                      onChanged: (bool value) {
+                        state.changeTheme();
+                        print(state.isDark);
+                      },
+                      value: state.isDark,
+                    ),
+                  )),
+          customListTile(Icons.language, 'Language', () {
+            showDialog(
+                context: context,
+                builder: (context) => Consumer<LanguageState>(
+                      builder: (context, state, child) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                              child: CheckboxListTile(
+                                title: Text('Arabic'),
+                                controlAffinity:
+                                    ListTileControlAffinity.platform,
+                                value: state.isArabic,
+                                onChanged: (bool val) async {
+                                  if (val) {
+                                    await state.changeLocale();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                activeColor: Colors.green,
+                              ),
+                            ),
+                            Material(
+                              child: CheckboxListTile(
+                                title: Text('English'),
+                                controlAffinity:
+                                    ListTileControlAffinity.platform,
+                                value: state.isEnglish,
+                                onChanged: (bool val) async {
+                                  if (val) {
+                                    await state.changeLocale();
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                activeColor: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ));
+          }, null),
+          customListTile(Icons.phone, 'Contact Us', () {
+            launch('mailto:esma3ny@support.com');
+          }, null),
+          customListTile(Icons.error_outline_outlined, 'About Us', () {
+            launch('https://esma3ny.org/');
+          }, null),
+          customListTile(Icons.logout, 'Log out', () async {
+            _clientRepositoryImpl.logout();
+            Navigator.pushReplacementNamed(context, 'login');
+          }, null),
         ],
       ),
     );
   }
 
-  customListTile(IconData icon, String title) => Column(
+  customListTile(
+          IconData icon, String title, Function onTap, Widget trailing) =>
+      Column(
         children: [
           ListTile(
-            onTap: () {},
+            onTap: onTap,
             leading: Icon(
               icon,
               color: CustomColors.blue,
             ),
             title: Text(title),
+            trailing: trailing ?? SizedBox(),
           ),
           Divider(),
         ],
