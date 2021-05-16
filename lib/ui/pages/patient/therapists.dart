@@ -2,12 +2,14 @@ import 'package:animated_size_and_fade/animated_size_and_fade.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_filter.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_general_info.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
+import 'package:esma3ny/ui/provider/filters_state.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 import '../../theme/colors.dart';
 import '../../widgets/filtersSheet.dart';
@@ -28,12 +30,21 @@ class _TherapistsListState extends State<TherapistsList>
   DateTime selectedDate = DateTime.now();
   TextEditingController _dateController = TextEditingController();
   ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
+  FilterState provider;
 
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newPage = await _clientRepositoryImpl.getDoctorsList(
         FilterTherapist(
-            specializeId: null, languageId: null, jobId: null, gender: null),
+          specializeId: provider.specialization == null
+              ? null
+              : provider.specialization.id.toString(),
+          languageId: provider.language == null
+              ? null
+              : provider.language.id.toString(),
+          jobId: provider.job == null ? null : provider.job.id.toString(),
+          gender: provider.gender,
+        ),
         pageKey,
       );
 
@@ -57,6 +68,7 @@ class _TherapistsListState extends State<TherapistsList>
 
   @override
   void initState() {
+    provider = Provider.of<FilterState>(context, listen: false);
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
@@ -131,29 +143,32 @@ class _TherapistsListState extends State<TherapistsList>
         ),
       );
 
-  body() => RefreshIndicator(
-        onRefresh: () => Future.sync(
-          () => _pagingController.refresh(),
-        ),
-        child: PagedListView.separated(
-          builderDelegate: PagedChildBuilderDelegate<TherapistListInfo>(
-            itemBuilder: (context, therapist, index) => Container(
-              child: TherapistListCard(therapist),
-            ),
-            firstPageErrorIndicatorBuilder: (context) => ErrorIndicator(
-              error: _pagingController.error,
-              onTryAgain: () => _pagingController.refresh(),
-            ),
-            noItemsFoundIndicatorBuilder: (context) => EmptyListIndicator(),
+  body() => Consumer<FilterState>(builder: (context, state, child) {
+        if (state.isFilterd) _pagingController.refresh();
+        return RefreshIndicator(
+          onRefresh: () => Future.sync(
+            () => _pagingController.refresh(),
           ),
-          // 4
-          pagingController: _pagingController,
-          padding: const EdgeInsets.all(16),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 16,
+          child: PagedListView.separated(
+            builderDelegate: PagedChildBuilderDelegate<TherapistListInfo>(
+              itemBuilder: (context, therapist, index) => Container(
+                child: TherapistListCard(therapist),
+              ),
+              firstPageErrorIndicatorBuilder: (context) => ErrorIndicator(
+                error: _pagingController.error,
+                onTryAgain: () => _pagingController.refresh(),
+              ),
+              noItemsFoundIndicatorBuilder: (context) => EmptyListIndicator(),
+            ),
+            // 4
+            pagingController: _pagingController,
+            padding: const EdgeInsets.all(16),
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 16,
+            ),
           ),
-        ),
-      );
+        );
+      });
 
   _showCupertinoModalBottomSheet() => showCupertinoModalBottomSheet(
         context: context,

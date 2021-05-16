@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 
 class MockClientRepositoryImpl extends Mock implements ClientRepositoryImpl {}
 
@@ -19,8 +20,8 @@ void main() {
   test(
     'countries',
     () async {
-      await publicRepository.getCountries();
-      // print(await SharedPrefrencesHelper.getCountries);
+      await publicRepository.getJob();
+      print(await SharedPrefrencesHelper.job);
     },
   );
 }

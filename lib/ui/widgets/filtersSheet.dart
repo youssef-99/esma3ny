@@ -1,5 +1,11 @@
 import 'package:chips_choice/chips_choice.dart';
+import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/language.dart';
+import 'package:esma3ny/data/models/public/specialization.dart';
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
+import 'package:esma3ny/ui/provider/filters_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../theme/colors.dart';
 import '../theme/constant.dart';
@@ -17,7 +23,6 @@ class _FilterSheetState extends State<FilterSheet> {
   bool label = false;
   int genderTag = 1;
   int feesTag = 1;
-  List<String> tags = [];
   List<String> genders = ['other', 'male', 'female'];
   List<String> fees = [
     'any',
@@ -27,10 +32,6 @@ class _FilterSheetState extends State<FilterSheet> {
     '300-500',
     'above 500'
   ];
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +59,9 @@ class _FilterSheetState extends State<FilterSheet> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            dropDownFilterColumn(Icons.apps, 'Specialization'),
-            dropDownFilterColumn(Icons.public, 'Languanges'),
+            specializationFilterColumn(Icons.apps, 'Specialization'),
+            languageFilterColumn(Icons.public, 'Languanges'),
+            jobsFilterColumn(Icons.work, 'Jobs'),
             group(
               listTile(Icons.watch_later, 'Availability'),
               datePicker(),
@@ -72,15 +74,28 @@ class _FilterSheetState extends State<FilterSheet> {
               listTile(Icons.attach_money_outlined, 'Fees'),
               feesChip(),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(onPressed: null, child: Text('Resset')),
-                SizedBox(
-                  width: 50,
-                ),
-                ElevatedButton(onPressed: null, child: Text('Apply'))
-              ],
+            Consumer<FilterState>(
+              builder: (context, state, child) => Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        state.reset();
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                      child: Text('Resset')),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        state.apply();
+                        Navigator.pop(context);
+                      },
+                      child: Text('Apply'))
+                ],
+              ),
             )
           ],
         ),
@@ -88,10 +103,24 @@ class _FilterSheetState extends State<FilterSheet> {
     );
   }
 
-  dropDownFilterColumn(IconData icon, String title) => Column(
+  specializationFilterColumn(IconData icon, String title) => Column(
         children: [
           listTile(icon, title),
-          dropDownButton(),
+          dropDownSpecializationButton(),
+        ],
+      );
+
+  languageFilterColumn(IconData icon, String title) => Column(
+        children: [
+          listTile(icon, title),
+          dropDownLanguageButton(),
+        ],
+      );
+
+  jobsFilterColumn(IconData icon, String title) => Column(
+        children: [
+          listTile(icon, title),
+          dropDownJobButton(),
         ],
       );
 
@@ -125,44 +154,106 @@ class _FilterSheetState extends State<FilterSheet> {
         ],
       );
 
-  dropDownButton() => padding(
-        DropdownButtonFormField<String>(
-          hint: Text('Select Specialization'),
-          items: <String>['A', 'B', 'C', 'D'].map((String value) {
-            return new DropdownMenuItem<String>(
-              value: value,
-              child: new Text(value),
-            );
-          }).toList(),
-          onChanged: (_) {},
-        ),
+  dropDownSpecializationButton() => padding(
+        FutureBuilder<List<Specialization>>(
+            future: SharedPrefrencesHelper.getSpecializations,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                List<Specialization> list = snapshot.data;
+                return DropdownButtonFormField<Specialization>(
+                  hint: Text('Select Specialization'),
+                  items: <Specialization>[...list].map((Specialization value) {
+                    return new DropdownMenuItem<Specialization>(
+                      value: value,
+                      child: new Text(value.nameEn),
+                    );
+                  }).toList(),
+                  onChanged: (Specialization specialization) {
+                    Provider.of<FilterState>(context, listen: false)
+                        .setSpecialization(specialization);
+                  },
+                );
+              }
+              return DropdownButtonFormField(items: []);
+            }),
+      );
+
+  dropDownLanguageButton() => padding(
+        FutureBuilder<List<Language>>(
+            future: SharedPrefrencesHelper.getLanguages,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                List<Language> list = snapshot.data;
+                return DropdownButtonFormField<Language>(
+                  hint: Text('Select Language'),
+                  items: <Language>[...list].map((Language value) {
+                    return new DropdownMenuItem<Language>(
+                      value: value,
+                      child: new Text(value.nameEn),
+                    );
+                  }).toList(),
+                  onChanged: (Language language) {
+                    Provider.of<FilterState>(context, listen: false)
+                        .setLanguage(language);
+                  },
+                );
+              }
+              return DropdownButtonFormField(items: []);
+            }),
+      );
+
+  dropDownJobButton() => padding(
+        FutureBuilder<List<Job>>(
+            future: SharedPrefrencesHelper.job,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                List<Job> list = snapshot.data;
+                return DropdownButtonFormField<Job>(
+                  hint: Text('Select Job'),
+                  items: <Job>[...list].map((Job value) {
+                    return new DropdownMenuItem<Job>(
+                      value: value,
+                      child: new Text(value.nameEn),
+                    );
+                  }).toList(),
+                  onChanged: (Job job) {
+                    Provider.of<FilterState>(context, listen: false)
+                        .setJobs(job);
+                  },
+                );
+              }
+              return DropdownButtonFormField(items: []);
+            }),
       );
 
   datePicker() => padding(CustomDatePicker(widget._dateController));
 
-  genderChip() => Align(
-        alignment: Alignment.center,
-        child: ChipsChoice<int>.single(
-          value: genderTag,
-          onChanged: (val) => setState(() {
-            genderTag = val;
-            print(val);
-          }),
-          choiceItems: C2Choice.listFrom<int, String>(
-              source: genders,
-              value: (i, v) => i,
-              label: (i, v) => v,
-              tooltip: (i, v) => v,
-              style: (i, v) {
-                return C2ChoiceStyle(
-                  labelStyle: TextStyle(fontSize: 18),
-                );
-              }),
-          choiceActiveStyle: C2ChoiceStyle(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            color: CustomColors.orange,
+  genderChip() => Consumer<FilterState>(
+        builder: (context, state, child) => Align(
+          alignment: Alignment.center,
+          child: ChipsChoice<int>.single(
+            value: state.genderIndex,
+            onChanged: (val) {
+              genderTag = val;
+              state.setGender(val);
+            },
+            choiceItems: C2Choice.listFrom<int, String>(
+                source: genders,
+                value: (i, v) => i,
+                label: (i, v) => v,
+                tooltip: (i, v) => v,
+                style: (i, v) {
+                  return C2ChoiceStyle(
+                    labelStyle: TextStyle(fontSize: 18),
+                  );
+                }),
+            choiceActiveStyle: C2ChoiceStyle(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: CustomColors.orange,
+            ),
+            wrapped: true,
           ),
-          wrapped: true,
         ),
       );
 
@@ -170,10 +261,7 @@ class _FilterSheetState extends State<FilterSheet> {
         alignment: Alignment.center,
         child: ChipsChoice<int>.single(
           value: feesTag,
-          onChanged: (val) => setState(() {
-            feesTag = val;
-            print(val);
-          }),
+          onChanged: (val) => feesTag = val,
           choiceItems: C2Choice.listFrom<int, String>(
               source: fees,
               value: (i, v) => i,

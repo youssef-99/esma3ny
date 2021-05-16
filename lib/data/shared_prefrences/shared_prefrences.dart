@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:esma3ny/data/models/public/country.dart';
+import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/language.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,9 +55,33 @@ class SharedPrefrencesHelper {
     return specializations;
   }
 
-  static Future<void> setLanguages(List<dynamic> specializations) async {
+  static Future<void> setLanguages(List<dynamic> languages) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    final encodedSpcializations = jsonEncode(specializations);
-    await sharedPreferences.setString('specializations', encodedSpcializations);
+    final encodedLanguages = jsonEncode(languages);
+    await sharedPreferences.setString('language', encodedLanguages);
+  }
+
+  static Future<List<Language>> get getLanguages async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final encodedLanguages =
+        jsonDecode(sharedPreferences.getString('language'));
+    List<Language> languages = [];
+    encodedLanguages
+        .forEach((language) => languages.add(Language.fromJson(language)));
+    return languages;
+  }
+
+  static Future<void> setJob(List<dynamic> jobs) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final encodedJobs = jsonEncode(jobs);
+    await sharedPreferences.setString('jobs', encodedJobs);
+  }
+
+  static Future<List<Job>> get job async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final encodedjob = jsonDecode(sharedPreferences.getString('jobs'));
+    List<Job> jobs = [];
+    encodedjob.forEach((job) => jobs.add(Job.fromJson(job)));
+    return jobs;
   }
 }

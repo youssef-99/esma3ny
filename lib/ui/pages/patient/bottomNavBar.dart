@@ -38,7 +38,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   initialCalls() async {
     ClientModel client = await _clientRepositoryImpl.getProfile();
     Provider.of<EditProfileState>(context, listen: false).initClient(client);
-    _publicRepository.getSpcializations();
+    await _publicRepository.getSpcializations();
+    await _publicRepository.getLanguages();
+    await _publicRepository.getJob();
   }
 
   @override

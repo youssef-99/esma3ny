@@ -10,8 +10,18 @@ class PublicRepository {
     SharedPrefrencesHelper.setSpecializations(response.data);
   }
 
+  Future<void> getLanguages() async {
+    Response response = await _apiBaseHelper.getHTTP('languages');
+    SharedPrefrencesHelper.setLanguages(response.data);
+  }
+
   Future<void> getCountries() async {
     Response response = await _apiBaseHelper.getHTTP('countries');
     SharedPrefrencesHelper.storeCountries(response.data);
+  }
+
+  Future<void> getJob() async {
+    Response response = await _apiBaseHelper.getHTTP('jobs');
+    SharedPrefrencesHelper.setJob(response.data);
   }
 }

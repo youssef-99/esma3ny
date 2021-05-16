@@ -1,4 +1,5 @@
 import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/ui/provider/filters_state.dart';
 import 'package:esma3ny/ui/provider/login_state.dart';
 import 'package:esma3ny/ui/provider/signup_form_state.dart';
 import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
@@ -35,6 +36,9 @@ class Providers {
         ),
         ChangeNotifierProvider(
           create: (context) => TherapistProfileState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FilterState(),
         )
       ];
 }
