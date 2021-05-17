@@ -54,7 +54,9 @@ class _TherapistListCardState extends State<TherapistListCard> {
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
         child: CircleAvatar(
-            radius: 60, backgroundImage: NetworkImage(_therapist.profileImage)),
+          radius: 60,
+          // backgroundImage: NetworkImage(_therapist.profileImage),
+        ),
       );
 
   therapistName() => AutoSizeText(

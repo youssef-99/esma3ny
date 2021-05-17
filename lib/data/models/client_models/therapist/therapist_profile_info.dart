@@ -23,7 +23,7 @@ class Therapist {
   final joiningDate;
   final Fees fees;
   final Job job;
-  final profileImage;
+  // final profileImage;
   final List<Specialization> specializations;
   final List<Specialization> mainFocus;
   final List<Certificate> certificates;
@@ -46,7 +46,7 @@ class Therapist {
     @required this.job,
     @required this.phone,
     @required this.prefix,
-    @required this.profileImage,
+    // @required this.profileImage,
     @required this.joiningDate,
     @required this.specializations,
     @required this.mainFocus,
@@ -99,7 +99,7 @@ class Therapist {
       job: json['job'] == null ? null : Job.fromJson(json['job']),
       phone: json['phone'],
       prefix: json['prefix'],
-      profileImage: json['profile_image']['high'],
+      // profileImage: json['profile_image']['high'],
       specializations: specializationList,
       mainFocus: mainFocusList,
       certificates: certificateList,

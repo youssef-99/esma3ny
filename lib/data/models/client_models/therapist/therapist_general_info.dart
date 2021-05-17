@@ -9,7 +9,7 @@ class TherapistListInfo {
   final Fees fees;
   final titleEn;
   final titleAr;
-  final profileImage;
+  // final profileImage;
   final Job job;
 
   TherapistListInfo({
@@ -19,7 +19,7 @@ class TherapistListInfo {
     this.fees,
     this.job,
     this.jobId,
-    this.profileImage,
+    // this.profileImage,
     this.titleAr,
     this.titleEn,
   });
@@ -32,7 +32,7 @@ class TherapistListInfo {
       fees: json['fees'].isEmpty ? null : Fees.fromJson(json['fees']),
       job: json['job'] == null ? null : Job.fromJson(json['job']),
       jobId: json['job_id'],
-      profileImage: json['profile_image']['high'],
+      // profileImage: json['profile_image']['high'],
       titleAr: json['title_ar'],
       titleEn: json['title_en'],
     );

@@ -1,7 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
+import 'package:esma3ny/ui/widgets/booking_option.dart';
+import 'package:esma3ny/ui/widgets/calender.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TherapistInfoCard extends StatefulWidget {
@@ -60,8 +63,9 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
         child: CircleAvatar(
-            radius: 60,
-            backgroundImage: NetworkImage(widget.therapist.profileImage)),
+          radius: 60,
+          // backgroundImage: NetworkImage(widget.therapist.profileImage),
+        ),
       );
 
   decoration(Color borderColor, double borderRaduis) => BoxDecoration(
@@ -99,7 +103,16 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           button(() {}, 'Start your free session', CustomColors.orange),
-          button(() {}, 'Book', CustomColors.blue),
+          button(
+            () {
+              showMaterialModalBottomSheet(
+                context: context,
+                builder: (context) => BookingOptionModalSheet(),
+              );
+            },
+            'Book',
+            CustomColors.blue,
+          ),
         ],
       );
   button(onPressed, String text, Color color) => ElevatedButton(

@@ -31,6 +31,9 @@ dependencies:
   fluttertoast: ^8.0.6
   infinite_scroll_pagination: ^2.3.0
   image_picker: ^0.7.5
+  flutter_calendar_carousel: ^2.0.1
+  smart_select: ^4.3.2
+
 
 dev_dependencies:
   flutter_test:

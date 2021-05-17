@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
+import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 
 class PublicRepository {
@@ -23,5 +24,16 @@ class PublicRepository {
   Future<void> getJob() async {
     Response response = await _apiBaseHelper.getHTTP('jobs');
     SharedPrefrencesHelper.setJob(response.data);
+  }
+
+  Future<List<AvailableTimeSlotResponse>> showTherapistTimeSlots(
+      int id, String date) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('doctor/$id/timeslots?day=$date');
+
+    List<AvailableTimeSlotResponse> list = [];
+    response.data.forEach((day, timeslot) =>
+        list.add(AvailableTimeSlotResponse.fromJson(day, timeslot)));
+    return list;
   }
 }
