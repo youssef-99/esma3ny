@@ -2,6 +2,7 @@ import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_in
 import 'package:esma3ny/data/models/enums/sessionType.dart';
 import 'package:esma3ny/ui/provider/book_session_state.dart';
 import 'package:esma3ny/ui/widgets/calender.dart';
+import 'package:esma3ny/ui/widgets/sessionBookingReview.dart';
 import 'package:esma3ny/ui/widgets/time_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -166,7 +167,11 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                           color: Colors.green, fontSize: 20, height: 3),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showMaterialModalBottomSheet(
+                            context: context,
+                            builder: (_) => SessionBookingReview());
+                      },
                       child: Text(
                         'Conintue',
                         style: TextStyle(

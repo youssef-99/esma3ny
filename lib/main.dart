@@ -3,7 +3,6 @@ import 'package:esma3ny/ui/pages/patient/Profile.dart';
 import 'package:esma3ny/ui/pages/patient/edit_profile_page.dart';
 import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
 import 'package:esma3ny/ui/provider/language_state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/localization/form_builder_localizations.dart';

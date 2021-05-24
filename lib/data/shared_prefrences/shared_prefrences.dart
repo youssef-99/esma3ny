@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/models/public/job.dart';
 import 'package:esma3ny/data/models/public/language.dart';
+import 'package:esma3ny/data/models/public/login_response.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,6 +11,21 @@ class SharedPrefrencesHelper {
   static setLanguage(isEnglish) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setBool('isEnglish', isEnglish);
+  }
+
+  static setLoginData(Map<String, dynamic> loginResponse) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String encodedResponse = json.encode(loginResponse);
+    await sharedPreferences.setString('loginResponse', encodedResponse);
+  }
+
+  static Future<LoginResponse> getLoginData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Map<String, dynamic> decodedResponse =
+        json.decode(sharedPreferences.getString('loginResponse'));
+
+    LoginResponse loginResponse = LoginResponse.fromJson(decodedResponse);
+    return loginResponse;
   }
 
   static get getLocale async {

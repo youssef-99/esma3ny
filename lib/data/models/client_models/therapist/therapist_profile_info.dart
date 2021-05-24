@@ -3,6 +3,7 @@ import 'package:esma3ny/data/models/public/education.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:flutter/foundation.dart';
 
@@ -23,7 +24,7 @@ class Therapist {
   final joiningDate;
   final Fees fees;
   final Job job;
-  // final profileImage;
+  final ProfileImage profileImage;
   final List<Specialization> specializations;
   final List<Specialization> mainFocus;
   final List<Certificate> certificates;
@@ -46,7 +47,7 @@ class Therapist {
     @required this.job,
     @required this.phone,
     @required this.prefix,
-    // @required this.profileImage,
+    @required this.profileImage,
     @required this.joiningDate,
     @required this.specializations,
     @required this.mainFocus,
@@ -99,7 +100,7 @@ class Therapist {
       job: json['job'] == null ? null : Job.fromJson(json['job']),
       phone: json['phone'],
       prefix: json['prefix'],
-      // profileImage: json['profile_image']['high'],
+      profileImage: ProfileImage.fromjson(json['profile_image']),
       specializations: specializationList,
       mainFocus: mainFocusList,
       certificates: certificateList,

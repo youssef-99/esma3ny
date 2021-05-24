@@ -1,3 +1,5 @@
+import 'package:esma3ny/data/models/public/login_response.dart';
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/ui/provider/language_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
@@ -25,11 +27,20 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: ListView(
         children: [
-          // ListTile(
-          //   leading: CircleAvatar(backgroundImage: NetworkImage('')),
-          //   title: Text('Name'),
-          // ),
-          // Divider(),
+          FutureBuilder<LoginResponse>(
+            future: SharedPrefrencesHelper.getLoginData(),
+            builder: (context, snapshot) => snapshot.hasData
+                ? ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage:
+                          NetworkImage(snapshot.data.profileImage.small),
+                    ),
+                    title: Text(snapshot.data.name),
+                    subtitle: Text(snapshot.data.email),
+                  )
+                : SizedBox(),
+          ),
+          Divider(),
           customListTile(Icons.person, 'Profile',
               () => Navigator.pushNamed(context, 'client_profile'), null),
           Consumer<CustomThemes>(

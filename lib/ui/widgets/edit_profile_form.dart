@@ -51,7 +51,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
     dateOfBirth.text = client.dateOfBirth;
     selectedGender = client.gender;
     selectedCountry = int.parse(client.countryId);
-    profileImage = client.profilImage;
+    profileImage = client.profilImage.small;
   }
 
   @override

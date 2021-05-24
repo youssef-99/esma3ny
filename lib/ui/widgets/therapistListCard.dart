@@ -55,7 +55,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
         decoration: decoration(CustomColors.orange, 100),
         child: CircleAvatar(
           radius: 60,
-          // backgroundImage: NetworkImage(_therapist.profileImage),
+          backgroundImage: NetworkImage(_therapist.profileImage.small),
         ),
       );
 

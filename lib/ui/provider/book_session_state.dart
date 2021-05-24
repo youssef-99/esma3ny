@@ -59,15 +59,25 @@ class BookSessionState extends ChangeNotifier {
   }
 
   void getTomorrowSessions() {
-    // TODO awel youm fe al 4ahr algded
     _selectedDate = format.format(DateTime.now().add(Duration(days: 1)));
-    bool isContain = false;
 
+    if (DateTime.now().add(Duration(days: 1)).day == 1) {
+      String date = format.format(DateTime.now().add(Duration(days: 1)));
+      getNextMonth(date).then((value) {
+        initSelectedDate();
+      });
+    }
+
+    initSelectedDate();
+  }
+
+  initSelectedDate() {
+    bool isContain = false;
     _availableTimeSlots.forEach((timeSlot) {
       if (_selectedDate == timeSlot.date) {
         isContain = true;
         _selectedTimeSlots = timeSlot.timeSlots;
-        _isPressedTimeSlot.fillRange(0, _selectedTimeSlots.length, false);
+        setIsPressedArray(_selectedTimeSlots.length);
         notifyListeners();
         return;
       }
@@ -79,7 +89,7 @@ class BookSessionState extends ChangeNotifier {
     notifyListeners();
   }
 
-  getNextMonth(String date) async {
+  Future<void> getNextMonth(String date) async {
     _loading = true;
     notifyListeners();
 

@@ -5,6 +5,7 @@ import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_filter.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
+import 'package:esma3ny/data/models/public/login_response.dart';
 
 import '../../core/device_info/device_info.dart';
 import '../../data/shared_prefrences/shared_prefrences.dart';
@@ -30,6 +31,7 @@ class ClientRepositoryImpl implements ClientRepository {
     );
 
     await SharedPrefrencesHelper.storeToken(response.data['token']);
+    await SharedPrefrencesHelper.setLoginData(response.data['data']);
 
     return response;
   }

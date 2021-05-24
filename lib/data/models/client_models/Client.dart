@@ -1,3 +1,4 @@
+import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:flutter/foundation.dart';
 
 class ClientModel {
@@ -11,10 +12,9 @@ class ClientModel {
   final String dateOfBirth;
   final String countryId;
   final deviceName;
-  final String image;
   final String stripeId;
   final String age;
-  final profilImage;
+  final ProfileImage profilImage;
 
   ClientModel({
     this.id,
@@ -26,7 +26,6 @@ class ClientModel {
     @required this.gender,
     @required this.dateOfBirth,
     @required this.countryId,
-    this.image,
     this.age,
     this.stripeId,
     this.deviceName,
@@ -43,7 +42,7 @@ class ClientModel {
       gender: json['gender'],
       dateOfBirth: json['date_of_birth'],
       countryId: json['country_id'],
-      image: json['profile_image'],
+      profilImage: ProfileImage.fromjson(json['profile_image']),
       age: json['age'],
       stripeId: json['stripe_id'],
     );
