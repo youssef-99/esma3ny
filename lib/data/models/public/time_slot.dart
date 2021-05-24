@@ -4,13 +4,13 @@ class TimeSlot {
   final id;
   final startTime;
   final endTime;
-  final text;
+  final duration;
 
   TimeSlot({
     @required this.id,
     @required this.startTime,
     @required this.endTime,
-    @required this.text,
+    @required this.duration,
   });
 
   factory TimeSlot.fromJson(Map<String, dynamic> json) {
@@ -18,7 +18,7 @@ class TimeSlot {
       id: json['id'],
       startTime: json['start_time'],
       endTime: json['end_time'],
-      text: json['text'],
+      duration: json['duration'],
     );
   }
 }

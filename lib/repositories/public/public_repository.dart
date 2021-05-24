@@ -32,8 +32,10 @@ class PublicRepository {
         await _apiBaseHelper.getHTTP('doctor/$id/timeslots?day=$date');
 
     List<AvailableTimeSlotResponse> list = [];
-    response.data.forEach((day, timeslot) =>
-        list.add(AvailableTimeSlotResponse.fromJson(day, timeslot)));
+
+    if (!response.data.isEmpty)
+      response.data.forEach((day, timeslot) =>
+          list.add(AvailableTimeSlotResponse.fromJson(day, timeslot)));
     return list;
   }
 }

@@ -1,10 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
+import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
+import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
+import 'package:esma3ny/repositories/public/public_repository.dart';
+import 'package:esma3ny/ui/provider/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/booking_option.dart';
-import 'package:esma3ny/ui/widgets/calender.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TherapistInfoCard extends StatefulWidget {
@@ -15,6 +20,9 @@ class TherapistInfoCard extends StatefulWidget {
 }
 
 class _TherapistInfoCardState extends State<TherapistInfoCard> {
+  PublicRepository _publicRepository = PublicRepository();
+  DateFormat format = DateFormat('yyyy-MM-dd');
+
   @override
   Widget build(BuildContext context) {
     return body();
@@ -104,10 +112,17 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
         children: [
           button(() {}, 'Start your free session', CustomColors.orange),
           button(
-            () {
+            () async {
+              List<AvailableTimeSlotResponse> list =
+                  await _publicRepository.showTherapistTimeSlots(
+                      widget.therapist.id,
+                      format.format(DateTime.now()).toString());
+              Provider.of<BookSessionState>(context, listen: false)
+                  .setAvailableTimeSlots(list);
+
               showMaterialModalBottomSheet(
                 context: context,
-                builder: (context) => BookingOptionModalSheet(),
+                builder: (context) => BookingOptionModalSheet(widget.therapist),
               );
             },
             'Book',

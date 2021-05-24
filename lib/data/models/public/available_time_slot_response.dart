@@ -14,11 +14,15 @@ class AvailableTimeSlotResponse {
 
   factory AvailableTimeSlotResponse.fromJson(
       String day, Map<String, dynamic> json) {
+    List<TimeSlot> timeSlots = [];
+    if (json['data'].isNotEmpty)
+      json['data']
+          .forEach((timeSlot) => timeSlots.add(TimeSlot.fromJson(timeSlot)));
+
     return AvailableTimeSlotResponse(
       date: day,
       count: json['count'],
-      timeSlots:
-          json['data'].forEach((timeSlot) => TimeSlot.fromJson(timeSlot)),
+      timeSlots: timeSlots,
     );
   }
 }

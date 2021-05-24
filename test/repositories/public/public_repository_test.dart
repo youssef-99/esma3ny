@@ -21,8 +21,8 @@ void main() {
     'time slot',
     () async {
       List<AvailableTimeSlotResponse> list =
-          await publicRepository.showTherapistTimeSlots(1, '2021-05-17');
-      print(list[0].date);
+          await publicRepository.showTherapistTimeSlots(1, '2021-05-24');
+      print(list.first.timeSlots.first.duration);
     },
   );
 }

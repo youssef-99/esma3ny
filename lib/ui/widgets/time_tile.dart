@@ -1,34 +1,29 @@
+import 'package:esma3ny/data/models/public/time_slot.dart';
+import 'package:esma3ny/ui/provider/book_session_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TimeTile extends StatefulWidget {
+  final TimeSlot timeSlot;
   final bool isPressed;
-  TimeTile(this.isPressed);
+  final index;
+  TimeTile(this.timeSlot, this.isPressed, this.index);
   @override
   _TimeTileState createState() => _TimeTileState();
 }
 
 class _TimeTileState extends State<TimeTile> {
   Color color = Colors.grey;
-  bool isPressed;
-  @override
-  void initState() {
-    if (widget.isPressed)
-      isPressed = true;
-    else
-      isPressed = false;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          primary: isPressed ? Colors.blue : Colors.grey),
-      child: Text('9:00 pm'),
+          primary: widget.isPressed ? Colors.blue : Colors.grey),
+      child: Text(widget.timeSlot.startTime),
       onPressed: () {
-        setState(() {
-          isPressed = !isPressed;
-        });
+        Provider.of<BookSessionState>(context)
+            .chooseSingleTimeSlot(widget.index);
       },
     );
   }
