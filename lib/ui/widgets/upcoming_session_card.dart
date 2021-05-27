@@ -74,7 +74,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
         decoration: decoration(CustomColors.orange, 100),
         child: CircleAvatar(
             radius: 60,
-            backgroundImage: NetworkImage(timeSlot.doctorProfileImage)),
+            backgroundImage: NetworkImage(timeSlot.doctorProfileImage.small)),
       );
 
   decoration(Color borderColor, double borderRaduis) => BoxDecoration(

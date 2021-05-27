@@ -1,3 +1,4 @@
+import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:flutter/foundation.dart';
 
 class TimeSlotResponse {
@@ -14,7 +15,7 @@ class TimeSlotResponse {
   final doctorId;
   final doctorNameEn;
   final doctorNameAr;
-  final doctorProfileImage;
+  final ProfileImage doctorProfileImage;
   final amount;
   final currency;
   final roomId;
@@ -53,10 +54,13 @@ class TimeSlotResponse {
       doctorId: json['session']['doctor']['doctor_id'],
       doctorNameEn: json['session']['doctor']['name_en'],
       doctorNameAr: json['session']['doctor']['name_ar'],
-      doctorProfileImage: json['session']['doctor']['profile_image']['high'],
-      amount: json['charges'][0]['amount'],
-      currency: json['charges'][0]['currency'],
-      paymentStatus: json['charges'][0]['status'],
+      doctorProfileImage:
+          ProfileImage.fromjson(json['session']['doctor']['profile_image']),
+      amount: json['charges'].length == 0 ? [] : json['charges'][0]['amount'],
+      currency:
+          json['charges'].length == 0 ? [] : json['charges'][0]['currency'],
+      paymentStatus:
+          json['charges'].length == 0 ? [] : json['charges'][0]['status'],
       roomId: json['room'],
     );
   }

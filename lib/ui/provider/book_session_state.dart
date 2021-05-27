@@ -1,7 +1,10 @@
+import 'package:esma3ny/core/exceptions/exceptions.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/enums/sessionType.dart';
 import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
+import 'package:esma3ny/data/models/public/session_price_response.dart';
 import 'package:esma3ny/data/models/public/time_slot.dart';
+import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
@@ -12,6 +15,7 @@ import 'package:intl/intl.dart';
 class BookSessionState extends ChangeNotifier {
   DateFormat format = DateFormat('yyyy-MM-dd');
   PublicRepository _publicRepository = PublicRepository();
+  ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
 
   Therapist _therapist;
   List<AvailableTimeSlotResponse> _availableTimeSlots;
@@ -21,11 +25,21 @@ class BookSessionState extends ChangeNotifier {
   String _selectedDate;
   bool _loading = false;
   SessionType _sessionType = SessionType.Video;
+  String _sessionTypeText = 'video';
   EventList<Event> _markedDateMap = new EventList<Event>(events: {});
+  SessionPriceResponse _sessionPriceResponse;
+  TimeSlot _selectedTimeSlot;
 
   setIsPressedArray(int length) {
     if (_isPressedTimeSlot != null) _isPressedTimeSlot.clear();
     for (int i = 0; i < length; i++) _isPressedTimeSlot.add(false);
+    _sessionPriceResponse = null;
+    _selectedTimeSlot = null;
+  }
+
+  resetValues() {
+    _sessionPriceResponse = null;
+    _selectedTimeSlot = null;
   }
 
   setAvailableTimeSlots(List<AvailableTimeSlotResponse> availableTimeSlots) {
@@ -143,23 +157,62 @@ class BookSessionState extends ChangeNotifier {
 
   setSessionType(SessionType sessionType) {
     _sessionType = sessionType;
+    if (_sessionType == SessionType.Video)
+      _sessionTypeText = 'video';
+    else if (_sessionType == SessionType.Audio)
+      _sessionTypeText = 'audio';
+    else
+      _sessionTypeText = 'chat';
+
+    if (_selectedTimeSlot != null) {
+      setSessionPrice();
+    }
   }
 
   chooseSingleTimeSlot(int index) {
     for (int i = 0; i < _isPressedTimeSlot.length; i++) {
-      if (i == index)
+      if (i == index) {
         _isPressedTimeSlot[i] = true;
-      else
+        _selectedTimeSlot = _selectedTimeSlots[i];
+      } else
         _isPressedTimeSlot[i] = false;
     }
     notifyListeners();
   }
 
+  setSessionPrice() async {
+    _sessionPriceResponse = await _clientRepositoryImpl
+        .getSelectedTimeSlotPrice(_selectedTimeSlot.id, _sessionTypeText);
+    notifyListeners();
+  }
+
+  reserveNewSession(bool payLater) async {
+    _loading = true;
+    notifyListeners();
+
+    await ExceptionHandling.hanleToastException(() async {
+      if (payLater) {
+        await _clientRepositoryImpl.reserveNewSession(
+            selectedTimeSlot.id, _sessionTypeText, payLater, null);
+      } else {
+        // TODO add stripe token
+        await _clientRepositoryImpl.reserveNewSession(
+            selectedTimeSlot.id, _sessionTypeText, payLater, null);
+      }
+    });
+
+    _loading = false;
+    notifyListeners();
+  }
+
   List<AvailableTimeSlotResponse> get availableTimeSlots => _availableTimeSlots;
-  List<TimeSlot> get selectedTimeSlot => _selectedTimeSlots;
+  List<TimeSlot> get selectedTimeSlots => _selectedTimeSlots;
+  TimeSlot get selectedTimeSlot => _selectedTimeSlot;
   List<bool> get isPressedTimeSlot => _isPressedTimeSlot;
   String get selectedDate => _selectedDate;
   Therapist get therapist => _therapist;
   bool get loading => _loading;
   EventList<Event> get markedDateMap => _markedDateMap;
+  SessionPriceResponse get sessionPriceResponse => _sessionPriceResponse;
+  String get sessionTypeText => _sessionTypeText;
 }

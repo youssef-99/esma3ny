@@ -5,7 +5,7 @@ import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_filter.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
-import 'package:esma3ny/data/models/public/login_response.dart';
+import 'package:esma3ny/data/models/public/session_price_response.dart';
 
 import '../../core/device_info/device_info.dart';
 import '../../data/shared_prefrences/shared_prefrences.dart';
@@ -45,13 +45,19 @@ class ClientRepositoryImpl implements ClientRepository {
   }
 
   @override
-  Future<void> bookLater() {
-    // TODO: implement bookLater
-    throw UnimplementedError();
+  Future<dynamic> reserveNewSession(
+      int id, String type, bool payLater, String stripeToken) async {
+    Response response = await _apiBaseHelper.postHTTP('$_route/timeslots/$id', {
+      'terms_and_conditions': true,
+      'type': type,
+      'paylater': payLater.toString(),
+      'stripeToken': stripeToken,
+    });
+    return response.data;
   }
 
   @override
-  Future<void> bookNow() {
+  Future<void> payLater() {
     // TODO: implement bookNow
     throw UnimplementedError();
   }
@@ -77,8 +83,10 @@ class ClientRepositoryImpl implements ClientRepository {
   }
 
   @override
-  Future<void> logout() async =>
-      await _apiBaseHelper.postHTTP('$_route/auth/logout', null);
+  Future<void> logout() async {
+    await SharedPrefrencesHelper.logout();
+    await _apiBaseHelper.postHTTP('$_route/auth/logout', null);
+  }
 
   @override
   Future<void> updateProfile(ClientModel client) async {
@@ -105,5 +113,15 @@ class ClientRepositoryImpl implements ClientRepository {
   Future<void> rescheduleSession(int oldSessionId, int newSeesionId) {
     // TODO: implement rescheduleSession
     throw UnimplementedError();
+  }
+
+  @override
+  Future<SessionPriceResponse> getSelectedTimeSlotPrice(
+      int id, String type) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('patient/timeslots/$id/price?type=$type');
+    SessionPriceResponse sessionPriceResponse =
+        SessionPriceResponse.fromJson(response.data);
+    return sessionPriceResponse;
   }
 }

@@ -60,8 +60,6 @@ class ApiBaseHelper {
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);
-    } catch (e) {
-      throw e;
     }
   }
 
@@ -72,8 +70,6 @@ class ApiBaseHelper {
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);
-    } catch (e) {
-      throw e;
     }
   }
 
@@ -83,8 +79,6 @@ class ApiBaseHelper {
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);
-    } catch (e) {
-      throw e;
     }
   }
 
@@ -94,8 +88,6 @@ class ApiBaseHelper {
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);
-    } catch (e) {
-      throw e;
     }
   }
 }

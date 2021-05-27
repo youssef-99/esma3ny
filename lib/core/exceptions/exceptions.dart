@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class NetworkConnectionException implements Exception {}
 
@@ -35,5 +37,24 @@ class ExceptionHandling {
 
     print(e.error);
     throw SomeThingWentWrong();
+  }
+
+  static hanleToastException(Function function) async {
+    try {
+      await function();
+      Fluttertoast.showToast(
+          msg: 'Session Booked Successfully', backgroundColor: Colors.green);
+    } on InvalidData catch (_) {
+      Fluttertoast.showToast(msg: 'Invaild Data');
+    } on NetworkConnectionException catch (_) {
+      Fluttertoast.showToast(
+          msg: 'Network error check your internet exception');
+    } on TimeoutException catch (_) {
+      Fluttertoast.showToast(msg: 'Time out');
+    } on ServerError catch (_) {
+      Fluttertoast.showToast(msg: 'Server Error');
+    } on SomeThingWentWrong catch (_) {
+      Fluttertoast.showToast(msg: 'Something went wrong');
+    }
   }
 }

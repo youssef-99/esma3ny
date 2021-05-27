@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +17,7 @@ class _SplashScreenState extends State<SplashScreen>
   var _tween;
   bool isDone = false;
   PublicRepository _publicRepository = PublicRepository();
+  bool isLogged;
 
   _getCountries() async {
     try {
@@ -29,9 +31,15 @@ class _SplashScreenState extends State<SplashScreen>
     }
   }
 
+  _checkLogging() async {
+    isLogged = await SharedPrefrencesHelper.isLogged();
+    isLogged = isLogged == null ? false : isLogged;
+  }
+
   @override
   void initState() {
     _getCountries();
+    _checkLogging();
 
     _animationController = AnimationController(
       vsync: this,
@@ -52,7 +60,10 @@ class _SplashScreenState extends State<SplashScreen>
     });
 
     Timer(Duration(seconds: 5), () {
-      Navigator.pushReplacementNamed(context, 'login');
+      if (isLogged)
+        Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar');
+      else
+        Navigator.pushReplacementNamed(context, 'login');
     });
 
     super.initState();

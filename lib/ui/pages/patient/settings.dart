@@ -51,7 +51,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     Switch(
                       onChanged: (bool value) {
                         state.changeTheme();
-                        print(state.isDark);
                       },
                       value: state.isDark,
                     ),

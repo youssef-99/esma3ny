@@ -16,6 +16,7 @@ class SharedPrefrencesHelper {
   static setLoginData(Map<String, dynamic> loginResponse) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String encodedResponse = json.encode(loginResponse);
+    await sharedPreferences.setBool('logged', true);
     await sharedPreferences.setString('loginResponse', encodedResponse);
   }
 
@@ -26,6 +27,11 @@ class SharedPrefrencesHelper {
 
     LoginResponse loginResponse = LoginResponse.fromJson(decodedResponse);
     return loginResponse;
+  }
+
+  static Future<bool> isLogged() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('logged');
   }
 
   static get getLocale async {
@@ -123,5 +129,10 @@ class SharedPrefrencesHelper {
     List<Job> jobs = [];
     encodedjob.forEach((job) => jobs.add(Job.fromJson(job)));
     return jobs;
+  }
+
+  static Future<void> logout() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
   }
 }

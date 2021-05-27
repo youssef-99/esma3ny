@@ -11,6 +11,10 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
+  - Stripe (19.4.1)
+  - stripe_payment (1.0.0):
+    - Flutter
+    - Stripe (~> 19.4.0)
   - Toast (4.0.0)
   - url_launcher (0.0.1):
     - Flutter
@@ -22,10 +26,12 @@ DEPENDENCIES:
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - stripe_payment (from `.symlinks/plugins/stripe_payment/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
   trunk:
+    - Stripe
     - Toast
 
 EXTERNAL SOURCES:
@@ -41,6 +47,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  stripe_payment:
+    :path: ".symlinks/plugins/stripe_payment/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
 
@@ -51,9 +59,11 @@ SPEC CHECKSUMS:
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  Stripe: 5914399ac5878056b985d56b409cb4bb1e7fc7e8
+  stripe_payment: 1cbe9c339c21b5ecf01035e80eea351067c67c56
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
 COCOAPODS: 1.10.1
