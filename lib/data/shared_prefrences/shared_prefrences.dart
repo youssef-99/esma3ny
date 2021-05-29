@@ -80,9 +80,9 @@ class SharedPrefrencesHelper {
     return countries;
   }
 
-  static Future<String> getCountryName(String id) async {
+  static Future<String> getCountryName(int id) async {
     List<Country> countries = await getCountries;
-    return countries[int.parse(id) - 1].name;
+    return countries[id - 1].name;
   }
 
   static Future<void> setSpecializations(List<dynamic> specializations) async {
@@ -133,6 +133,7 @@ class SharedPrefrencesHelper {
 
   static Future<void> logout() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
+    sharedPreferences.remove('token');
+    sharedPreferences.remove('loginResponse');
   }
 }

@@ -55,8 +55,10 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     },
                     child: Text(
                       'Today',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white),
                     ),
                   ),
                   ElevatedButton(
@@ -65,8 +67,10 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     },
                     child: Text(
                       'Tomorrow',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white),
                     ),
                   ),
                 ],
@@ -184,7 +188,10 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                 },
                 child: Text(
                   'Conintue',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.white),
                 ),
               ),
             ],

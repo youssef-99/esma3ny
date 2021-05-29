@@ -54,6 +54,7 @@ class ApiBaseHelper {
   static final dio = createDio();
   static final baseAPI = addInterceptors(dio);
 
+  // ignore: missing_return
   Future<Response> getHTTP(String url) async {
     try {
       Response response = await baseAPI.get(url);
@@ -63,16 +64,30 @@ class ApiBaseHelper {
     }
   }
 
+  // ignore: missing_return
   Future<Response> postHTTP(String url, dynamic data) async {
     try {
-      FormData.fromMap(data);
       Response response = await baseAPI.post(url, data: data);
       return response;
     } on DioError catch (e) {
+      print(e);
       ExceptionHandling.handleDioExceprion(e);
     }
   }
 
+  // ignore: missing_return
+  Future<Response> postPhotoHTTP(String url, dynamic data) async {
+    try {
+      FormData formData = FormData.fromMap(data);
+      Response response = await baseAPI.post(url, data: formData);
+      return response;
+    } on DioError catch (e) {
+      print(e);
+      ExceptionHandling.handleDioExceprion(e);
+    }
+  }
+
+  // ignore: missing_return
   Future<Response> putHTTP(String url, dynamic data) async {
     try {
       Response response = await baseAPI.put(url, data: data);
@@ -82,6 +97,7 @@ class ApiBaseHelper {
     }
   }
 
+  // ignore: missing_return
   Future<Response> deleteHTTP(String url) async {
     try {
       Response response = await baseAPI.delete(url);

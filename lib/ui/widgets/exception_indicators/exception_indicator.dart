@@ -1,4 +1,3 @@
-import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -49,9 +48,9 @@ class ExceptionIndicator extends StatelessWidget {
                 SizedBox(
                   height: 50,
                   width: double.infinity,
-                  child: RaisedButton.icon(
+                  child: ElevatedButton.icon(
                     onPressed: onTryAgain,
-                    color: CustomColors.blue,
+                    // color: CustomColors.blue,
                     icon: const Icon(
                       Icons.refresh,
                       color: Colors.white,

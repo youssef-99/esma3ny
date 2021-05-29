@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
@@ -22,7 +23,7 @@ class ClientRepositoryImpl implements ClientRepository {
     Map<String, dynamic> creditials = {
       'email': email,
       'password': pass,
-      'device_name': deviceName,
+      'device_name': 'deviceName',
     };
 
     Response response = await _apiBaseHelper.postHTTP(
@@ -57,12 +58,6 @@ class ClientRepositoryImpl implements ClientRepository {
   }
 
   @override
-  Future<void> payLater() {
-    // TODO: implement bookNow
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Therapist> getDoctorInfo(int id) async {
     Response response = await _apiBaseHelper.getHTTP('doctor/$id');
     return Therapist.fromJson(response.data);
@@ -84,8 +79,8 @@ class ClientRepositoryImpl implements ClientRepository {
 
   @override
   Future<void> logout() async {
-    await SharedPrefrencesHelper.logout();
     await _apiBaseHelper.postHTTP('$_route/auth/logout', null);
+    await SharedPrefrencesHelper.logout();
   }
 
   @override
@@ -123,5 +118,17 @@ class ClientRepositoryImpl implements ClientRepository {
     SessionPriceResponse sessionPriceResponse =
         SessionPriceResponse.fromJson(response.data);
     return sessionPriceResponse;
+  }
+
+  @override
+  Future<void> uploadProfilePic(String imagePath, ClientModel client) async {
+    Response response =
+        await _apiBaseHelper.postPhotoHTTP('$_route/profile/update', {
+      ...client.toJsonEdit(),
+      'image': await MultipartFile.fromFile(imagePath,
+          filename: imagePath.split('/').last,
+          contentType: MediaType('image', 'jpg')),
+    });
+    print(response.data);
   }
 }

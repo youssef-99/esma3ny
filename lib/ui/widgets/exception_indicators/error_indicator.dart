@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:esma3ny/core/exceptions/exceptions.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/generic_error_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/no_connection_indicator.dart';

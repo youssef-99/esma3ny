@@ -9,8 +9,8 @@ import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class BookSessionState extends ChangeNotifier {
   DateFormat format = DateFormat('yyyy-MM-dd');
@@ -29,6 +29,8 @@ class BookSessionState extends ChangeNotifier {
   EventList<Event> _markedDateMap = new EventList<Event>(events: {});
   SessionPriceResponse _sessionPriceResponse;
   TimeSlot _selectedTimeSlot;
+  Token _stripeToken;
+  bool _isPaid = false;
 
   setIsPressedArray(int length) {
     if (_isPressedTimeSlot != null) _isPressedTimeSlot.clear();
@@ -110,12 +112,10 @@ class BookSessionState extends ChangeNotifier {
     if (!_catchedMonths.contains(date) &&
         DateTime.parse(date).isAfter(DateTime.now())) {
       _catchedMonths.add(date);
-      try {
+      await ExceptionHandling.hanleToastException(() async {
         _availableTimeSlots.addAll(await _publicRepository
             .showTherapistTimeSlots(_therapist.id, date));
-      } catch (_) {
-        Fluttertoast.showToast(msg: 'Something Went Wrog');
-      }
+      }, '', false);
     }
 
     _loading = false;
@@ -181,13 +181,21 @@ class BookSessionState extends ChangeNotifier {
   }
 
   setSessionPrice() async {
-    _sessionPriceResponse = await _clientRepositoryImpl
-        .getSelectedTimeSlotPrice(_selectedTimeSlot.id, _sessionTypeText);
+    await ExceptionHandling.hanleToastException(() async {
+      _sessionPriceResponse = await _clientRepositoryImpl
+          .getSelectedTimeSlotPrice(_selectedTimeSlot.id, _sessionTypeText);
+    }, '', false);
+
     notifyListeners();
+  }
+
+  setStripeToken(Token token) {
+    _stripeToken = token;
   }
 
   reserveNewSession(bool payLater) async {
     _loading = true;
+    _isPaid = false;
     notifyListeners();
 
     await ExceptionHandling.hanleToastException(() async {
@@ -195,11 +203,11 @@ class BookSessionState extends ChangeNotifier {
         await _clientRepositoryImpl.reserveNewSession(
             selectedTimeSlot.id, _sessionTypeText, payLater, null);
       } else {
-        // TODO add stripe token
-        await _clientRepositoryImpl.reserveNewSession(
-            selectedTimeSlot.id, _sessionTypeText, payLater, null);
+        await _clientRepositoryImpl.reserveNewSession(selectedTimeSlot.id,
+            _sessionTypeText, payLater, _stripeToken.tokenId);
+        _isPaid = true;
       }
-    });
+    }, 'Your Session Booked Successfully', true);
 
     _loading = false;
     notifyListeners();
@@ -215,4 +223,5 @@ class BookSessionState extends ChangeNotifier {
   EventList<Event> get markedDateMap => _markedDateMap;
   SessionPriceResponse get sessionPriceResponse => _sessionPriceResponse;
   String get sessionTypeText => _sessionTypeText;
+  bool get isPaid => _isPaid;
 }

@@ -5,7 +5,7 @@ class TherapistProfileState extends ChangeNotifier {
   int _id;
   String country;
 
-  getCounry(String id) async {
+  getCounry(int id) async {
     country = await SharedPrefrencesHelper.getCountryName(id);
     return country;
   }

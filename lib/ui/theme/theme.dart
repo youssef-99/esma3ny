@@ -69,8 +69,7 @@ class CustomThemes extends ChangeNotifier {
       colorScheme: ColorScheme.dark(),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          // shape:
-          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+          // textStyle: TextStyle(color: Colors.white),
           primary: CustomColors.orange,
         ),
       ),

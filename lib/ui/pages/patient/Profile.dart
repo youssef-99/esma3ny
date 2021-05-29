@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/ui/theme/colors.dart';
+import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:esma3ny/ui/widgets/waiting_wiget.dart';
@@ -68,24 +71,26 @@ class _ProfileState extends State<Profile> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CircleAvatar(
-              radius: 100,
-              backgroundImage: NetworkImage(client.profilImage == null
-                  ? 'https://esma3ny.org/assets/images/team/team-33.jpg'
-                  : client.profilImage),
-            ),
+            CachedImage(client.profilImage.small),
+            SizedBox(height: 10),
             Text(
               client.name,
               style: Theme.of(context).textTheme.headline5,
             ),
+            SizedBox(height: 10),
             infoCard(client),
           ],
         ),
       );
 
   infoCard(ClientModel client) => Container(
+        padding: EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
+          border: Border.all(
+            color: CustomColors.blue,
+            width: 3,
+            style: BorderStyle.solid,
+          ),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Column(
@@ -102,7 +107,9 @@ class _ProfileState extends State<Profile> {
                 child: Text(
                   'Edit',
                   style: TextStyle(
-                      fontSize: 20, decoration: TextDecoration.underline),
+                      fontSize: 20,
+                      decoration: TextDecoration.underline,
+                      fontFamily: 'arial'),
                 ),
               ),
             ),
@@ -112,13 +119,23 @@ class _ProfileState extends State<Profile> {
             customListTile(Icons.person, client.gender),
             customListTile(Icons.date_range, client.dateOfBirth),
             FutureBuilder(
-                future: SharedPrefrencesHelper.getCountryName(client.countryId),
+                future: SharedPrefrencesHelper.getCountryName(
+                    int.parse(client.countryId)),
                 builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done)
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    print(snapshot.data);
                     return customListTile(Icons.location_city, snapshot.data);
+                  }
                   return SizedBox();
                 }),
             customListTile(Icons.timer, client.age),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(onPressed: () {}, child: Text('Health Profile')),
+                ElevatedButton(onPressed: () {}, child: Text('Session List')),
+              ],
+            )
           ],
         ),
       );

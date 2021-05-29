@@ -1,5 +1,6 @@
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
+import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -54,18 +55,19 @@ void main() {
       //   },
       // );
 
-      // test('updateProfile', () async {
-      //   Client client = Client(
-      //     name: 'namee',
-      //     email: 'youssefwilliam970@gmail.com',
-      //     phone: '12315646879',
-      //     gender: 'male',
-      //     dateOfBirth: '1999-06-01',
-      //     countryId: '62',
-      //   );
+      test('updateProfile', () async {
+        ClientModel client = ClientModel(
+          name: 'namee',
+          email: 'youssefwilliam970@gmail.com',
+          phone: '12315646879',
+          gender: 'male',
+          dateOfBirth: '1999-06-01',
+          countryId: '62',
+        );
 
-      // await clientRepositoryImpl.updateProfile(client);
-      // });
+        await clientRepositoryImpl.uploadProfilePic(
+            '/data/user/0/com.example.esma3ny/cache/image_pixker.jpg', client);
+      });
     },
   );
 }

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:esma3ny/core/exceptions/exceptions.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
-import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:esma3ny/ui/provider/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
@@ -113,10 +113,13 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
           button(() {}, 'Start your free session', CustomColors.orange),
           button(
             () async {
-              List<AvailableTimeSlotResponse> list =
-                  await _publicRepository.showTherapistTimeSlots(
-                      widget.therapist.id,
-                      format.format(DateTime.now()).toString());
+              List<AvailableTimeSlotResponse> list;
+              await ExceptionHandling.hanleToastException(() async {
+                list = await _publicRepository.showTherapistTimeSlots(
+                    widget.therapist.id,
+                    format.format(DateTime.now()).toString());
+              }, '', false);
+
               Provider.of<BookSessionState>(context, listen: false)
                   .setAvailableTimeSlots(list);
 
@@ -134,6 +137,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
         onPressed: onPressed,
         child: Text(
           text,
+          style: TextStyle(color: Colors.white),
         ),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(color),

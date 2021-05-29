@@ -1,35 +1,29 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:esma3ny/ui/provider/book_session_state.dart';
+import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_credit_card/credit_card_form.dart';
+import 'package:flutter_credit_card/credit_card_model.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 
-class PaymentSheetScreen extends StatefulWidget {
+class PaymentSheet extends StatefulWidget {
   @override
-  _PaymentSheetScreenState createState() => new _PaymentSheetScreenState();
+  State<StatefulWidget> createState() {
+    return PaymentSheetState();
+  }
 }
 
-class _PaymentSheetScreenState extends State<PaymentSheetScreen> {
-  Token _paymentToken;
-  PaymentMethod _paymentMethod;
-  String _error;
+class PaymentSheetState extends State<PaymentSheet> {
+  String cardNumber = '';
+  String expiryDate = '';
+  String cardHolderName = '';
+  String cvvCode = '';
+  bool isCvvFocused = false;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  //this client secret is typically created by a backend system
-  //check https://stripe.com/docs/payments/payment-intents#passing-to-client
-  final String _paymentIntentClientSecret = null;
-
-  PaymentIntentResult _paymentIntent;
-  Source _source;
-
-  ScrollController _controller = ScrollController();
-
-  final CreditCard testCard = CreditCard(
-    number: '4000002760003184',
-    expMonth: 12,
-    expYear: 21,
-  );
-
-  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  CreditCard testCard;
 
   @override
   initState() {
@@ -41,256 +35,144 @@ class _PaymentSheetScreenState extends State<PaymentSheetScreen> {
         androidPayMode: 'test'));
   }
 
-  void setError(dynamic error) {
-    _scaffoldKey.currentState
-        .showSnackBar(SnackBar(content: Text(error.toString())));
-    setState(() {
-      _error = error.toString();
-    });
+  void setError(error) {
+    Fluttertoast.showToast(msg: '${error.message}');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: new AppBar(
-        title: new Text('Plugin example app'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              setState(() {
-                _source = null;
-                _paymentIntent = null;
-                _paymentMethod = null;
-                _paymentToken = null;
-              });
-            },
-          )
-        ],
+      appBar: AppBar(
+        title: Text('Payment',
+            style: Theme.of(context).appBarTheme.titleTextStyle),
       ),
-      body: ListView(
-        controller: _controller,
-        padding: const EdgeInsets.all(20),
-        children: <Widget>[
-          RaisedButton(
-            child: Text("Create Source"),
-            onPressed: () {
-              StripePayment.createSourceWithParams(SourceParams(
-                type: 'ideal',
-                amount: 1099,
-                currency: 'eur',
-                returnURL: 'example://stripe-redirect',
-              )).then((source) {
-                _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text('Received ${source.sourceId}')));
-                setState(() {
-                  _source = source;
-                });
-              }).catchError(setError);
-            },
-          ),
-          Divider(),
-          RaisedButton(
-            child: Text("Create Token with Card Form"),
-            onPressed: () {
-              StripePayment.paymentRequestWithCardForm(CardFormPaymentRequest())
-                  .then((paymentMethod) {
-                _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text('Received ${paymentMethod.id}')));
-                setState(() {
-                  _paymentMethod = paymentMethod;
-                });
-              }).catchError(setError);
-            },
-          ),
-          RaisedButton(
-            child: Text("Create Token with Card"),
-            onPressed: () {
-              StripePayment.createTokenWithCard(
-                testCard,
-              ).then((token) {
-                print(token.tokenId);
-                _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text('Received ${token.tokenId}')));
-                setState(() {
-                  _paymentToken = token;
-                });
-              }).catchError(setError);
-            },
-          ),
-          Divider(),
-          RaisedButton(
-            child: Text("Create Payment Method with Card"),
-            onPressed: () {
-              StripePayment.createPaymentMethod(
-                PaymentMethodRequest(
-                  card: testCard,
-                ),
-              ).then((paymentMethod) {
-                _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text('Received ${paymentMethod.id}')));
-                setState(() {
-                  _paymentMethod = paymentMethod;
-                });
-              }).catchError(setError);
-            },
-          ),
-          RaisedButton(
-            child: Text("Create Payment Method with existing token"),
-            onPressed: _paymentToken == null
-                ? null
-                : () {
-                    StripePayment.createPaymentMethod(
-                      PaymentMethodRequest(
-                        card: CreditCard(
-                          token: _paymentToken.tokenId,
-                        ),
-                      ),
-                    ).then((paymentMethod) {
-                      _scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text('Received ${paymentMethod.id}')));
-                      setState(() {
-                        _paymentMethod = paymentMethod;
-                      });
-                    }).catchError(setError);
-                  },
-          ),
-          Divider(),
-          RaisedButton(
-            child: Text("Confirm Payment Intent"),
-            onPressed:
-                _paymentMethod == null || _paymentIntentClientSecret == null
-                    ? null
-                    : () {
-                        StripePayment.confirmPaymentIntent(
-                          PaymentIntent(
-                            clientSecret: _paymentIntentClientSecret,
-                            paymentMethodId: _paymentMethod.id,
-                          ),
-                        ).then((paymentIntent) {
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text(
-                                  'Received ${paymentIntent.paymentIntentId}')));
-                          setState(() {
-                            _paymentIntent = paymentIntent;
-                          });
-                        }).catchError(setError);
-                      },
-          ),
-          RaisedButton(
-            child: Text(
-              "Confirm Payment Intent with saving payment method",
-              textAlign: TextAlign.center,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            CreditCardWidget(
+              cardNumber: cardNumber,
+              expiryDate: expiryDate,
+              cardHolderName: cardHolderName,
+              cvvCode: cvvCode,
+              showBackView: isCvvFocused,
+              obscureCardNumber: true,
+              obscureCardCvv: true,
             ),
-            onPressed:
-                _paymentMethod == null || _paymentIntentClientSecret == null
-                    ? null
-                    : () {
-                        StripePayment.confirmPaymentIntent(
-                          PaymentIntent(
-                            clientSecret: _paymentIntentClientSecret,
-                            paymentMethodId: _paymentMethod.id,
-                            isSavingPaymentMethod: true,
+            Expanded(
+              child: CreditCardForm(
+                formKey: formKey,
+                obscureCvv: true,
+                obscureNumber: true,
+                cardNumber: cardNumber,
+                cvvCode: cvvCode,
+                cardHolderName: cardHolderName,
+                expiryDate: expiryDate,
+                themeColor: Colors.blue,
+                cardNumberDecoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  labelText: 'Number',
+                  hintText: 'XXXX XXXX XXXX XXXX',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                expiryDateDecoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  labelText: 'Expired Date',
+                  labelStyle: TextStyle(color: Colors.blue),
+                  hintText: 'MM/YY',
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                cvvCodeDecoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  labelText: 'CVV',
+                  labelStyle: TextStyle(color: Colors.grey),
+                  hintText: 'XXX',
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                cardHolderDecoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)),
+                  labelStyle: TextStyle(color: Colors.blue),
+                  labelText: 'Card Holder',
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+                onCreditCardModelChange: onCreditCardModelChange,
+              ),
+            ),
+            Consumer<BookSessionState>(
+              builder: (context, state, child) => state.loading
+                  ? CircularProgressIndicator()
+                  : Container(
+                      alignment: Alignment.bottomCenter,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              child: const Text(
+                                'Submit',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'halter',
+                                  fontSize: 14,
+                                  package: 'flutter_credit_card',
+                                ),
+                              ),
+                              onPressed: () {
+                                if (formKey.currentState.validate()) {
+                                  testCard = CreditCard(
+                                    number: cardNumber,
+                                    expMonth:
+                                        int.parse(expiryDate.split('/')[0]),
+                                    expYear:
+                                        int.parse(expiryDate.split('/')[1]),
+                                  );
+
+                                  StripePayment.createTokenWithCard(
+                                    testCard,
+                                  ).then((token) async {
+                                    state.setStripeToken(token);
+                                    await state.reserveNewSession(false);
+                                    if (state.isPaid)
+                                      Navigator.popUntil(
+                                          context,
+                                          ModalRoute.withName(
+                                              'Bottom_Nav_Bar'));
+                                  }).catchError(setError);
+                                }
+                              },
+                            ),
                           ),
-                        ).then((paymentIntent) {
-                          _scaffoldKey.currentState?.showSnackBar(SnackBar(
-                              content: Text(
-                                  'Received ${paymentIntent.paymentIntentId}')));
-                          setState(() {
-                            _paymentIntent = paymentIntent;
-                          });
-                        }).catchError(setError);
-                      },
-          ),
-          RaisedButton(
-            child: Text("Authenticate Payment Intent"),
-            onPressed: _paymentIntentClientSecret == null
-                ? null
-                : () {
-                    StripePayment.authenticatePaymentIntent(
-                            clientSecret: _paymentIntentClientSecret)
-                        .then((paymentIntent) {
-                      _scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text(
-                              'Received ${paymentIntent.paymentIntentId}')));
-                      setState(() {
-                        _paymentIntent = paymentIntent;
-                      });
-                    }).catchError(setError);
-                  },
-          ),
-          Divider(),
-          RaisedButton(
-            child: Text("Native payment"),
-            onPressed: () {
-              if (Platform.isIOS) {
-                _controller.jumpTo(450);
-              }
-              StripePayment.paymentRequestWithNativePay(
-                androidPayOptions: AndroidPayPaymentRequest(
-                  totalPrice: "1.20",
-                  currencyCode: "EUR",
-                ),
-                applePayOptions: ApplePayPaymentOptions(
-                  countryCode: 'DE',
-                  currencyCode: 'EUR',
-                  items: [
-                    ApplePayItem(
-                      label: 'Test',
-                      amount: '13',
-                    )
-                  ],
-                ),
-              ).then((token) {
-                setState(() {
-                  print(token.tokenId);
-                  _scaffoldKey.currentState.showSnackBar(
-                      SnackBar(content: Text('Received ${token.tokenId}')));
-                  _paymentToken = token;
-                });
-              }).catchError(setError);
-            },
-          ),
-          RaisedButton(
-            child: Text("Complete Native Payment"),
-            onPressed: () {
-              StripePayment.completeNativePayRequest().then((_) {
-                _scaffoldKey.currentState.showSnackBar(
-                    SnackBar(content: Text('Completed successfully')));
-              }).catchError(setError);
-            },
-          ),
-          Divider(),
-          Text('Current source:'),
-          Text(
-            JsonEncoder.withIndent('  ').convert(_source?.toJson() ?? {}),
-            style: TextStyle(fontFamily: "Monospace"),
-          ),
-          Divider(),
-          Text('Current token:'),
-          Text(
-            JsonEncoder.withIndent('  ').convert(_paymentToken?.toJson() ?? {}),
-            style: TextStyle(fontFamily: "Monospace"),
-          ),
-          Divider(),
-          Text('Current payment method:'),
-          Text(
-            JsonEncoder.withIndent('  ')
-                .convert(_paymentMethod?.toJson() ?? {}),
-            style: TextStyle(fontFamily: "Monospace"),
-          ),
-          Divider(),
-          Text('Current payment intent:'),
-          Text(
-            JsonEncoder.withIndent('  ')
-                .convert(_paymentIntent?.toJson() ?? {}),
-            style: TextStyle(fontFamily: "Monospace"),
-          ),
-          Divider(),
-          Text('Current error: $_error'),
-        ],
+                        ],
+                      ),
+                    ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void onCreditCardModelChange(CreditCardModel creditCardModel) {
+    setState(() {
+      cardNumber = creditCardModel.cardNumber;
+      expiryDate = creditCardModel.expiryDate;
+      cardHolderName = creditCardModel.cardHolderName;
+      cvvCode = creditCardModel.cvvCode;
+      isCvvFocused = creditCardModel.isCvvFocused;
+    });
   }
 }

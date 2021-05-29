@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/core/device_info/device_info.dart';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/models/therapist/Therapist.dart';
 import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/textFields/validation_error.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,12 +40,12 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   List<String> genderOptions = ['male', 'female', 'other'];
   List<Country> countries = [];
+  EditProfileState _editProfileState;
 
   initalValues() async {
-    ClientModel client =
-        Provider.of<EditProfileState>(context, listen: false).client;
-    countries =
-        await Provider.of<EditProfileState>(context, listen: false).countries;
+    _editProfileState = Provider.of<EditProfileState>(context, listen: false);
+    ClientModel client = _editProfileState.client;
+    countries = await _editProfileState.countries;
 
     name.text = client.name;
     email.text = client.email;
@@ -65,20 +67,19 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   pickImage(ImageSource source) async {
     final pickedImage = await picker.getImage(source: source);
-    setState(() {
-      _image = File(pickedImage.path);
-    });
+    _image = File(pickedImage.path);
+    _editProfileState.updateProfileImage(_image.path);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<EditProfileState>(
-      builder: (context, state, widget) => FormBuilder(
-        key: _key,
-        child: Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-            child: ListView(
+    return FormBuilder(
+      key: _key,
+      child: Expanded(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          child: Consumer<EditProfileState>(
+            builder: (context, state, widget) => ListView(
               children: [
                 profileImageWidget(),
                 changeImage(),
@@ -128,13 +129,11 @@ class _EditProfileFormState extends State<EditProfileForm> {
     );
   }
 
-  profileImageWidget() => CircleAvatar(
-        radius: 100,
-        backgroundImage: _image == null
-            ? NetworkImage(profileImage == null
-                ? 'https://esma3ny.org/assets/images/team/team-33.jpg'
-                : profileImage)
-            : FileImage(_image),
+  profileImageWidget() => Consumer<EditProfileState>(
+        builder: (context, state, child) => CircleAvatar(
+          radius: 100,
+          child: CachedImage(state.client.profilImage.small),
+        ),
       );
 
   changeImage() => TextButton(
@@ -152,15 +151,19 @@ class _EditProfileFormState extends State<EditProfileForm> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('Camera'),
-                onTap: () => pickImage(ImageSource.camera),
-              ),
+                  leading: Icon(Icons.camera),
+                  title: Text('Camera'),
+                  onTap: () {
+                    pickImage(ImageSource.camera);
+                    Navigator.pop(context);
+                  }),
               ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('Gallery'),
-                onTap: () => pickImage(ImageSource.gallery),
-              )
+                  leading: Icon(Icons.photo),
+                  title: Text('Gallery'),
+                  onTap: () {
+                    pickImage(ImageSource.gallery);
+                    Navigator.pop(context);
+                  })
             ],
           ),
         ),

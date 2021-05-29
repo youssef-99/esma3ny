@@ -1,6 +1,5 @@
 import 'package:esma3ny/data/models/public/session_price_response.dart';
 import 'package:esma3ny/data/models/public/time_slot.dart';
-import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/ui/provider/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/payment_sheet.dart';
@@ -27,7 +26,6 @@ class SessionBookingReview extends StatefulWidget {
 }
 
 class _SessionBookingReviewState extends State<SessionBookingReview> {
-  ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
   bool payLater = false;
   @override
   Widget build(BuildContext context) {
@@ -41,8 +39,10 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
             customListTile('Your Therapist', state.therapist.nameEn),
             customListTile('Session Type',
                 '${state.selectedTimeSlot.duration} ${state.sessionTypeText}'),
-            customListTile('Session Fees',
-                '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}'),
+            state.sessionPriceResponse != null
+                ? customListTile('Session Fees',
+                    '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}')
+                : SizedBox(),
             customListTile('Date', state.selectedDate),
             customListTile('Time', state.selectedTimeSlot.startTime),
             payState(),
@@ -50,15 +50,20 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
                 ? CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () async {
-                      await state.reserveNewSession(payLater);
-                      if (!payLater)
+                      if (payLater) {
+                        await state.reserveNewSession(payLater);
                         showMaterialModalBottomSheet(
-                            context: context,
-                            builder: (_) => PaymentSheetScreen());
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                            context: context, builder: (_) => PaymentSheet());
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      } else {
+                        Navigator.pushNamed(context, 'payment_sheet');
+                      }
                     },
-                    child: Text('Confirm'))
+                    child: Text(
+                      'Confirm',
+                      style: TextStyle(color: Colors.white),
+                    ))
           ],
         ),
       ),

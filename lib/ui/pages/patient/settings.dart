@@ -15,7 +15,6 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
-  bool _checked = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

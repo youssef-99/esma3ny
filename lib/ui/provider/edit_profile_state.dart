@@ -13,6 +13,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 class EditProfileState extends ChangeNotifier {
   ClientModel _client;
   bool _loading = false;
+  bool _profileImageLoading = false;
   List<Country> _countries = [];
   Map<String, dynamic> _validationErrors = {};
   Exceptions exception;
@@ -76,9 +77,16 @@ class EditProfileState extends ChangeNotifier {
     return user;
   }
 
+  updateProfileImage(String imagePath) async {
+    await ExceptionHandling.hanleToastException(() async {
+      await _clientRepositoryImpl.uploadProfilePic(imagePath, client);
+      _client = await _clientRepositoryImpl.getProfile();
+    }, '', false);
+    notifyListeners();
+  }
+
   initClient(ClientModel client) {
     this._client = client;
-    // notifyListeners();
   }
 
   void cleanErrors() {

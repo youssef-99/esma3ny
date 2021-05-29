@@ -1,5 +1,7 @@
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
+import 'package:esma3ny/data/models/public/country.dart';
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +22,10 @@ void main() {
   test(
     'time slot',
     () async {
-      List<AvailableTimeSlotResponse> list =
-          await publicRepository.showTherapistTimeSlots(1, '2021-05-24');
-      print(list.first.timeSlots.first.duration);
+      await publicRepository.getCountries();
+      List<Country> co = await SharedPrefrencesHelper.getCountries;
+      print(co[0].code);
+      print(await SharedPrefrencesHelper.getCountryName(co[0].id));
     },
   );
 }

@@ -32,18 +32,22 @@ class ExceptionHandling {
         throw ServerError();
       }
     } else if (e.type == DioErrorType.connectTimeout) {
-      throw TimeoutException('timw out');
+      throw TimeoutException('time out');
     }
 
     print(e.error);
     throw SomeThingWentWrong();
   }
 
-  static hanleToastException(Function function) async {
+  static hanleToastException(
+      Function function, String doneMessage, bool isShow) async {
     try {
       await function();
-      Fluttertoast.showToast(
-          msg: 'Session Booked Successfully', backgroundColor: Colors.green);
+      if (isShow)
+        Fluttertoast.showToast(
+            msg: doneMessage,
+            backgroundColor: Colors.green,
+            timeInSecForIosWeb: 4);
     } on InvalidData catch (_) {
       Fluttertoast.showToast(msg: 'Invaild Data');
     } on NetworkConnectionException catch (_) {

@@ -3,13 +3,13 @@ import 'package:esma3ny/ui/pages/patient/Profile.dart';
 import 'package:esma3ny/ui/pages/patient/edit_profile_page.dart';
 import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
 import 'package:esma3ny/ui/provider/language_state.dart';
+import 'package:esma3ny/ui/widgets/payment_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/localization/form_builder_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:device_preview/device_preview.dart';
 
 import 'ui/pages/auth/login.dart';
 import 'ui/pages/auth/signup.dart';
@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
               'edit_profile': (context) => EditProfilePage(),
               'therapist_profile': (context) => TherapistProfile(),
               'client_profile': (context) => Profile(),
+              'payment_sheet': (context) => PaymentSheet(),
             },
           ),
         );
