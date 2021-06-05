@@ -38,4 +38,14 @@ class PublicRepository {
           list.add(AvailableTimeSlotResponse.fromJson(day, timeslot)));
     return list;
   }
+
+  Future<void> sendChatMessage(
+      int sessionId, String roomId, String message) async {
+    print(message);
+    Response response = await _apiBaseHelper.postHTTP(
+      'patient/rooms/$sessionId-$roomId/message',
+      {'message': message},
+    );
+    print(response.data);
+  }
 }

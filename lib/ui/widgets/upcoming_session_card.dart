@@ -1,7 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/client_models/time_slot_response.dart';
+import 'package:esma3ny/data/models/enums/sessionStatus.dart';
+import 'package:esma3ny/ui/pages/communications/call.dart';
+import 'package:esma3ny/ui/pages/communications/chat.dart';
+import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
+import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
 import 'package:esma3ny/ui/provider/upcoming_sessions_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
+import 'package:esma3ny/ui/widgets/payment_sheet.dart';
+import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +29,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
 
   @override
   void initState() {
-    isStarted = timeSlot.status == 'started';
+    isStarted = timeSlot.status == SessionStatus.Started;
     super.initState();
   }
 
@@ -40,7 +48,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
   body() => Column(
         children: [
           Align(
-            alignment: Alignment.topRight,
+            alignment: AlignmentDirectional.topEnd,
             child: Text(
               '${dateFormat.format(DateTime.parse(timeSlot.startTime).toLocal())} - ${timeSlot.day}',
               style: TextStyle(color: CustomColors.blue),
@@ -56,8 +64,8 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
                 children: [
                   therapistName(),
                   SizedBox(height: 20),
-                  customListTile(
-                      Icons.timer, '${timeSlot.duration} / ${timeSlot.type}'),
+                  customListTile(Icons.timer,
+                      '${timeSlot.duration} Min / ${timeSlot.type}'),
                   customListTile(
                       Icons.money, '${timeSlot.amount} / ${timeSlot.currency}'),
                 ],
@@ -72,9 +80,14 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
   therapistImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: CircleAvatar(
-            radius: 60,
-            backgroundImage: NetworkImage(timeSlot.doctorProfileImage.small)),
+        child: ClipOval(
+          child: Image.network(
+            timeSlot.doctorProfileImage.small,
+            width: 130,
+            height: 130,
+            fit: BoxFit.fill,
+          ),
+        ),
       );
 
   decoration(Color borderColor, double borderRaduis) => BoxDecoration(
@@ -89,8 +102,11 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
 
   therapistName() => InkWell(
         onTap: () {
-          // TODO: go to therapist profile
-          Navigator.pushNamed(context, 'comming_soon');
+          Provider.of<TherapistProfileState>(context, listen: false)
+              .setId(timeSlot.doctorId);
+          print(timeSlot.doctorId);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => TherapistProfile()));
         },
         child: AutoSizeText(
           timeSlot.doctorNameEn,
@@ -114,7 +130,10 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
         ],
       );
 
-  bottomSection() => Row(
+  bottomSection() {
+    if (timeSlot.status == SessionStatus.Started ||
+        timeSlot.status == SessionStatus.NotStarted) {
+      return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           button(() {
@@ -134,7 +153,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
                             onPressed: () {
                               Provider.of<UpcommingSessionState>(context,
                                       listen: false)
-                                  .cancelSession(timeSlot.sessionId);
+                                  .cancelSession(timeSlot.id);
                               Navigator.pop(context);
                             },
                             child: Text('yes')),
@@ -142,15 +161,47 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
                     ));
           }, 'Cancel', CustomColors.orange),
           button(() {}, 'Reschedule', CustomColors.blue),
-          button(() {
-            if (isStarted) {
-              // TODO: go to Session Page
-            } else {
-              Fluttertoast.showToast(msg: 'Session didn\'t started yet!');
-            }
-          }, 'Start', isStarted ? Colors.green : CustomColors.grey),
+          checkforPayment(),
         ],
       );
+    }
+    return Align(
+      alignment: AlignmentDirectional.bottomEnd,
+      child: SessionStatusMark(sessionStatus: timeSlot.status),
+    );
+  }
+
+  checkforPayment() {
+    print(timeSlot.paymentStatus);
+    if (timeSlot.paymentStatus.length == 0 ||
+        timeSlot.paymentStatus == PENDING) {
+      return button(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PaymentSheet(
+              timeSlotId: timeSlot.id,
+            ),
+          ),
+        );
+      }, 'Pay Now', CustomColors.orange);
+    }
+    return button(() {
+      if (isStarted) {
+        // TODO: go to Session Page
+        if (timeSlot.room.type == CHAT) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => ChatScreen(timeSlot.room)));
+        } else if (timeSlot.room.type == VIDEO) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => CallPage(room: timeSlot.room)));
+        }
+      } else {
+        Fluttertoast.showToast(msg: 'Session didn\'t started yet!');
+      }
+    }, 'Start', isStarted ? Colors.green : CustomColors.grey);
+  }
+
   button(onPressed, String text, Color color) => ElevatedButton(
         onPressed: onPressed,
         child: Text(

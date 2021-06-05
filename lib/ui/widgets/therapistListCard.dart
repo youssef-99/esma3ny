@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_general_info.dart';
 import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
-import 'package:esma3ny/ui/theme/theme.dart';
 import 'package:provider/provider.dart';
 import '../theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -56,9 +55,13 @@ class _TherapistListCardState extends State<TherapistListCard> {
   therapistImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: CircleAvatar(
-          radius: 60,
-          backgroundImage: NetworkImage(_therapist.profileImage.small),
+        child: ClipOval(
+          child: Image.network(
+            _therapist.profileImage.small,
+            width: 130,
+            height: 130,
+            fit: BoxFit.fill,
+          ),
         ),
       );
 

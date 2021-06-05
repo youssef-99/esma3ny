@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/core/device_info/device_info.dart';
 import 'package:esma3ny/data/models/public/country.dart';

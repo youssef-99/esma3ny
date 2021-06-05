@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:esma3ny/data/models/client_models/health_profile.dart';
+import 'package:esma3ny/data/models/client_models/session_history.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
@@ -128,6 +130,32 @@ class ClientRepositoryImpl implements ClientRepository {
       'image': await MultipartFile.fromFile(imagePath,
           filename: imagePath.split('/').last,
           contentType: MediaType('image', 'jpg')),
+    });
+    print(response.data);
+  }
+
+  @override
+  Future<dynamic> getSessionHistory(int pageKey) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/sessions/history?page=$pageKey');
+
+    return response.data;
+  }
+
+  @override
+  Future<HealthProfileHelper> getHealthProfileHelper() async {
+    Response response = await _apiBaseHelper.getHTTP('$_route/health_profile');
+    HealthProfileHelper healthProfileHelper =
+        HealthProfileHelper.fromJson(response.data);
+    return healthProfileHelper;
+  }
+
+  @override
+  Future<void> payNow(int id, String stripeToken) async {
+    Response response =
+        await _apiBaseHelper.postHTTP('$_route/timeslots/$id/pay', {
+      'terms_and_conditions': true,
+      'stripeToken': stripeToken,
     });
     print(response.data);
   }

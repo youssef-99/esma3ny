@@ -1,4 +1,6 @@
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
+import 'package:esma3ny/data/models/client_models/health_profile.dart';
+import 'package:esma3ny/data/models/client_models/time_slot_response.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:flutter/material.dart';
@@ -47,27 +49,32 @@ void main() {
       //   },
       // );
 
-      // test(
-      //   'get profile',
-      //   () async {
-      //     Client client = await clientRepositoryImpl.getProfile();
-      //     print(client.email);
-      //   },
-      // );
+      test(
+        'get profile',
+        () async {
+          // List<TimeSlotResponse> newPageDecoded = [];
+          HealthProfileHelper newPage =
+              await clientRepositoryImpl.getHealthProfileHelper();
+          // newPage['data'].forEach((timeSlot) {
+          //   newPageDecoded.add(TimeSlotResponse.fromJson(timeSlot));
+          // });
+          print(newPage.maritalStatus[0].key);
+        },
+      );
 
-      test('updateProfile', () async {
-        ClientModel client = ClientModel(
-          name: 'namee',
-          email: 'youssefwilliam970@gmail.com',
-          phone: '12315646879',
-          gender: 'male',
-          dateOfBirth: '1999-06-01',
-          countryId: '62',
-        );
+      // test('updateProfile', () async {
+      //   ClientModel client = ClientModel(
+      //     name: 'namee',
+      //     email: 'youssefwilliam970@gmail.com',
+      //     phone: '12315646879',
+      //     gender: 'male',
+      //     dateOfBirth: '1999-06-01',
+      //     countryId: '62',
+      //   );
 
-        await clientRepositoryImpl.uploadProfilePic(
-            '/data/user/0/com.example.esma3ny/cache/image_pixker.jpg', client);
-      });
+      //   await clientRepositoryImpl.uploadProfilePic(
+      //       '/data/user/0/com.example.esma3ny/cache/image_pixker.jpg', client);
+      // });
     },
   );
 }

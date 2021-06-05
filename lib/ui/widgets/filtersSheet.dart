@@ -34,6 +34,12 @@ class _FilterSheetState extends State<FilterSheet> {
   ];
 
   @override
+  void initState() {
+    Provider.of<FilterState>(context, listen: false).init();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -53,51 +59,53 @@ class _FilterSheetState extends State<FilterSheet> {
           ),
         ],
       ),
-      body: Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            specializationFilterColumn(Icons.apps, 'Specialization'),
-            languageFilterColumn(Icons.public, 'Languanges'),
-            jobsFilterColumn(Icons.work, 'Jobs'),
-            group(
-              listTile(Icons.watch_later, 'Availability'),
-              datePicker(),
-            ),
-            group(
-              listTile(Icons.person, 'Gender'),
-              genderChip(),
-            ),
-            group(
-              listTile(Icons.attach_money_outlined, 'Fees'),
-              feesChip(),
-            ),
-            Consumer<FilterState>(
-              builder: (context, state, child) => Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        state.reset();
-                        setState(() {});
-                        Navigator.pop(context);
-                      },
-                      child: Text('Resset')),
-                  SizedBox(
-                    width: 50,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        state.apply();
-                        Navigator.pop(context);
-                      },
-                      child: Text('Apply'))
-                ],
+      body: SingleChildScrollView(
+        child: Container(
+          // height: MediaQuery.of(context).size.height * 0.7,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              specializationFilterColumn(Icons.apps, 'Specialization'),
+              languageFilterColumn(Icons.public, 'Languanges'),
+              jobsFilterColumn(Icons.work, 'Jobs'),
+              group(
+                listTile(Icons.watch_later, 'Availability'),
+                datePicker(),
               ),
-            )
-          ],
+              group(
+                listTile(Icons.person, 'Gender'),
+                genderChip(),
+              ),
+              group(
+                listTile(Icons.attach_money_outlined, 'Fees'),
+                feesChip(),
+              ),
+              Consumer<FilterState>(
+                builder: (context, state, child) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          state.reset();
+                          setState(() {});
+                          Navigator.pop(context);
+                        },
+                        child: Text('Resset')),
+                    SizedBox(
+                      width: 50,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          state.apply();
+                          Navigator.pop(context);
+                        },
+                        child: Text('Apply'))
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

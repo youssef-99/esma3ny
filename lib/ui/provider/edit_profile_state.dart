@@ -13,7 +13,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 class EditProfileState extends ChangeNotifier {
   ClientModel _client;
   bool _loading = false;
-  bool _profileImageLoading = false;
   List<Country> _countries = [];
   Map<String, dynamic> _validationErrors = {};
   Exceptions exception;

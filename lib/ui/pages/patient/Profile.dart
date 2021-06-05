@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
@@ -132,8 +131,16 @@ class _ProfileState extends State<Profile> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(onPressed: () {}, child: Text('Health Profile')),
-                ElevatedButton(onPressed: () {}, child: Text('Session List')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'health_profile');
+                    },
+                    child: Text('Health Profile')),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'session_history');
+                    },
+                    child: Text('Session List')),
               ],
             )
           ],

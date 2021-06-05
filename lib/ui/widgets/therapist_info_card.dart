@@ -70,9 +70,13 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
   therapistImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: CircleAvatar(
-          radius: 60,
-          backgroundImage: NetworkImage(widget.therapist.profileImage.small),
+        child: ClipOval(
+          child: Image.network(
+            widget.therapist.profileImage.small,
+            width: 130,
+            height: 130,
+            fit: BoxFit.fill,
+          ),
         ),
       );
 

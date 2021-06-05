@@ -33,6 +33,10 @@ class _TherapistsListState extends State<TherapistsList>
   FilterState provider;
 
   Future<void> _fetchPage(int pageKey) async {
+    print(provider.specialization);
+    print(provider.gender);
+    print(provider.job);
+    print(provider.language);
     try {
       final newPage = await _clientRepositoryImpl.getDoctorsList(
         FilterTherapist(

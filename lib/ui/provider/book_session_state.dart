@@ -213,6 +213,20 @@ class BookSessionState extends ChangeNotifier {
     notifyListeners();
   }
 
+  payNow(int id) async {
+    _loading = true;
+    _isPaid = false;
+    notifyListeners();
+
+    await ExceptionHandling.hanleToastException(() async {
+      await _clientRepositoryImpl.payNow(id, 'tok_visa');
+    }, 'Your Session Booked Successfully', true);
+
+    print(_stripeToken.tokenId);
+    _loading = false;
+    notifyListeners();
+  }
+
   List<AvailableTimeSlotResponse> get availableTimeSlots => _availableTimeSlots;
   List<TimeSlot> get selectedTimeSlots => _selectedTimeSlots;
   TimeSlot get selectedTimeSlot => _selectedTimeSlot;

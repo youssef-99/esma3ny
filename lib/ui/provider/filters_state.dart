@@ -16,8 +16,17 @@ class FilterState extends ChangeNotifier {
     _specialization = null;
     _language = null;
     _gender = null;
+    _job = null;
     genderIndex = 0;
     notifyListeners();
+  }
+
+  void init() {
+    _specialization = null;
+    _language = null;
+    _gender = null;
+    _job = null;
+    genderIndex = 0;
   }
 
   apply() {

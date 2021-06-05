@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 
 class ProfileImage {
-  final small;
-  final large;
+  final String small;
+  final String large;
 
   ProfileImage({@required this.small, @required this.large});
 
   factory ProfileImage.fromjson(Map<String, dynamic> json) {
+    String small;
+    String large;
+    small = json['small'].toString().substring(0, 4) != 'http'
+        ? 'https://esma3ny.org${json['small']}'
+        : json['small'];
+
+    large = json['large'].toString().substring(0, 4) != 'http'
+        ? 'https://esma3ny.org${json['large']}'
+        : json['large'];
     return ProfileImage(
-      small: 'https://esma3ny.org${json['small']}',
-      large: 'https://esma3ny.org${json['large']}',
+      small: small,
+      large: large,
     );
   }
 

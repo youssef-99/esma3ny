@@ -1,5 +1,4 @@
 import 'package:esma3ny/ui/provider/book_session_state.dart';
-import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
@@ -9,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:stripe_payment/stripe_payment.dart';
 
 class PaymentSheet extends StatefulWidget {
+  final int timeSlotId;
+  PaymentSheet({this.timeSlotId});
   @override
   State<StatefulWidget> createState() {
     return PaymentSheetState();
@@ -145,7 +146,13 @@ class PaymentSheetState extends State<PaymentSheet> {
                                     testCard,
                                   ).then((token) async {
                                     state.setStripeToken(token);
-                                    await state.reserveNewSession(false);
+
+                                    if (widget.timeSlotId != null) {
+                                      await state.payNow(widget.timeSlotId);
+                                      Navigator.pop(context);
+                                    } else
+                                      await state.reserveNewSession(false);
+
                                     if (state.isPaid)
                                       Navigator.popUntil(
                                           context,

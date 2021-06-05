@@ -1,5 +1,4 @@
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
-import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';

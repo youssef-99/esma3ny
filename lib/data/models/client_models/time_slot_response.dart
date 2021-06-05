@@ -1,4 +1,8 @@
+import 'package:esma3ny/core/constants.dart';
+import 'package:esma3ny/data/models/enums/lastChargeType.dart';
+import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
+import 'package:esma3ny/data/models/public/room.dart';
 import 'package:flutter/foundation.dart';
 
 class TimeSlotResponse {
@@ -7,7 +11,7 @@ class TimeSlotResponse {
   final duration;
   final startTime;
   final endTime;
-  final status;
+  final SessionStatus status;
   final type;
   final bookedAt;
   final paymentStatus;
@@ -18,7 +22,7 @@ class TimeSlotResponse {
   final ProfileImage doctorProfileImage;
   final amount;
   final currency;
-  final roomId;
+  final Room room;
 
   TimeSlotResponse({
     @required this.id,
@@ -37,21 +41,40 @@ class TimeSlotResponse {
     @required this.doctorProfileImage,
     @required this.amount,
     @required this.currency,
-    @required this.roomId,
+    @required this.room,
   });
 
   factory TimeSlotResponse.fromJson(Map<String, dynamic> json) {
+    SessionStatus sessionStatus;
+    switch (json['status']) {
+      case AVAILABLE:
+        sessionStatus = SessionStatus.Available;
+        break;
+      case NOT_STARTED:
+        sessionStatus = SessionStatus.NotStarted;
+        break;
+      case STARTED:
+        sessionStatus = SessionStatus.Started;
+        break;
+      case FINIDHED:
+        sessionStatus = SessionStatus.Finished;
+        break;
+      case CANCELLED:
+        sessionStatus = SessionStatus.Cancelled;
+        break;
+    }
+
     return TimeSlotResponse(
       id: json['id'],
       duration: json['duration'],
       startTime: json['start_time'],
       endTime: json['end_time'],
-      status: json['status'],
+      status: sessionStatus,
       type: json['type'],
       bookedAt: json['booked_at'],
       sessionId: json['session']['id'],
       day: json['session']['day'],
-      doctorId: json['session']['doctor']['doctor_id'],
+      doctorId: json['session']['doctor']['id'],
       doctorNameEn: json['session']['doctor']['name_en'],
       doctorNameAr: json['session']['doctor']['name_ar'],
       doctorProfileImage:
@@ -61,7 +84,7 @@ class TimeSlotResponse {
           json['charges'].length == 0 ? [] : json['charges'][0]['currency'],
       paymentStatus:
           json['charges'].length == 0 ? [] : json['charges'][0]['status'],
-      roomId: json['room'],
+      room: Room.fromJson(json['room']),
     );
   }
 }
