@@ -1,5 +1,4 @@
 import 'package:esma3ny/core/constants.dart';
-import 'package:esma3ny/data/models/enums/lastChargeType.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:esma3ny/data/models/public/room.dart';

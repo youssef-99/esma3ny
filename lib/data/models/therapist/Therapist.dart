@@ -69,4 +69,17 @@ class Therapist {
       'terms_and_condition': true,
     };
   }
+
+  Map<String, dynamic> toJsonUpdate() {
+    return <String, dynamic>{
+      'name_en': name,
+      'email': email,
+      'password': password,
+      'password_confirmation': confirmPassword,
+      'phone': phone,
+      'gender': gender,
+      'date_of_birth': dateOfBirth,
+      'country_id': countryId,
+    };
+  }
 }

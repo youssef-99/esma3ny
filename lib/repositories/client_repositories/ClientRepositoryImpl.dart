@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:esma3ny/data/models/client_models/health_profile.dart';
-import 'package:esma3ny/data/models/client_models/session_history.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
