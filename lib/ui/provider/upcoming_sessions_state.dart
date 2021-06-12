@@ -1,6 +1,6 @@
+import 'package:esma3ny/core/exceptions/exceptions.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class UpcommingSessionState extends ChangeNotifier {
   bool _loading = false;
@@ -9,10 +9,11 @@ class UpcommingSessionState extends ChangeNotifier {
   cancelSession(int id) async {
     _loading = true;
     notifyListeners();
+    String msg;
 
-    String msg = await _clientRepositoryImpl.cancelSession(id);
-
-    Fluttertoast.showToast(msg: msg, timeInSecForIosWeb: 5);
+    ExceptionHandling.hanleToastException(() async {
+      msg = await _clientRepositoryImpl.cancelSession(id);
+    }, msg, true);
 
     _loading = false;
     notifyListeners();

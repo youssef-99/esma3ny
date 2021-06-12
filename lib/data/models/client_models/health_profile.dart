@@ -26,15 +26,15 @@ class HealthProfileHelper {
 
     final List<MapEntry<String, String>> degree = [];
     json['degree'].forEach(
-        (String key, dynamic value) => education.add(MapEntry(key, value)));
+        (String key, dynamic value) => degree.add(MapEntry(key, value)));
 
     final List<MapEntry<String, String>> problems = [];
     json['problems'].forEach(
-        (String key, dynamic value) => education.add(MapEntry(key, value)));
+        (String key, dynamic value) => problems.add(MapEntry(key, value)));
 
     final List<MapEntry<String, String>> services = [];
     json['services'].forEach(
-        (String key, dynamic value) => education.add(MapEntry(key, value)));
+        (String key, dynamic value) => services.add(MapEntry(key, value)));
 
     return HealthProfileHelper(
       maritalStatus: maritalStatus,

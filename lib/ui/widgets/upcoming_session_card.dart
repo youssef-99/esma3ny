@@ -187,7 +187,8 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
       }, 'Pay Now', CustomColors.orange);
     }
     return button(() {
-      if (isStarted) {
+      print(isStarted);
+      if (isStarted && timeSlot.room != null) {
         // TODO: go to Session Page
         if (timeSlot.room.type == CHAT) {
           Navigator.push(context,

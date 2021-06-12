@@ -30,6 +30,12 @@ void main() {
               'youssefwilliam970@gmail.com', '123456%');
         },
       );
+      test(
+        'cancel session',
+        () async {
+          await clientRepositoryImpl.cancelSession(1);
+        },
+      );
 
       // test(
       //   'signup',
@@ -49,18 +55,18 @@ void main() {
       //   },
       // );
 
-      test(
-        'get profile',
-        () async {
-          // List<TimeSlotResponse> newPageDecoded = [];
-          HealthProfileHelper newPage =
-              await clientRepositoryImpl.getHealthProfileHelper();
-          // newPage['data'].forEach((timeSlot) {
-          //   newPageDecoded.add(TimeSlotResponse.fromJson(timeSlot));
-          // });
-          print(newPage.maritalStatus[0].key);
-        },
-      );
+      // test(
+      //   'get profile',
+      //   () async {
+      //     // List<TimeSlotResponse> newPageDecoded = [];
+      //     HealthProfileHelper newPage =
+      //         await clientRepositoryImpl.getHealthProfileHelper();
+      //     // newPage['data'].forEach((timeSlot) {
+      //     //   newPageDecoded.add(TimeSlotResponse.fromJson(timeSlot));
+      //     // });
+      //     print(newPage.maritalStatus[0].key);
+      //   },
+      // );
 
       // test('updateProfile', () async {
       //   ClientModel client = ClientModel(

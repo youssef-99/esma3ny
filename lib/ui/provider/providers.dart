@@ -2,6 +2,7 @@ import 'package:esma3ny/ui/provider/book_session_state.dart';
 import 'package:esma3ny/ui/provider/chat_state.dart';
 import 'package:esma3ny/ui/provider/edit_profile_state.dart';
 import 'package:esma3ny/ui/provider/filters_state.dart';
+import 'package:esma3ny/ui/provider/health_profile_state.dart';
 import 'package:esma3ny/ui/provider/language_state.dart';
 import 'package:esma3ny/ui/provider/login_state.dart';
 import 'package:esma3ny/ui/provider/signup_form_state.dart';
@@ -47,6 +48,9 @@ class Providers {
         ),
         ChangeNotifierProvider(
           create: (context) => ChatState(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HealthProfileState(),
+        ),
       ];
 }

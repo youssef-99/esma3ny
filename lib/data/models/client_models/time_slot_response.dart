@@ -84,7 +84,7 @@ class TimeSlotResponse {
           json['charges'].length == 0 ? [] : json['charges'][0]['currency'],
       paymentStatus:
           json['charges'].length == 0 ? [] : json['charges'][0]['status'],
-      room: Room.fromJson(json['room']),
+      room: json['room'] == null ? null : Room.fromJson(json['room']),
     );
   }
 }
