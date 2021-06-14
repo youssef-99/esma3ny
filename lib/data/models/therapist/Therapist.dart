@@ -2,21 +2,14 @@ import 'package:flutter/material.dart';
 
 class Therapist {
   final int id;
-  @required
   final String name;
-  @required
+  final String nameAr;
   final String email;
-  @required
   final String password;
-  @required
   final String confirmPassword;
-  @required
   final String phone;
-  @required
   final String gender;
-  @required
   final String dateOfBirth;
-  @required
   final String countryId;
   final deviceName;
   final String image;
@@ -26,6 +19,7 @@ class Therapist {
   Therapist({
     this.id,
     @required this.name,
+    this.nameAr,
     @required this.email,
     this.password,
     this.confirmPassword,
@@ -73,6 +67,7 @@ class Therapist {
   Map<String, dynamic> toJsonUpdate() {
     return <String, dynamic>{
       'name_en': name,
+      'name_ar': nameAr,
       'email': email,
       'password': password,
       'password_confirmation': confirmPassword,

@@ -4,7 +4,9 @@ import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/data/models/public/certificate.dart';
 import 'package:esma3ny/data/models/public/education.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
+import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/therapist/Therapist.dart';
+import 'package:esma3ny/data/models/therapist/about_therapist.dart';
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:http_parser/http_parser.dart';
@@ -84,12 +86,44 @@ class TherapistRepository {
   }
 
   Future<void> uploadProfilePic(String imagePath, Therapist therapist) async {
-    Response response = await _apiBaseHelper.postPhotoHTTP('$_route', {
+    Response response =
+        await _apiBaseHelper.postPhotoHTTP('$_route/profile/basic', {
       ...therapist.toJsonUpdate(),
       'image': await MultipartFile.fromFile(imagePath,
           filename: imagePath.split('/').last,
           contentType: MediaType('image', 'jpg')),
     });
     print(response.data);
+  }
+
+  Future<void> deleteExperience(int id) async {
+    Response response =
+        await _apiBaseHelper.deleteHTTP('$_route/profile/experiences/$id');
+    print(response.data);
+  }
+
+  Future<void> deleteCertificate(int id) async {
+    Response reponse =
+        await _apiBaseHelper.deleteHTTP('$_route/profile/certificates/$id');
+    print(reponse.data);
+  }
+
+  Future<void> deleteEducation(int id) async {
+    Response reponse =
+        await _apiBaseHelper.deleteHTTP('$_route/profile/educations/$id');
+    print(reponse.data);
+  }
+
+  Future<void> updateAboutProfile(AboutTherapistModel abouTherapist) async {
+    Response response = await _apiBaseHelper.postHTTP(
+        '$_route/profile/about', abouTherapist.toJson());
+    print(response.data);
+  }
+
+  Future<String> updateFees(Fees fees, String accountType) async {
+    Response response = await _apiBaseHelper.postHTTP(
+        '$_route/profile/fees', fees.toJson(accountType));
+    String msg = response.data;
+    return msg;
   }
 }

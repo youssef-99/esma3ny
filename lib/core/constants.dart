@@ -16,6 +16,10 @@ const String CHAT = 'chat';
 const String VIDEO = 'video';
 const String AUDIO = 'audio';
 
+// account type
+const String LOCAL = 'local account';
+const String FOREIGN = 'foreign account';
+
 // Exceprions
 const String NETWORK_ERROR = 'networkError';
 enum Exceptions {

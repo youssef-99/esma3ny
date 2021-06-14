@@ -58,11 +58,21 @@ class Fees {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(String accountType) {
     return {
-      'video': video.toJson(),
-      'audio': audio.toJson(),
-      'chat': chat.toJson(),
+      'account_type': accountType,
+      'video_dollar_fees_full': video.usd.full,
+      'video_dollar_fees_half': video.usd.half,
+      'video_egp_fees_full': video.egp.full,
+      'video_egp_fees_half': video.egp.half,
+      'audio_dollar_fees_full': audio.usd.full,
+      'audio_dollar_fees_half': audio.usd.half,
+      'audio_egp_fees_full': audio.egp.full,
+      'audio_egp_fees_half': audio.egp.half,
+      'chat_dollar_fees_full': chat.usd.full,
+      'chat_dollar_fees_half': chat.usd.half,
+      'chat_egp_fees_full': chat.egp.full,
+      'chat_egp_fees_half': chat.egp.half,
     };
   }
 }
