@@ -17,8 +17,8 @@ const String VIDEO = 'video';
 const String AUDIO = 'audio';
 
 // account type
-const String LOCAL = 'local account';
-const String FOREIGN = 'foreign account';
+const String LOCAL = 'local';
+const String FOREIGN = 'foreign';
 
 // Exceprions
 const String NETWORK_ERROR = 'networkError';
