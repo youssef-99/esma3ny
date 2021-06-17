@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/core/device_info/device_info.dart';
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/data/models/public/certificate.dart';
@@ -30,6 +31,7 @@ class TherapistRepository {
     );
 
     await SharedPrefrencesHelper.storeToken(response.data['token']);
+    await SharedPrefrencesHelper.setLoginData(response.data['data'], THERAPIST);
 
     return response;
   }
@@ -42,9 +44,10 @@ class TherapistRepository {
   }
 
   Future<TherapistProfileResponse> getProfile() async {
-    Response response = await _apiBaseHelper.getHTTP('$_route/auth/me');
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/profile/specializations');
     TherapistProfileResponse therapistProfileResponse =
-        TherapistProfileResponse.fromJson(response.data);
+        TherapistProfileResponse.fromJson(response.data['doctor']);
     return therapistProfileResponse;
   }
 

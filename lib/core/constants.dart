@@ -1,3 +1,7 @@
+// Roles
+const CLIENT = 'client';
+const THERAPIST = 'therapist';
+
 // last charge type
 const String SUCCESS = 'success';
 const String PENDING = 'pending';

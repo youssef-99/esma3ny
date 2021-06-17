@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,9 @@ class _SplashScreenState extends State<SplashScreen>
   var _tween;
   bool isDone = false;
   PublicRepository _publicRepository = PublicRepository();
-  bool isLogged;
+  bool isLoggedClient = false;
+  bool isLoggedTherapist = false;
+  String role;
 
   _getCountries() async {
     try {
@@ -32,8 +35,10 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   _checkLogging() async {
-    isLogged = await SharedPrefrencesHelper.isLogged();
-    isLogged = isLogged == null ? false : isLogged;
+    role = await SharedPrefrencesHelper.isLogged();
+    print(role);
+    isLoggedClient = role == CLIENT;
+    isLoggedTherapist = role == THERAPIST;
   }
 
   @override
@@ -60,8 +65,10 @@ class _SplashScreenState extends State<SplashScreen>
     });
 
     Timer(Duration(seconds: 5), () {
-      if (isLogged)
+      if (isLoggedClient)
         Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar');
+      else if (isLoggedTherapist)
+        Navigator.pushReplacementNamed(context, 'therapist_profile_page');
       else
         Navigator.pushReplacementNamed(context, 'login');
     });

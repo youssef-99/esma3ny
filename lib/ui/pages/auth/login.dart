@@ -1,5 +1,6 @@
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/ui/provider/login_state.dart';
+import 'package:esma3ny/ui/provider/roleState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,7 +19,6 @@ class _LoginState extends State<Login> {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool _isClientPressed = true;
-  bool _isTherapistPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,33 +79,31 @@ class _LoginState extends State<Login> {
         ),
       );
 
-  roleButton(String role, Color color) => Expanded(
-        child: InkWell(
-          onTap: () {
-            if (role == 'Client') {
-              setState(() {
+  roleButton(String role, Color color) => Consumer<RoleState>(
+        builder: (context, state, child) => Expanded(
+          child: InkWell(
+            onTap: () {
+              if (role == 'Client') {
+                state.clientPressed();
                 _isClientPressed = true;
-                _isTherapistPressed = false;
-              });
-            } else {
-              setState(() {
+              } else {
+                state.therapistPressed();
                 _isClientPressed = false;
-                _isTherapistPressed = true;
-              });
-            }
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: role == 'Client'
-                  ? (_isClientPressed ? grediant(color) : null)
-                  : (_isTherapistPressed ? grediant(color) : null),
-              borderRadius: BorderRadius.circular(5),
-              color: color,
-            ),
-            child: Center(
-              child: Text(
-                role,
-                style: Theme.of(context).textTheme.headline6,
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: role == 'Client'
+                    ? (state.client ? grediant(color) : null)
+                    : (state.therapist ? grediant(color) : null),
+                borderRadius: BorderRadius.circular(5),
+                color: color,
+              ),
+              child: Center(
+                child: Text(
+                  role,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
               ),
             ),
           ),
@@ -205,7 +203,8 @@ class _LoginState extends State<Login> {
                           Navigator.pushReplacementNamed(
                               context, 'Bottom_Nav_Bar');
                         else
-                          Navigator.pushNamed(context, 'comming_soon');
+                          Navigator.pushReplacementNamed(
+                              context, 'therapist_profile_page');
                       }
                       handleException(state.exception);
                     }

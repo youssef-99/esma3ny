@@ -1,4 +1,6 @@
 import 'package:esma3ny/ui/pages/comming_soon.dart';
+import 'package:esma3ny/ui/pages/doctor/basic_info.dart';
+import 'package:esma3ny/ui/pages/doctor/profile.dart';
 import 'package:esma3ny/ui/pages/patient/Profile.dart';
 import 'package:esma3ny/ui/pages/patient/edit_profile_page.dart';
 import 'package:esma3ny/ui/pages/patient/health_profile.dart';
@@ -86,6 +88,8 @@ class _MyAppState extends State<MyApp> {
               'payment_sheet': (context) => PaymentSheet(),
               'session_history': (context) => SessionHistory(),
               'health_profile': (context) => HealthProfile(),
+              'therapist_profile_page': (context) => TherapistProfilePage(),
+              'basic_info': (context) => BasicInfoPage(),
             },
           ),
         );

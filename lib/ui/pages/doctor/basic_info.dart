@@ -1,30 +1,29 @@
-import 'package:esma3ny/data/models/client_models/Client.dart';
+import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
-import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
-import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
-import 'package:esma3ny/ui/widgets/waiting_wiget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class Profile extends StatefulWidget {
+class BasicInfoPage extends StatefulWidget {
   @override
-  _ProfileState createState() => _ProfileState();
+  _BasicInfoPageState createState() => _BasicInfoPageState();
 }
 
-class _ProfileState extends State<Profile> {
-  ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
-  Future<dynamic> get _getClientInfo => _clientRepositoryImpl.getProfile();
+class _BasicInfoPageState extends State<BasicInfoPage> {
+  TherapistRepository _therapistRepository = TherapistRepository();
+  Future<TherapistProfileResponse> get _getTherapist =>
+      _therapistRepository.getProfile();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          'Basic Information',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,
@@ -40,23 +39,23 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  body() => Consumer<EditProfileState>(
-        builder: (context, state, child) => FutureBuilder(
-          future: _getClientInfo,
-          builder: (context, snapShot) {
-            if (snapShot.connectionState == ConnectionState.waiting)
-              return WaitingWidget();
-            if (snapShot.connectionState == ConnectionState.done) {
-              if (snapShot.hasData) {
-                state.initClient(snapShot.data);
-                return dataWidget(snapShot.data);
-              } else if (snapShot.hasError) {
-                return errorHandling(snapShot.error);
-              }
+  body() => FutureBuilder<TherapistProfileResponse>(
+        future: _getTherapist,
+        builder: (context, snapShot) {
+          if (snapShot.connectionState == ConnectionState.waiting)
+            return CustomProgressIndicator();
+          if (snapShot.connectionState == ConnectionState.done) {
+            print(snapShot.data);
+            if (snapShot.hasData) {
+              // state.initClient(snapShot.data);
+              return dataWidget(snapShot.data);
+            } else if (snapShot.hasError) {
+              print(snapShot.error);
+              // return errorHandling(snapShot.error);
             }
-            return SomethingWentWrongWidget();
-          },
-        ),
+          }
+          return SomethingWentWrongWidget();
+        },
       );
 
   errorHandling(dynamic error) {
@@ -66,25 +65,25 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  dataWidget(ClientModel client) => Container(
+  dataWidget(TherapistProfileResponse therapist) => Container(
         padding: EdgeInsets.only(left: 40, right: 40, bottom: 100),
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CachedImage(client.profilImage.small),
+            CachedImage(therapist.profileImage.small),
             SizedBox(height: 10),
             Text(
-              client.name,
+              therapist.nameEn,
               style: Theme.of(context).textTheme.headline5,
             ),
             SizedBox(height: 10),
-            infoCard(client),
+            infoCard(therapist),
           ],
         ),
       );
 
-  infoCard(ClientModel client) => Container(
+  infoCard(TherapistProfileResponse therapist) => Container(
         padding: EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(
           border: Border.all(
@@ -101,9 +100,9 @@ class _ProfileState extends State<Profile> {
               padding: EdgeInsets.only(top: 5, right: 10),
               child: TextButton(
                 onPressed: () {
-                  Provider.of<EditProfileState>(context, listen: false)
-                      .initClient(client);
-                  Navigator.pushNamed(context, 'edit_profile');
+                  // Provider.of<EditProfileState>(context, listen: false)
+                  //     .initClient(client);
+                  // Navigator.pushNamed(context, 'edit_profile');
                 },
                 child: Text(
                   'Edit',
@@ -114,14 +113,14 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
             ),
-            customListTile(Icons.person, client.name),
-            customListTile(Icons.email, client.email),
-            customListTile(Icons.phone, client.phone),
-            customListTile(Icons.person, client.gender),
-            customListTile(Icons.date_range, client.dateOfBirth),
+            customListTile(Icons.person, therapist.nameEn),
+            customListTile(Icons.email, therapist.email),
+            customListTile(Icons.phone, therapist.phone),
+            customListTile(Icons.person, therapist.gender),
+            customListTile(Icons.date_range, therapist.dateOfBirth),
             FutureBuilder(
                 future: SharedPrefrencesHelper.getCountryName(
-                    int.parse(client.countryId)),
+                    int.parse(therapist.countryId)),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     print(snapshot.data);
@@ -129,22 +128,6 @@ class _ProfileState extends State<Profile> {
                   }
                   return SizedBox();
                 }),
-            customListTile(Icons.timer, client.age),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'health_profile');
-                    },
-                    child: Text('Health Profile')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'session_history');
-                    },
-                    child: Text('Session List')),
-              ],
-            )
           ],
         ),
       );

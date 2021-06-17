@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/client_models/health_profile.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -33,7 +34,7 @@ class ClientRepositoryImpl implements ClientRepository {
     );
 
     await SharedPrefrencesHelper.storeToken(response.data['token']);
-    await SharedPrefrencesHelper.setLoginData(response.data['data']);
+    await SharedPrefrencesHelper.setLoginData(response.data['data'], CLIENT);
 
     return response;
   }

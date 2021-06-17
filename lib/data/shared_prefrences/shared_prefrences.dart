@@ -13,10 +13,10 @@ class SharedPrefrencesHelper {
     sharedPreferences.setBool('isEnglish', isEnglish);
   }
 
-  static setLoginData(Map<String, dynamic> loginResponse) async {
+  static setLoginData(Map<String, dynamic> loginResponse, String role) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String encodedResponse = json.encode(loginResponse);
-    await sharedPreferences.setBool('logged', true);
+    await sharedPreferences.setString('logged', role);
     await sharedPreferences.setString('loginResponse', encodedResponse);
   }
 
@@ -29,9 +29,9 @@ class SharedPrefrencesHelper {
     return loginResponse;
   }
 
-  static Future<bool> isLogged() async {
+  static Future<String> isLogged() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getBool('logged');
+    return sharedPreferences.getString('logged');
   }
 
   static get getLocale async {
@@ -135,5 +135,6 @@ class SharedPrefrencesHelper {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove('token');
     sharedPreferences.remove('loginResponse');
+    sharedPreferences.remove('logged');
   }
 }
