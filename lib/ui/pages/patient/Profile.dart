@@ -1,7 +1,7 @@
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
-import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';

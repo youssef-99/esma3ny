@@ -1,23 +1,20 @@
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
-import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
-import 'package:esma3ny/ui/widgets/progress_indicator.dart';
-import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
 
 class BasicInfoPage extends StatefulWidget {
+  final TherapistProfileResponse therapistProfileResponse;
+
+  const BasicInfoPage({Key key, @required this.therapistProfileResponse})
+      : super(key: key);
   @override
   _BasicInfoPageState createState() => _BasicInfoPageState();
 }
 
 class _BasicInfoPageState extends State<BasicInfoPage> {
-  TherapistRepository _therapistRepository = TherapistRepository();
-  Future<TherapistProfileResponse> get _getTherapist =>
-      _therapistRepository.getProfile();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,31 +29,12 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         builder: (context, constraint) => SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraint.maxHeight),
-            child: body(),
+            child: body(widget.therapistProfileResponse),
           ),
         ),
       ),
     );
   }
-
-  body() => FutureBuilder<TherapistProfileResponse>(
-        future: _getTherapist,
-        builder: (context, snapShot) {
-          if (snapShot.connectionState == ConnectionState.waiting)
-            return CustomProgressIndicator();
-          if (snapShot.connectionState == ConnectionState.done) {
-            print(snapShot.data);
-            if (snapShot.hasData) {
-              // state.initClient(snapShot.data);
-              return dataWidget(snapShot.data);
-            } else if (snapShot.hasError) {
-              print(snapShot.error);
-              // return errorHandling(snapShot.error);
-            }
-          }
-          return SomethingWentWrongWidget();
-        },
-      );
 
   errorHandling(dynamic error) {
     return ErrorIndicator(
@@ -65,7 +43,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     );
   }
 
-  dataWidget(TherapistProfileResponse therapist) => Container(
+  body(TherapistProfileResponse therapist) => Container(
         padding: EdgeInsets.only(left: 40, right: 40, bottom: 100),
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.center,

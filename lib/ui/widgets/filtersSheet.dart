@@ -3,7 +3,7 @@ import 'package:esma3ny/data/models/public/job.dart';
 import 'package:esma3ny/data/models/public/language.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
-import 'package:esma3ny/ui/provider/filters_state.dart';
+import 'package:esma3ny/ui/provider/client/filters_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

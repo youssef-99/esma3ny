@@ -3,7 +3,7 @@ import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/client_models/session_history.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
-import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/material.dart';

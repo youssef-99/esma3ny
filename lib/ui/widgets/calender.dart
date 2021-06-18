@@ -1,4 +1,4 @@
-import 'package:esma3ny/ui/provider/book_session_state.dart';
+import 'package:esma3ny/ui/provider/client/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';

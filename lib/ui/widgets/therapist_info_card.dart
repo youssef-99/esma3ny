@@ -3,7 +3,7 @@ import 'package:esma3ny/core/exceptions/exceptions.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
-import 'package:esma3ny/ui/provider/book_session_state.dart';
+import 'package:esma3ny/ui/provider/client/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/booking_option.dart';
 import 'package:flutter/material.dart';

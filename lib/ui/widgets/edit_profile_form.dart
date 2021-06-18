@@ -4,7 +4,7 @@ import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/core/device_info/device_info.dart';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/models/therapist/Therapist.dart';
-import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/textFields/validation_error.dart';
 import 'package:fluttertoast/fluttertoast.dart';

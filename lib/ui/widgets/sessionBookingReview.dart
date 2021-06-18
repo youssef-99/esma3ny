@@ -1,6 +1,6 @@
 import 'package:esma3ny/data/models/public/session_price_response.dart';
 import 'package:esma3ny/data/models/public/time_slot.dart';
-import 'package:esma3ny/ui/provider/book_session_state.dart';
+import 'package:esma3ny/ui/provider/client/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/payment_sheet.dart';
 import 'package:flutter/material.dart';

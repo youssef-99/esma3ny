@@ -5,7 +5,7 @@ import 'package:esma3ny/data/models/public/login_response.dart';
 import 'package:esma3ny/data/models/public/room.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
-import 'package:esma3ny/ui/provider/chat_state.dart';
+import 'package:esma3ny/ui/provider/client/chat_state.dart';
 import 'package:esma3ny/ui/widgets/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -2,7 +2,7 @@ import 'package:animated_size_and_fade/animated_size_and_fade.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_filter.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_general_info.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
-import 'package:esma3ny/ui/provider/filters_state.dart';
+import 'package:esma3ny/ui/provider/client/filters_state.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:flutter/cupertino.dart';

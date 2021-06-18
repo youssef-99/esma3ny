@@ -1,7 +1,9 @@
+import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/public/login_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
-import 'package:esma3ny/ui/provider/language_state.dart';
+import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
+import 'package:esma3ny/ui/provider/public/language_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,15 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
+  TherapistRepository _therapistRepository = TherapistRepository();
+  String role;
+
+  Future<LoginResponse> _getdata() async {
+    role = await SharedPrefrencesHelper.isLogged();
+    LoginResponse loginResponse = await SharedPrefrencesHelper.getLoginData();
+    return loginResponse;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           FutureBuilder<LoginResponse>(
-            future: SharedPrefrencesHelper.getLoginData(),
+            future: _getdata(),
             builder: (context, snapshot) => snapshot.hasData
                 ? ListTile(
                     leading: CircleAvatar(
@@ -40,8 +51,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 : SizedBox(),
           ),
           Divider(),
-          customListTile(Icons.person, 'Profile',
-              () => Navigator.pushNamed(context, 'client_profile'), null),
+          customListTile(Icons.person, 'Profile', () {
+            if (role == CLIENT)
+              Navigator.pushNamed(context, 'client_profile');
+            else
+              Navigator.pushNamed(context, 'therapist_profile_page');
+          }, null),
           Consumer<CustomThemes>(
               builder: (context, state, child) => customListTile(
                     Icons.brightness_4,
@@ -105,7 +120,11 @@ class _SettingsPageState extends State<SettingsPage> {
             launch('https://esma3ny.org/');
           }, null),
           customListTile(Icons.logout, 'Log out', () async {
-            _clientRepositoryImpl.logout();
+            if (role == CLIENT) {
+              _clientRepositoryImpl.logout();
+            } else {
+              _therapistRepository.logout();
+            }
             Navigator.pushReplacementNamed(context, 'login');
           }, null),
         ],

@@ -14,7 +14,7 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      name: json['name'],
+      name: json['name'] == null ? json['name_en'] : json['name'],
       email: json['email'],
       profileImage: ProfileImage.fromjson(json['profile_image']),
     );

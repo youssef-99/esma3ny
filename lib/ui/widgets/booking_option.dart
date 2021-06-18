@@ -1,6 +1,6 @@
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/enums/sessionType.dart';
-import 'package:esma3ny/ui/provider/book_session_state.dart';
+import 'package:esma3ny/ui/provider/client/book_session_state.dart';
 import 'package:esma3ny/ui/widgets/calender.dart';
 import 'package:esma3ny/ui/widgets/sessionBookingReview.dart';
 import 'package:esma3ny/ui/widgets/time_tile.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_general_info.dart';
-import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:provider/provider.dart';
 import '../theme/colors.dart';
 import 'package:flutter/material.dart';

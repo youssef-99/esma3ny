@@ -129,4 +129,9 @@ class TherapistRepository {
     String msg = response.data;
     return msg;
   }
+
+  Future<void> logout() async {
+    await _apiBaseHelper.postHTTP('$_route/auth/logout', null);
+    await SharedPrefrencesHelper.logout();
+  }
 }

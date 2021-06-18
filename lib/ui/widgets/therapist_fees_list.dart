@@ -1,5 +1,5 @@
 import 'package:esma3ny/data/models/public/fees.dart';
-import 'package:esma3ny/ui/provider/edit_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,6 +1,6 @@
 import 'package:esma3ny/core/constants.dart';
-import 'package:esma3ny/ui/provider/login_state.dart';
-import 'package:esma3ny/ui/provider/roleState.dart';
+import 'package:esma3ny/ui/provider/public/login_state.dart';
+import 'package:esma3ny/ui/provider/public/roleState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
@@ -204,7 +204,7 @@ class _LoginState extends State<Login> {
                               context, 'Bottom_Nav_Bar');
                         else
                           Navigator.pushReplacementNamed(
-                              context, 'therapist_profile_page');
+                              context, 'Bottom_Nav_Bar_therapist');
                       }
                       handleException(state.exception);
                     }

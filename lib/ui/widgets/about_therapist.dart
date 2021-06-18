@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
-import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 
 class AbouTherapist extends StatelessWidget {

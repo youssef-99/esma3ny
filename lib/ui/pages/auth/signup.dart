@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../data/models/enums/RoleEnum.dart';
-import '../../provider/roleState.dart';
+import '../../provider/public/roleState.dart';
 import '../../theme/colors.dart';
 import '../../widgets/SignupForm.dart';
 import '../../widgets/role/pickedRole.dart';

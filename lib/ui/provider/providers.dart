@@ -1,17 +1,17 @@
-import 'package:esma3ny/ui/provider/book_session_state.dart';
-import 'package:esma3ny/ui/provider/chat_state.dart';
-import 'package:esma3ny/ui/provider/edit_profile_state.dart';
-import 'package:esma3ny/ui/provider/filters_state.dart';
-import 'package:esma3ny/ui/provider/health_profile_state.dart';
-import 'package:esma3ny/ui/provider/language_state.dart';
-import 'package:esma3ny/ui/provider/login_state.dart';
-import 'package:esma3ny/ui/provider/signup_form_state.dart';
-import 'package:esma3ny/ui/provider/therapist_profile_state.dart';
-import 'package:esma3ny/ui/provider/upcoming_sessions_state.dart';
+import 'package:esma3ny/ui/provider/client/book_session_state.dart';
+import 'package:esma3ny/ui/provider/client/chat_state.dart';
+import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/filters_state.dart';
+import 'package:esma3ny/ui/provider/client/health_profile_state.dart';
+import 'package:esma3ny/ui/provider/public/language_state.dart';
+import 'package:esma3ny/ui/provider/public/login_state.dart';
+import 'package:esma3ny/ui/provider/public/signup_form_state.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/upcoming_sessions_state.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import 'roleState.dart';
+import 'public/roleState.dart';
 import '../theme/theme.dart';
 
 class Providers {

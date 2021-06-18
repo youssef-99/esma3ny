@@ -1,12 +1,12 @@
 import 'package:esma3ny/ui/pages/comming_soon.dart';
-import 'package:esma3ny/ui/pages/doctor/basic_info.dart';
+import 'package:esma3ny/ui/pages/doctor/bottom_nav_bar.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';
 import 'package:esma3ny/ui/pages/patient/Profile.dart';
 import 'package:esma3ny/ui/pages/patient/edit_profile_page.dart';
 import 'package:esma3ny/ui/pages/patient/health_profile.dart';
 import 'package:esma3ny/ui/pages/patient/session_history.dart';
 import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
-import 'package:esma3ny/ui/provider/language_state.dart';
+import 'package:esma3ny/ui/provider/public/language_state.dart';
 import 'package:esma3ny/ui/widgets/payment_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
               'session_history': (context) => SessionHistory(),
               'health_profile': (context) => HealthProfile(),
               'therapist_profile_page': (context) => TherapistProfilePage(),
-              'basic_info': (context) => BasicInfoPage(),
+              'Bottom_Nav_Bar_therapist': (context) => TherapistBottomNavBar(),
             },
           ),
         );

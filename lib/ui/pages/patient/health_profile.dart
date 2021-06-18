@@ -2,7 +2,7 @@ import 'package:chips_choice/chips_choice.dart';
 import 'package:esma3ny/data/models/client_models/health_profile.dart';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
-import 'package:esma3ny/ui/provider/health_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/health_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/country_list.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';

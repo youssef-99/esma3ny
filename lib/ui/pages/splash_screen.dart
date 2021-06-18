@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
       if (isLoggedClient)
         Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar');
       else if (isLoggedTherapist)
-        Navigator.pushReplacementNamed(context, 'therapist_profile_page');
+        Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar_therapist');
       else
         Navigator.pushReplacementNamed(context, 'login');
     });

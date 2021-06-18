@@ -1,6 +1,6 @@
 import 'package:esma3ny/data/models/client_models/time_slot_response.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
-import 'package:esma3ny/ui/provider/upcoming_sessions_state.dart';
+import 'package:esma3ny/ui/provider/client/upcoming_sessions_state.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/upcoming_session_card.dart';
