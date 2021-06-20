@@ -35,7 +35,7 @@ class AbouTherapist extends StatelessWidget {
   mainInfo(context) => Column(
         children: [
           FutureBuilder(
-            future: Provider.of<TherapistProfileState>(context)
+            future: Provider.of<ClientTherapistProfileState>(context)
                 .getCounry(int.parse(therapist.countryId)),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done)

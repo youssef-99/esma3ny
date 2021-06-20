@@ -20,7 +20,7 @@ class _ValidationErrorState extends State<ValidationError> {
         SizedBox(height: 5),
         widget.error != null
             ? Align(
-                alignment: Alignment.topLeft,
+                alignment: AlignmentDirectional.topStart,
                 child: Text(
                   widget.error
                       .toString()

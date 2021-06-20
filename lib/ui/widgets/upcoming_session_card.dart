@@ -102,7 +102,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
 
   therapistName() => InkWell(
         onTap: () {
-          Provider.of<TherapistProfileState>(context, listen: false)
+          Provider.of<ClientTherapistProfileState>(context, listen: false)
               .setId(timeSlot.doctorId);
           print(timeSlot.doctorId);
           Navigator.push(
@@ -160,7 +160,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
                       ],
                     ));
           }, 'Cancel', CustomColors.orange),
-          button(() {}, 'Reschedule', CustomColors.blue),
+          // button(() {}, 'Reschedule', CustomColors.blue),
           checkforPayment(),
         ],
       );

@@ -1,4 +1,5 @@
 import 'package:esma3ny/ui/pages/comming_soon.dart';
+import 'package:esma3ny/ui/pages/doctor/calender.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';
 import 'package:esma3ny/ui/pages/patient/settings.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
@@ -16,7 +17,7 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
   List screens = [
     // HomeClient(),
     CommingSoon(),
-    CommingSoon(),
+    Calender(),
     TherapistProfilePage(),
     SettingsPage(),
   ];
@@ -42,7 +43,7 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
         items: [
           // FloatingNavbarItem(icon: Icons.home, title: 'Home'),
           FloatingNavbarItem(icon: Icons.group, title: 'Appointments'),
-          FloatingNavbarItem(icon: Icons.monetization_on, title: 'Invoices'),
+          FloatingNavbarItem(icon: Icons.calendar_today, title: 'Calender'),
           FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
           FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
         ],

@@ -27,7 +27,7 @@ class _TherapistProfileState extends State<TherapistProfile>
 
   @override
   void initState() {
-    id = Provider.of<TherapistProfileState>(context, listen: false).id;
+    id = Provider.of<ClientTherapistProfileState>(context, listen: false).id;
     controller = TabController(vsync: this, length: 4, initialIndex: 0);
     super.initState();
   }

@@ -1,10 +1,9 @@
 import 'package:esma3ny/data/models/public/fees.dart';
+import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FeesPage extends StatelessWidget {
-  final Fees fees;
-
-  const FeesPage({Key key, @required this.fees}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,24 +12,35 @@ class FeesPage extends StatelessWidget {
           'Fees',
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
-        actions: [TextButton(onPressed: () {}, child: Text('Edit'))],
+        actions: [
+          TextButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, 'edit_session_fees'),
+              child: Text('Edit'))
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: ListView(
-          children: [
-            customListTile(
-              'Video',
-              fees.video.usd,
-              fees.video.egp,
-            ),
-            customListTile(
-              'Audio',
-              fees.audio.usd,
-              fees.audio.egp,
-            ),
-            customListTile('Chat', fees.chat.usd, fees.video.egp),
-          ],
+      body: Consumer<TherapistProfileState>(
+        builder: (context, state, child) => Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: ListView(
+            children: [
+              customListTile(
+                'Video',
+                state.therapistProfileResponse.fees.video.usd,
+                state.therapistProfileResponse.fees.video.egp,
+              ),
+              customListTile(
+                'Audio',
+                state.therapistProfileResponse.fees.audio.usd,
+                state.therapistProfileResponse.fees.audio.egp,
+              ),
+              customListTile(
+                'Chat',
+                state.therapistProfileResponse.fees.chat.usd,
+                state.therapistProfileResponse.fees.video.egp,
+              ),
+            ],
+          ),
         ),
       ),
     );

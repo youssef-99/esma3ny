@@ -27,7 +27,7 @@ class AboutTherapistModel {
       'biography_en': biographyEn,
       'biography_ar': biographyAr,
       'job_id': jobId,
-      'anguages': languageId,
+      'languages': languageId,
     };
   }
 }

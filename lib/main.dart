@@ -1,6 +1,13 @@
 import 'package:esma3ny/ui/pages/comming_soon.dart';
+import 'package:esma3ny/ui/pages/doctor/add_certificate.dart';
+import 'package:esma3ny/ui/pages/doctor/add_education.dart';
+import 'package:esma3ny/ui/pages/doctor/add_excperience.dart';
 import 'package:esma3ny/ui/pages/doctor/bottom_nav_bar.dart';
+import 'package:esma3ny/ui/pages/doctor/edit_about_me.dart';
+import 'package:esma3ny/ui/pages/doctor/edit_basic_info.dart';
+import 'package:esma3ny/ui/pages/doctor/edit_session_fees.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';
+import 'package:esma3ny/ui/pages/doctor/session_history.dart';
 import 'package:esma3ny/ui/pages/patient/Profile.dart';
 import 'package:esma3ny/ui/pages/patient/edit_profile_page.dart';
 import 'package:esma3ny/ui/pages/patient/health_profile.dart';
@@ -90,6 +97,13 @@ class _MyAppState extends State<MyApp> {
               'health_profile': (context) => HealthProfile(),
               'therapist_profile_page': (context) => TherapistProfilePage(),
               'Bottom_Nav_Bar_therapist': (context) => TherapistBottomNavBar(),
+              'edit_therapist_bais_info': (context) => EditBasicInfoPage(),
+              'edit_about_me_page': (context) => EditAboutMePage(),
+              'therapist_session_history': (context) => SessionHistoryPage(),
+              'edit_session_fees': (context) => EditSessionFees(),
+              'add_experience': (context) => AddExperience(),
+              'add_certificate': (context) => AddCertificate(),
+              'add_education': (context) => AddEducation(),
             },
           ),
         );

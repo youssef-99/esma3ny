@@ -32,6 +32,7 @@ dependencies:
   infinite_scroll_pagination: ^2.3.0
   image_picker: ^0.7.5
   flutter_calendar_carousel: ^2.0.1
+  table_calendar: ^3.0.0
   smart_select: ^4.3.2
   stripe_payment: ^1.1.1
   flutter_credit_card: ^2.0.0

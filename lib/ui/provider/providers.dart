@@ -3,11 +3,18 @@ import 'package:esma3ny/ui/provider/client/chat_state.dart';
 import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
 import 'package:esma3ny/ui/provider/client/filters_state.dart';
 import 'package:esma3ny/ui/provider/client/health_profile_state.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/provider/public/language_state.dart';
 import 'package:esma3ny/ui/provider/public/login_state.dart';
 import 'package:esma3ny/ui/provider/public/signup_form_state.dart';
-import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/provider/client/upcoming_sessions_state.dart';
+import 'package:esma3ny/ui/provider/therapist/about_me_state.dart';
+import 'package:esma3ny/ui/provider/therapist/add_ceritficate_state.dart';
+import 'package:esma3ny/ui/provider/therapist/add_education_state.dart';
+import 'package:esma3ny/ui/provider/therapist/add_experience_state.dart';
+import 'package:esma3ny/ui/provider/therapist/basic_info_state.dart';
+import 'package:esma3ny/ui/provider/therapist/fees_state.dart';
+import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -35,7 +42,7 @@ class Providers {
           create: (context) => UpcommingSessionState(),
         ),
         ChangeNotifierProvider(
-          create: (context) => TherapistProfileState(),
+          create: (context) => ClientTherapistProfileState(),
         ),
         ChangeNotifierProvider(
           create: (context) => FilterState(),
@@ -51,6 +58,27 @@ class Providers {
         ),
         ChangeNotifierProvider(
           create: (context) => HealthProfileState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TherapistProfileState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => EditBasicInfoState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AboutMeState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FeesState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddExperienceState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddCertificateState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AddEducationState(),
         ),
       ];
 }

@@ -23,7 +23,7 @@ class _FilterSheetState extends State<FilterSheet> {
   bool label = false;
   int genderTag = 1;
   int feesTag = 1;
-  List<String> genders = ['other', 'male', 'female'];
+  List<String> genders = ['any', 'male', 'female'];
   List<String> fees = [
     'any',
     'less 150',

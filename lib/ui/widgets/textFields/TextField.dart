@@ -8,11 +8,13 @@ class TextFieldForm extends StatelessWidget {
   final dynamic validate;
   final IconData prefixIcon;
   final TextEditingController controller;
+  final int maxLines;
   TextFieldForm({
     @required this.hint,
     @required this.validate,
     @required this.prefixIcon,
     @required this.controller,
+    this.maxLines = 1,
   });
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class TextFieldForm extends StatelessWidget {
       controller: controller,
       name: hint,
       validator: validate,
+      maxLines: maxLines,
       decoration: InputDecoration(
         labelText: hint,
         prefixIcon: Icon(

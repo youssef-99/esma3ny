@@ -6,6 +6,7 @@ import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:esma3ny/ui/provider/client/book_session_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/booking_option.dart';
+import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -43,7 +44,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                     Text(
                       widget.therapist.titleEn,
                       style: TextStyle(
-                        color: Colors.black,
+                        // color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -70,13 +71,9 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
   therapistImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: ClipOval(
-          child: Image.network(
-            widget.therapist.profileImage.small,
-            width: 130,
-            height: 130,
-            fit: BoxFit.fill,
-          ),
+        child: CachedImage(
+          url: widget.therapist.profileImage.small,
+          raduis: 70,
         ),
       );
 

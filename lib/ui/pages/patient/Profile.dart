@@ -72,7 +72,10 @@ class _ProfileState extends State<Profile> {
           // crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CachedImage(client.profilImage.small),
+            CachedImage(
+              url: client.profilImage.small,
+              raduis: 100,
+            ),
             SizedBox(height: 10),
             Text(
               client.name,

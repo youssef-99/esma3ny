@@ -44,10 +44,9 @@ class TherapistRepository {
   }
 
   Future<TherapistProfileResponse> getProfile() async {
-    Response response =
-        await _apiBaseHelper.getHTTP('$_route/profile/specializations');
+    Response response = await _apiBaseHelper.getHTTP('$_route/auth/me');
     TherapistProfileResponse therapistProfileResponse =
-        TherapistProfileResponse.fromJson(response.data['doctor']);
+        TherapistProfileResponse.fromJson(response.data);
     return therapistProfileResponse;
   }
 
@@ -77,14 +76,14 @@ class TherapistRepository {
 
   Future<String> addCertificate(Certificate certificate) async {
     Response response = await _apiBaseHelper.postHTTP(
-        '$_route/profile/experiences', certificate.toJson());
+        '$_route/profile/certificates', certificate.toJson());
 
     return response.data['msg'];
   }
 
   Future<void> updateBasicInfo(Therapist therapist) async {
-    Response response =
-        await _apiBaseHelper.postHTTP('$_route', therapist.toJsonUpdate());
+    Response response = await _apiBaseHelper.postHTTP(
+        '$_route/profile/basic', therapist.toJsonUpdate());
     print(response.data);
   }
 
@@ -126,8 +125,14 @@ class TherapistRepository {
   Future<String> updateFees(Fees fees, String accountType) async {
     Response response = await _apiBaseHelper.postHTTP(
         '$_route/profile/fees', fees.toJson(accountType));
-    String msg = response.data;
+    String msg = response.data['msg'];
     return msg;
+  }
+
+  Future<dynamic> getSessionHistory(int pageKey) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/sessions/history?page=$pageKey');
+    return response.data;
   }
 
   Future<void> logout() async {

@@ -1,11 +1,12 @@
-import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
+import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/language.dart';
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
+import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_select/smart_select.dart';
 
 class AboutMePage extends StatefulWidget {
-  final TherapistProfileResponse therapistProfileResponse;
-
-  const AboutMePage({Key key, @required this.therapistProfileResponse})
-      : super(key: key);
   @override
   _AboutMePageState createState() => _AboutMePageState();
 }
@@ -20,31 +21,47 @@ class _AboutMePageState extends State<AboutMePage> {
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
-          TextButton(onPressed: () {}, child: Text('Edit')),
+          TextButton(
+              onPressed: () =>
+                  Navigator.pushNamed(context, 'edit_about_me_page'),
+              child: Text('Edit')),
         ],
       ),
       body: body(),
     );
   }
 
-  body() => Padding(
-        padding: const EdgeInsets.only(bottom: 15),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            customListTile(
-                Icons.work, widget.therapistProfileResponse.titleEn, () {}),
-            customListTile(
-                Icons.work, widget.therapistProfileResponse.titleAr, () {}),
-            customListTile(
-                Icons.person, widget.therapistProfileResponse.prefix, () {}),
-            // customListTile(Icons.language, widget.therapistProfileResponse., (){}),
-            customListTile(Icons.menu_book_sharp,
-                widget.therapistProfileResponse.biographyEn, () {}),
-            customListTile(Icons.menu_book_sharp,
-                widget.therapistProfileResponse.biographyAr, () {}),
-          ],
+  body() => Consumer<TherapistProfileState>(
+        builder: (context, state, child) => Padding(
+          padding: const EdgeInsets.only(bottom: 15),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FutureBuilder<List<Job>>(
+                  future: SharedPrefrencesHelper.job,
+                  builder: (context, snapshot) => snapshot.hasData
+                      ? customListTile(
+                          Icons.work,
+                          snapshot
+                              .data[state.therapistProfileResponse.jobId - 1]
+                              .nameEn,
+                          () {})
+                      : SizedBox()),
+              customListTile(
+                  Icons.work, state.therapistProfileResponse.titleEn, () {}),
+              customListTile(
+                  Icons.work, state.therapistProfileResponse.titleAr, () {}),
+              customListTile(
+                  Icons.person, state.therapistProfileResponse.prefix, () {}),
+              // customListTile(Icons.language, state.therapistProfileResponse., (){}),
+              customListTile(Icons.menu_book_sharp,
+                  state.therapistProfileResponse.biographyEn, () {}),
+              customListTile(Icons.menu_book_sharp,
+                  state.therapistProfileResponse.biographyAr, () {}),
+              languages(state.therapistProfileResponse.languages),
+            ],
+          ),
         ),
       );
 
@@ -53,4 +70,17 @@ class _AboutMePageState extends State<AboutMePage> {
         title: Text(title),
         onTap: () => onTap(),
       );
+
+  languages(List<Language> languages) => S2ChipsTile(
+      leading: Icon(Icons.public),
+      values: languages
+          .map(
+            (language) => S2Choice(
+              value: language.id,
+              title: language.nameEn,
+            ),
+          )
+          .toList(),
+      onTap: () {},
+      title: Text('Languages'));
 }

@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class CachedImage extends StatefulWidget {
   final String url;
+  final double raduis;
 
-  const CachedImage(this.url);
+  const CachedImage({
+    @required this.url,
+    @required this.raduis,
+  });
   @override
   _CachedImageState createState() => _CachedImageState();
 }
@@ -13,7 +17,7 @@ class _CachedImageState extends State<CachedImage> {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 100,
+      radius: widget.raduis,
       child: CachedNetworkImage(
         imageUrl: widget.url,
         imageBuilder: (context, imageProvider) => Container(

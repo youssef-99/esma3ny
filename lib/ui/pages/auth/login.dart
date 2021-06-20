@@ -31,8 +31,8 @@ class _LoginState extends State<Login> {
   body() => Center(
         child: Container(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.1,
-            bottom: MediaQuery.of(context).size.height * 0.1,
+            // top: MediaQuery.of(context).size.height * 0.1,
+            // bottom: MediaQuery.of(context).size.height * 0.1,
             right: MediaQuery.of(context).size.width * 0.1,
             left: MediaQuery.of(context).size.width * 0.1,
           ),

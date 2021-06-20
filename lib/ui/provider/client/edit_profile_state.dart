@@ -48,10 +48,7 @@ class EditProfileState extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // if (isClient)
       await _clientRepositoryImpl.updateProfile(user);
-      // else
-      //   await _therapistRepository.signup(user);
     } on InvalidData catch (e) {
       _loading = false;
       _validationErrors = e.errors;

@@ -1,15 +1,13 @@
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
+import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BasicInfoPage extends StatefulWidget {
-  final TherapistProfileResponse therapistProfileResponse;
-
-  const BasicInfoPage({Key key, @required this.therapistProfileResponse})
-      : super(key: key);
   @override
   _BasicInfoPageState createState() => _BasicInfoPageState();
 }
@@ -29,7 +27,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         builder: (context, constraint) => SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: constraint.maxHeight),
-            child: body(widget.therapistProfileResponse),
+            child: body(),
           ),
         ),
       ),
@@ -43,21 +41,26 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
     );
   }
 
-  body(TherapistProfileResponse therapist) => Container(
-        padding: EdgeInsets.only(left: 40, right: 40, bottom: 100),
-        child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CachedImage(therapist.profileImage.small),
-            SizedBox(height: 10),
-            Text(
-              therapist.nameEn,
-              style: Theme.of(context).textTheme.headline5,
-            ),
-            SizedBox(height: 10),
-            infoCard(therapist),
-          ],
+  body() => Consumer<TherapistProfileState>(
+        builder: (context, state, child) => Container(
+          padding: EdgeInsets.only(left: 40, right: 40, bottom: 100),
+          child: Column(
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              CachedImage(
+                url: state.therapistProfileResponse.profileImage.small,
+                raduis: 100,
+              ),
+              SizedBox(height: 10),
+              Text(
+                state.therapistProfileResponse.nameEn,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              SizedBox(height: 10),
+              infoCard(state.therapistProfileResponse),
+            ],
+          ),
         ),
       );
 
@@ -78,16 +81,15 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
               padding: EdgeInsets.only(top: 5, right: 10),
               child: TextButton(
                 onPressed: () {
-                  // Provider.of<EditProfileState>(context, listen: false)
-                  //     .initClient(client);
-                  // Navigator.pushNamed(context, 'edit_profile');
+                  Navigator.pushNamed(context, 'edit_therapist_bais_info');
                 },
                 child: Text(
                   'Edit',
                   style: TextStyle(
-                      fontSize: 20,
-                      decoration: TextDecoration.underline,
-                      fontFamily: 'arial'),
+                    fontSize: 20,
+                    decoration: TextDecoration.underline,
+                    fontFamily: 'arial',
+                  ),
                 ),
               ),
             ),

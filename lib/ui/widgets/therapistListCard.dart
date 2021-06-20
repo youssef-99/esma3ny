@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_general_info.dart';
 import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
+import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:provider/provider.dart';
 import '../theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -55,13 +56,9 @@ class _TherapistListCardState extends State<TherapistListCard> {
   therapistImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: ClipOval(
-          child: Image.network(
-            _therapist.profileImage.small,
-            width: 130,
-            height: 130,
-            fit: BoxFit.fill,
-          ),
+        child: CachedImage(
+          url: _therapist.profileImage.small,
+          raduis: 70,
         ),
       );
 
@@ -97,7 +94,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
       alignment: Alignment.centerRight,
       child: ElevatedButton(
         onPressed: () {
-          Provider.of<TherapistProfileState>(context, listen: false)
+          Provider.of<ClientTherapistProfileState>(context, listen: false)
               .setId(_therapist.id);
           Navigator.pushNamed(context, 'therapist_profile');
         },

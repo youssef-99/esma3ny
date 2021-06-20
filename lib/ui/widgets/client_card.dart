@@ -1,33 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/core/constants.dart';
-import 'package:esma3ny/data/models/client_models/session_history.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
-import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
-import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
+import 'package:esma3ny/data/models/therapist/session_history.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
+import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-class SessionHistoryCard extends StatefulWidget {
-  final SessionHistoryModel sessionHistoryModel;
-  SessionHistoryCard(this.sessionHistoryModel);
+class ClientCard extends StatelessWidget {
+  final SessionHistory sessionHistory;
 
-  @override
-  _SessionHistoryCardState createState() => _SessionHistoryCardState();
-}
+  ClientCard({Key key, this.sessionHistory}) : super(key: key);
 
-class _SessionHistoryCardState extends State<SessionHistoryCard> {
-  DateFormat dateFormat = DateFormat.Hm();
-
-  bool isStarted;
-
-  @override
-  void initState() {
-    isStarted = widget.sessionHistoryModel.status == STARTED;
-    super.initState();
-  }
+  final DateFormat dateFormat = DateFormat.Hm();
 
   @override
   Widget build(BuildContext context) {
@@ -46,26 +32,23 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
           Align(
             alignment: AlignmentDirectional.topEnd,
             child: Text(
-              '${dateFormat.format(DateTime.parse(widget.sessionHistoryModel.startTime).toLocal())} - ${widget.sessionHistoryModel.day}',
+              '${dateFormat.format(DateTime.parse(sessionHistory.startTime).toLocal())}',
               style: TextStyle(color: CustomColors.blue),
             ),
           ),
           Row(
             children: [
-              therapistImage(),
+              clientImage(),
               Column(
                 mainAxisSize: MainAxisSize.max,
                 // mainAxisAlignment: MainAxisAlignment.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  therapistName(),
-                  AutoSizeText(
-                    widget.sessionHistoryModel.doctor.titleEn,
-                    style: Theme.of(context).textTheme.caption,
-                  ),
+                  clientName(),
+
                   SizedBox(height: 20),
                   customListTile(Icons.timer,
-                      '${widget.sessionHistoryModel.duration} Min / ${widget.sessionHistoryModel.type}'),
+                      '${sessionHistory.duration} Min / ${sessionHistory.type}'),
                   // customListTile(
                   //     Icons.money, '${timeSlot.amount} / ${timeSlot.currency}'),
                 ],
@@ -77,16 +60,12 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
         ],
       );
 
-  therapistImage() => Container(
+  clientImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: ClipOval(
-          child: Image.network(
-            widget.sessionHistoryModel.doctor.profileImage.small,
-            width: 130,
-            height: 130,
-            fit: BoxFit.fill,
-          ),
+        child: CachedImage(
+          url: '',
+          raduis: 70,
         ),
       );
 
@@ -100,15 +79,10 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
         color: CustomColors.white,
       );
 
-  therapistName() => InkWell(
-        onTap: () {
-          Provider.of<ClientTherapistProfileState>(context, listen: false)
-              .setId(widget.sessionHistoryModel.doctor.id);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => TherapistProfile()));
-        },
+  clientName() => InkWell(
+        onTap: () {},
         child: AutoSizeText(
-          widget.sessionHistoryModel.doctor.nameEn,
+          sessionHistory.client.name,
           maxLines: 1,
           style: TextStyle(color: CustomColors.orange, fontSize: 20),
         ),
@@ -132,7 +106,7 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
   bottomSection() => Align(
         alignment: AlignmentDirectional.bottomEnd,
         child: SessionStatusMark(
-          sessionStatus: widget.sessionHistoryModel.status == STARTED
+          sessionStatus: sessionHistory.status == STARTED
               ? SessionStatus.Finished
               : SessionStatus.Cancelled,
         ),

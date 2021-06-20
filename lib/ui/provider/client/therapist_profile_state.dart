@@ -1,7 +1,7 @@
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:flutter/material.dart';
 
-class TherapistProfileState extends ChangeNotifier {
+class ClientTherapistProfileState extends ChangeNotifier {
   int _id;
   String country;
 
