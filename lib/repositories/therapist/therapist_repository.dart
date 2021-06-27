@@ -8,7 +8,10 @@ import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/therapist/Therapist.dart';
 import 'package:esma3ny/data/models/therapist/about_therapist.dart';
+import 'package:esma3ny/data/models/therapist/appointment.dart';
+import 'package:esma3ny/data/models/therapist/new_time_slote.dart';
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
+import 'package:esma3ny/data/models/therapist/time_slote.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:http_parser/http_parser.dart';
 
@@ -132,6 +135,27 @@ class TherapistRepository {
   Future<dynamic> getSessionHistory(int pageKey) async {
     Response response =
         await _apiBaseHelper.getHTTP('$_route/sessions/history?page=$pageKey');
+    return response.data;
+  }
+
+  Future<TherapistTimeSlot> getAllTimeSlots(String from, String to) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/sessions?from=$from&to=$to');
+
+    return TherapistTimeSlot.fromJson(response.data);
+  }
+
+  Future<void> deleteTimeSlot(int id) async {
+    await _apiBaseHelper.deleteHTTP('$_route/sessions/$id');
+  }
+
+  Future<void> createTimeSlots(NewTimeSlot newTimeSlot) async {
+    await _apiBaseHelper.postHTTP('$_route/sessions', newTimeSlot.toJson());
+  }
+
+  Future<dynamic> getAppointment(int pageKey, type) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/timeslots/$type?page=$pageKey');
     return response.data;
   }
 

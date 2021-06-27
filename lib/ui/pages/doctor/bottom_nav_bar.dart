@@ -1,4 +1,5 @@
 import 'package:esma3ny/ui/pages/comming_soon.dart';
+import 'package:esma3ny/ui/pages/doctor/appointments.dart';
 import 'package:esma3ny/ui/pages/doctor/calender.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';
 import 'package:esma3ny/ui/pages/patient/settings.dart';
@@ -16,7 +17,7 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
 
   List screens = [
     // HomeClient(),
-    CommingSoon(),
+    AppointmentsPage(),
     Calender(),
     TherapistProfilePage(),
     SettingsPage(),

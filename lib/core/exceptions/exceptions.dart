@@ -8,8 +8,9 @@ class NetworkConnectionException implements Exception {}
 
 class InvalidData implements Exception {
   Map<String, dynamic> _errors;
+  String msg;
 
-  InvalidData(this._errors);
+  InvalidData(this._errors, {this.msg});
 
   Map<String, dynamic> get errors => this._errors;
 }
@@ -25,7 +26,8 @@ class ExceptionHandling {
     else if (e.type == DioErrorType.response) {
       if (e.response.statusCode >= 400 && e.response.statusCode < 500) {
         print(e.response.data);
-        throw InvalidData(e.response.data['errors']);
+        throw InvalidData(e.response.data['errors'],
+            msg: e.response.data['msg']);
       }
       if (e.response.statusCode >= 500) {
         print(e.response.data);
@@ -48,8 +50,8 @@ class ExceptionHandling {
             msg: doneMessage,
             backgroundColor: Colors.green,
             timeInSecForIosWeb: 4);
-    } on InvalidData catch (_) {
-      Fluttertoast.showToast(msg: 'Invaild Data');
+    } on InvalidData catch (e) {
+      Fluttertoast.showToast(msg: e.msg);
     } on NetworkConnectionException catch (_) {
       Fluttertoast.showToast(
           msg: 'Network error check your internet exception');

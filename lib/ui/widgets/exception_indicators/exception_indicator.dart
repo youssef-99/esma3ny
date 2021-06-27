@@ -22,6 +22,7 @@ class ExceptionIndicator extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
                 assetName,
@@ -32,7 +33,7 @@ class ExceptionIndicator extends StatelessWidget {
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.headline5,
               ),
               if (message != null)
                 const SizedBox(
@@ -43,7 +44,10 @@ class ExceptionIndicator extends StatelessWidget {
                   message,
                   textAlign: TextAlign.center,
                 ),
-              if (onTryAgain != null) const Spacer(),
+              if (onTryAgain != null)
+                const SizedBox(
+                  height: 50,
+                ),
               if (onTryAgain != null)
                 SizedBox(
                   height: 50,
