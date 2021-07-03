@@ -1,6 +1,7 @@
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/ui/provider/public/login_state.dart';
 import 'package:esma3ny/ui/provider/public/roleState.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,7 +19,6 @@ class _LoginState extends State<Login> {
   final _key = GlobalKey<FormBuilderState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
-  bool _isClientPressed = true;
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +85,8 @@ class _LoginState extends State<Login> {
             onTap: () {
               if (role == 'Client') {
                 state.clientPressed();
-                _isClientPressed = true;
               } else {
                 state.therapistPressed();
-                _isClientPressed = false;
               }
             },
             child: Container(
@@ -177,11 +175,11 @@ class _LoginState extends State<Login> {
         ),
       );
 
-  confirmButton() => Consumer<LoginState>(
-        builder: (context, state, widget) => state.loading
+  confirmButton() => Consumer2<LoginState, RoleState>(
+        builder: (context, state, roleState, widget) => state.loading
             ? Column(
                 children: [
-                  CircularProgressIndicator(),
+                  CustomProgressIndicator(),
                 ],
               )
             : Padding(
@@ -196,10 +194,10 @@ class _LoginState extends State<Login> {
 
                     if (_key.currentState.validate()) {
                       await state.login(
-                          _email.text, _password.text, _isClientPressed);
+                          _email.text, _password.text, roleState.client);
 
                       if (state.exception == null) {
-                        if (_isClientPressed)
+                        if (roleState.client)
                           Navigator.pushReplacementNamed(
                               context, 'Bottom_Nav_Bar');
                         else
