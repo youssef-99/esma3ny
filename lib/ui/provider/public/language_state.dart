@@ -1,5 +1,6 @@
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:flutter/material.dart';
+import 'package:esma3ny/core/.env.dart';
 
 class LanguageState extends ChangeNotifier {
   Locale _currentLocale;
@@ -28,11 +29,15 @@ class LanguageState extends ChangeNotifier {
   changeLocale() async {
     _isEnglish = !isEnglish;
     _isArabic = !_isArabic;
-    if (_currentLocale == Locale('en', 'us'))
+    if (_currentLocale == Locale('en', 'us')) {
       _currentLocale = Locale('ar', 'su');
-    else
+      LANG = 'ar';
+    } else {
       _currentLocale = Locale('en', 'us');
+      LANG = 'en';
+    }
     await SharedPrefrencesHelper.setLanguage(_isEnglish);
+
     notifyListeners();
   }
 

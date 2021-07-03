@@ -141,7 +141,8 @@ class TherapistRepository {
   Future<TherapistTimeSlot> getAllTimeSlots(String from, String to) async {
     Response response =
         await _apiBaseHelper.getHTTP('$_route/sessions?from=$from&to=$to');
-
+    print(response.data);
+    if (response.data is List) return TherapistTimeSlot.fromJson({});
     return TherapistTimeSlot.fromJson(response.data);
   }
 

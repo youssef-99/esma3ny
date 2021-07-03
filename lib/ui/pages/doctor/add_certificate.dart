@@ -1,4 +1,5 @@
 import 'package:esma3ny/data/models/public/certificate.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/ui/provider/therapist/add_ceritficate_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
@@ -167,13 +168,17 @@ class _AddCertificateState extends State<AddCertificate> {
       );
 
   Certificate certificate() => Certificate(
-        organizationEn: _orgEn.text,
-        organizationAr: _orgAr.text,
+        organization: LocaleString(
+          stringEn: _orgEn.text,
+          stringAr: _orgAr.text,
+        ),
         from: _from.text,
         to: _to.text,
         licenseNumber: _licensingNum.text,
         licensingOrganization: _licensingOrg.text,
-        nameAr: _nameEn.text,
-        nameEn: _nameAr.text,
+        name: LocaleString(
+          stringEn: _nameEn.text,
+          stringAr: _nameAr.text,
+        ),
       );
 }

@@ -7,10 +7,10 @@ import 'package:esma3ny/ui/widgets/about_therapist.dart';
 import 'package:esma3ny/ui/widgets/education_and_certificates.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/experience.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:esma3ny/ui/widgets/therapist_fees_list.dart';
 import 'package:esma3ny/ui/widgets/therapist_info_card.dart';
-import 'package:esma3ny/ui/widgets/waiting_wiget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +45,7 @@ class _TherapistProfileState extends State<TherapistProfile>
         future: _clientRepositoryImpl.getDoctorInfo(id),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
-            return WaitingWidget();
+            return CustomProgressIndicator();
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               return body(snapshot.data);

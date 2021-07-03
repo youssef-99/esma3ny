@@ -173,7 +173,7 @@ class _FilterSheetState extends State<FilterSheet> {
                   items: <Specialization>[...list].map((Specialization value) {
                     return new DropdownMenuItem<Specialization>(
                       value: value,
-                      child: new Text(value.nameEn),
+                      child: new Text(value.name.getLocalizedString()),
                     );
                   }).toList(),
                   onChanged: (Specialization specialization) {
@@ -197,7 +197,7 @@ class _FilterSheetState extends State<FilterSheet> {
                   items: <Language>[...list].map((Language value) {
                     return new DropdownMenuItem<Language>(
                       value: value,
-                      child: new Text(value.nameEn),
+                      child: new Text(value.name.getLocalizedString()),
                     );
                   }).toList(),
                   onChanged: (Language language) {
@@ -222,7 +222,7 @@ class _FilterSheetState extends State<FilterSheet> {
                   items: <Job>[...list].map((Job value) {
                     return new DropdownMenuItem<Job>(
                       value: value,
-                      child: new Text(value.nameEn),
+                      child: new Text(value.name.getLocalizedString()),
                     );
                   }).toList(),
                   onChanged: (Job job) {

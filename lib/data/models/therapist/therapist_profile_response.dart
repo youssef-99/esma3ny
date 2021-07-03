@@ -4,24 +4,22 @@ import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/public/job.dart';
 import 'package:esma3ny/data/models/public/language.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:flutter/foundation.dart';
 
 class TherapistProfileResponse {
   final id;
-  final nameEn;
-  final nameAr;
-  final titleEn;
-  final titleAr;
+  final LocaleString name;
+  final LocaleString title;
   final email;
   final phone;
   final gender;
   final dateOfBirth;
   final countryId;
   final prefix;
-  final biographyEn;
-  final biographyAr;
+  final LocaleString biography;
   final joiningDate;
   final jobId;
   final Fees fees;
@@ -37,12 +35,9 @@ class TherapistProfileResponse {
   TherapistProfileResponse({
     @required this.id,
     @required this.email,
-    @required this.nameEn,
-    @required this.nameAr,
-    @required this.titleEn,
-    @required this.titleAr,
-    @required this.biographyEn,
-    @required this.biographyAr,
+    @required this.name,
+    @required this.title,
+    @required this.biography,
     @required this.countryId,
     @required this.dateOfBirth,
     @required this.fees,
@@ -96,12 +91,18 @@ class TherapistProfileResponse {
     return TherapistProfileResponse(
       id: json['id'],
       email: json['email'],
-      nameEn: json['name_en'],
-      nameAr: json['name_ar'],
-      titleEn: json['title_en'] == '' ? 'Empty' : json['title_en'],
-      titleAr: json['title_ar'] == '' ? 'Empty' : json['title_ar'],
-      biographyEn: json['biography_en'] == '' ? 'Empty' : json['biography_en'],
-      biographyAr: json['biography_ar'] == '' ? 'Empty' : json['biography_ar'],
+      name: LocaleString(
+        stringEn: json['name_en'],
+        stringAr: json['name_ar'],
+      ),
+      title: LocaleString(
+        stringEn: json['title_en'] == '' ? 'Empty' : json['title_en'],
+        stringAr: json['title_ar'] == '' ? 'Empty' : json['title_ar'],
+      ),
+      biography: LocaleString(
+        stringEn: json['biography_en'] == '' ? 'Empty' : json['biography_en'],
+        stringAr: json['biography_ar'] == '' ? 'Empty' : json['biography_ar'],
+      ),
       countryId: json['country_id'],
       dateOfBirth: json['date_of_birth'],
       fees: json['fees'] == null ? null : Fees.fromJson(json['fees']),

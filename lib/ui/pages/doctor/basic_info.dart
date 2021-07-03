@@ -54,7 +54,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
               ),
               SizedBox(height: 10),
               Text(
-                state.therapistProfileResponse.nameEn,
+                state.therapistProfileResponse.name.getLocalizedString(),
                 style: Theme.of(context).textTheme.headline5,
               ),
               SizedBox(height: 10),
@@ -77,7 +77,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
         child: Column(
           children: [
             Container(
-              alignment: Alignment.topRight,
+              alignment: AlignmentDirectional.bottomEnd,
               padding: EdgeInsets.only(top: 5, right: 10),
               child: TextButton(
                 onPressed: () {
@@ -93,7 +93,7 @@ class _BasicInfoPageState extends State<BasicInfoPage> {
                 ),
               ),
             ),
-            customListTile(Icons.person, therapist.nameEn),
+            customListTile(Icons.person, therapist.name.getLocalizedString()),
             customListTile(Icons.email, therapist.email),
             customListTile(Icons.phone, therapist.phone),
             customListTile(Icons.person, therapist.gender),

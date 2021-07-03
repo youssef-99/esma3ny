@@ -22,8 +22,14 @@ class EducationAndCertificate extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: therapist.educations
-                    .map((e) =>
-                        customListTile(e.degreeEn, e.from, e.to, e.schoolEn))
+                    .map(
+                      (e) => customListTile(
+                        e.degree.getLocalizedString(),
+                        e.from,
+                        e.to,
+                        e.school.getLocalizedString(),
+                      ),
+                    )
                     .toList(),
               ),
         SizedBox(height: 40),
@@ -38,8 +44,14 @@ class EducationAndCertificate extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: therapist.certificates
-                    .map((e) => customListTile(
-                        e.nameEn, e.from, e.to, e.organizationEn))
+                    .map(
+                      (e) => customListTile(
+                        e.name.getLocalizedString(),
+                        e.from,
+                        e.to,
+                        e.organization.getLocalizedString(),
+                      ),
+                    )
                     .toList(),
               )
       ]),

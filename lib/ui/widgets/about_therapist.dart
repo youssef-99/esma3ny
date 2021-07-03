@@ -16,7 +16,7 @@ class AbouTherapist extends StatelessWidget {
   mianFocusString(List<Specialization> specializations) {
     String main = '';
     specializations.forEach((element) {
-      main += ', ${element.nameEn}';
+      main += ', ${element.name.getLocalizedString()}';
     });
     return main.isNotEmpty ? main.substring(2) : main;
   }
@@ -59,7 +59,8 @@ class AbouTherapist extends StatelessWidget {
             title: Text('Language'),
             subtitle: language(),
           ),
-          customListTile(Icons.person, 'Bio', therapist.biographyEn)
+          customListTile(
+              Icons.person, 'Bio', therapist.biography.getLocalizedString())
         ],
       );
 

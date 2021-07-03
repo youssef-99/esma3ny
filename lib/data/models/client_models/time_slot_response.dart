@@ -1,5 +1,6 @@
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:esma3ny/data/models/public/room.dart';
 import 'package:flutter/foundation.dart';
@@ -16,8 +17,7 @@ class TimeSlotResponse {
   final paymentStatus;
   final day;
   final doctorId;
-  final doctorNameEn;
-  final doctorNameAr;
+  final LocaleString doctorName;
   final ProfileImage doctorProfileImage;
   final amount;
   final currency;
@@ -35,8 +35,7 @@ class TimeSlotResponse {
     @required this.paymentStatus,
     @required this.day,
     @required this.doctorId,
-    @required this.doctorNameEn,
-    @required this.doctorNameAr,
+    @required this.doctorName,
     @required this.doctorProfileImage,
     @required this.amount,
     @required this.currency,
@@ -74,8 +73,10 @@ class TimeSlotResponse {
       sessionId: json['session']['id'],
       day: json['session']['day'],
       doctorId: json['session']['doctor']['id'],
-      doctorNameEn: json['session']['doctor']['name_en'],
-      doctorNameAr: json['session']['doctor']['name_ar'],
+      doctorName: LocaleString(
+        stringEn: json['session']['doctor']['name_en'],
+        stringAr: json['session']['doctor']['name_ar'],
+      ),
       doctorProfileImage:
           ProfileImage.fromjson(json['session']['doctor']['profile_image']),
       amount: json['charges'].length == 0 ? [] : json['charges'][0]['amount'],

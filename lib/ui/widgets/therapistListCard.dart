@@ -19,8 +19,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.only(top: 10, bottom: 10, right: 25, left: 10),
+      padding: EdgeInsets.all(10),
       decoration: decoration(
         CustomColors.blue,
         60,
@@ -28,6 +27,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
       child: Row(
         children: [
           therapistImage(),
+          SizedBox(width: 5),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +54,6 @@ class _TherapistListCardState extends State<TherapistListCard> {
       );
 
   therapistImage() => Container(
-        margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
         child: CachedImage(
           url: _therapist.profileImage.small,
@@ -63,13 +62,15 @@ class _TherapistListCardState extends State<TherapistListCard> {
       );
 
   therapistName() => AutoSizeText(
-        _therapist.nameEn,
+        _therapist.name.getLocalizedString(),
         maxLines: 1,
         style: TextStyle(color: CustomColors.orange, fontSize: 20),
       );
 
   jobTitle() => Text(
-        _therapist.job == null ? 'Unknown' : _therapist.job.nameEn,
+        _therapist.job == null
+            ? 'Unknown'
+            : _therapist.job.name.getLocalizedString(),
         style: Theme.of(context).textTheme.caption,
       );
 
@@ -81,7 +82,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
               text: 'specialized at: ',
             ),
             TextSpan(
-              text: 'Personal disorder and depression',
+              text: _therapist.title.getLocalizedString(),
               style: TextStyle(
                 color: CustomColors.blue,
               ),
@@ -91,7 +92,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
       );
 
   bottmSection() => Align(
-      alignment: Alignment.centerRight,
+      alignment: AlignmentDirectional.bottomEnd,
       child: ElevatedButton(
         onPressed: () {
           Provider.of<ClientTherapistProfileState>(context, listen: false)

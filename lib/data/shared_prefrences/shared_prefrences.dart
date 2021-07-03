@@ -8,6 +8,16 @@ import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefrencesHelper {
+  static Future<SharedPreferences> get _instance async =>
+      _prefsInstance ??= await SharedPreferences.getInstance();
+  static SharedPreferences _prefsInstance;
+
+  // call this method from iniState() function of mainApp().
+  static Future<SharedPreferences> init() async {
+    _prefsInstance = await _instance;
+    return _prefsInstance;
+  }
+
   static setLanguage(isEnglish) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setBool('isEnglish', isEnglish);

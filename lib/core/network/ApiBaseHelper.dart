@@ -9,6 +9,7 @@ import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 
 class ApiBaseHelper {
   static final String url = 'https://esma3ny.org/api/';
+  static String lang = 'en';
   static BaseOptions opts = BaseOptions(
       baseUrl: url,
       responseType: ResponseType.json,
@@ -45,6 +46,7 @@ class ApiBaseHelper {
 
     // Get your JWT token
     final token = await SharedPrefrencesHelper.getToken;
+    lang = await SharedPrefrencesHelper.getLocale ? 'en' : 'ar';
     if (token != null) {
       options.headers[HttpHeaders.authorizationHeader] = 'Bearer ' + token;
     }
@@ -54,10 +56,19 @@ class ApiBaseHelper {
   static final dio = createDio();
   static final baseAPI = addInterceptors(dio);
 
+  checkUrl(String url) {
+    if (url.contains('?'))
+      url += '&lang=$lang';
+    else
+      url += '?lang=$lang';
+
+    return url;
+  }
+
   // ignore: missing_return
   Future<Response> getHTTP(String url) async {
     try {
-      Response response = await baseAPI.get(url);
+      Response response = await baseAPI.get(checkUrl(url));
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);
@@ -67,7 +78,7 @@ class ApiBaseHelper {
   // ignore: missing_return
   Future<Response> postHTTP(String url, dynamic data) async {
     try {
-      Response response = await baseAPI.post(url, data: data);
+      Response response = await baseAPI.post(checkUrl(url), data: data);
       return response;
     } on DioError catch (e) {
       print(e);
@@ -79,7 +90,7 @@ class ApiBaseHelper {
   Future<Response> postPhotoHTTP(String url, dynamic data) async {
     try {
       FormData formData = FormData.fromMap(data);
-      Response response = await baseAPI.post(url, data: formData);
+      Response response = await baseAPI.post(checkUrl(url), data: formData);
       return response;
     } on DioError catch (e) {
       print(e);
@@ -90,7 +101,7 @@ class ApiBaseHelper {
   // ignore: missing_return
   Future<Response> putHTTP(String url, dynamic data) async {
     try {
-      Response response = await baseAPI.put(url, data: data);
+      Response response = await baseAPI.put(checkUrl(url), data: data);
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);
@@ -100,7 +111,7 @@ class ApiBaseHelper {
   // ignore: missing_return
   Future<Response> deleteHTTP(String url) async {
     try {
-      Response response = await baseAPI.delete(url);
+      Response response = await baseAPI.delete(checkUrl(url));
       return response;
     } on DioError catch (e) {
       ExceptionHandling.handleDioExceprion(e);

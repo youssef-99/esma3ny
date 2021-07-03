@@ -1,6 +1,7 @@
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/ui/provider/therapist/add_experience_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
@@ -196,10 +197,14 @@ class _AddExperienceState extends State<AddExperience> {
 
   Experience experience() {
     return Experience(
-      nameEn: _organizationEn.text,
-      nameAr: _organizationAr.text,
-      titleEn: _jobTitleEn.text,
-      titleAr: _jobTitleAr.text,
+      name: LocaleString(
+        stringEn: _organizationEn.text,
+        stringAr: _organizationAr.text,
+      ),
+      title: LocaleString(
+        stringEn: _jobTitleEn.text,
+        stringAr: _jobTitleAr.text,
+      ),
       from: _from.text,
       to: _to.text,
       city: _city.text,

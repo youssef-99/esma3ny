@@ -1,7 +1,6 @@
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:esma3ny/data/models/public/room.dart';
-import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/foundation.dart';
 
 class Appointment {

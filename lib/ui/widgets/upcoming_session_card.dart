@@ -109,7 +109,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
               context, MaterialPageRoute(builder: (_) => TherapistProfile()));
         },
         child: AutoSizeText(
-          timeSlot.doctorNameEn,
+          timeSlot.doctorName.getLocalizedString(),
           maxLines: 1,
           style: TextStyle(color: CustomColors.orange, fontSize: 20),
         ),

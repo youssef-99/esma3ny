@@ -26,7 +26,14 @@ class Experience extends StatelessWidget {
       );
 
   List<Widget> listing() => therapist.experience
-      .map((e) => customListTile(e.titleEn, e.from, e.to, e.nameEn))
+      .map(
+        (e) => customListTile(
+          e.title.getLocalizedString(),
+          e.from,
+          e.to,
+          e.name.getLocalizedString(),
+        ),
+      )
       .toList();
 
   Widget customListTile(

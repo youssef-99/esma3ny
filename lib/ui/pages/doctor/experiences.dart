@@ -30,7 +30,7 @@ class ExperiencePage extends StatelessWidget {
                   values: state.therapistProfileResponse.specializations
                       .map((Specialization specialization) => S2Choice(
                             value: specialization.id,
-                            title: specialization.nameEn,
+                            title: specialization.name.getLocalizedString(),
                           ))
                       .toList(),
                   onTap: null,
@@ -40,7 +40,7 @@ class ExperiencePage extends StatelessWidget {
                   values: state.therapistProfileResponse.mainFocus
                       .map((Specialization specialization) => S2Choice(
                             value: specialization.id,
-                            title: specialization.nameEn,
+                            title: specialization.name.getLocalizedString(),
                           ))
                       .toList(),
                   onTap: null,
@@ -67,8 +67,8 @@ class ExperiencePage extends StatelessWidget {
         builder: (context, state, child) => Column(
           children: experience
               .map((Experience experience) => experienceTile(
-                    experience.titleEn,
-                    '${experience.nameEn} (${experience.from} - ${experience.to})',
+                    experience.title.getLocalizedString(),
+                    '${experience.name.getLocalizedString()} (${experience.from} - ${experience.to})',
                     () async {
                       await state.deleteExperience(experience.id);
                       await state.updateProfile();
@@ -83,8 +83,8 @@ class ExperiencePage extends StatelessWidget {
           children: education
               .map(
                 (Education education) => experienceTile(
-                  education.degreeEn,
-                  '${education.degreeEn} (${education.from} - ${education.to})',
+                  education.degree.getLocalizedString(),
+                  '${education.degree.getLocalizedString()} (${education.from} - ${education.to})',
                   () async {
                     await state.deleteEducation(education.id);
                     await state.updateProfile();
@@ -99,8 +99,8 @@ class ExperiencePage extends StatelessWidget {
         builder: (context, state, child) => Column(
           children: certificate
               .map((Certificate certificate) => experienceTile(
-                    certificate.nameEn,
-                    '${certificate.organizationEn} (${certificate.from} - ${certificate.to})',
+                    certificate.name.getLocalizedString(),
+                    '${certificate.organization.getLocalizedString()} (${certificate.from} - ${certificate.to})',
                     () async {
                       await state.deleteCertificate(certificate.id);
                       await state.updateProfile();

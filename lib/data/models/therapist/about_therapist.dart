@@ -1,31 +1,28 @@
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:flutter/foundation.dart';
 
 class AboutTherapistModel {
-  final String titleEn;
-  final String titleAr;
+  final LocaleString title;
   final String prefix;
-  final String biographyEn;
-  final String biographyAr;
+  final LocaleString biography;
   final int jobId;
   final List<int> languageId;
 
   AboutTherapistModel({
-    @required this.titleEn,
-    @required this.titleAr,
+    @required this.title,
     @required this.prefix,
-    @required this.biographyEn,
-    @required this.biographyAr,
+    @required this.biography,
     @required this.jobId,
     @required this.languageId,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      'title_en': titleEn,
-      'title_ar': titleAr,
+      'title_en': title.stringEn,
+      'title_ar': title.stringAr,
       'prefix': prefix,
-      'biography_en': biographyEn,
-      'biography_ar': biographyAr,
+      'biography_en': biography.stringEn,
+      'biography_ar': biography.stringAr,
       'job_id': jobId,
       'languages': languageId,
     };

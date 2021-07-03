@@ -5,6 +5,7 @@ import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:esma3ny/ui/widgets/waiting_wiget.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class _ProfileState extends State<Profile> {
           future: _getClientInfo,
           builder: (context, snapShot) {
             if (snapShot.connectionState == ConnectionState.waiting)
-              return WaitingWidget();
+              return CustomProgressIndicator();
             if (snapShot.connectionState == ConnectionState.done) {
               if (snapShot.hasData) {
                 state.initClient(snapShot.data);
@@ -100,7 +101,7 @@ class _ProfileState extends State<Profile> {
         child: Column(
           children: [
             Container(
-              alignment: Alignment.topRight,
+              alignment: AlignmentDirectional.bottomEnd,
               padding: EdgeInsets.only(top: 5, right: 10),
               child: TextButton(
                 onPressed: () {

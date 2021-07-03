@@ -1,4 +1,5 @@
 import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/therapist/about_therapist.dart';
 import 'package:esma3ny/ui/provider/therapist/about_me_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
@@ -31,10 +32,14 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
     _therapistProfileState =
         Provider.of<TherapistProfileState>(context, listen: false);
     _aboutMeState = Provider.of<AboutMeState>(context, listen: false);
-    _jobEn.text = _therapistProfileState.therapistProfileResponse.titleEn;
-    _jobAr.text = _therapistProfileState.therapistProfileResponse.titleAr;
-    _bioEn.text = _therapistProfileState.therapistProfileResponse.biographyEn;
-    _bioAr.text = _therapistProfileState.therapistProfileResponse.biographyAr;
+    _jobEn.text =
+        _therapistProfileState.therapistProfileResponse.title.stringEn;
+    _jobAr.text =
+        _therapistProfileState.therapistProfileResponse.title.stringAr;
+    _bioEn.text =
+        _therapistProfileState.therapistProfileResponse.biography.stringEn;
+    _bioAr.text =
+        _therapistProfileState.therapistProfileResponse.biography.stringAr;
     _selectedPrefix = _therapistProfileState.therapistProfileResponse.prefix;
     _selectedJobId = _therapistProfileState.therapistProfileResponse.jobId;
     super.initState();
@@ -61,11 +66,13 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
             child: ListView(
               children: [
                 jobs(therapistState.therapistProfileResponse.jobId),
-                jobEn(therapistState.therapistProfileResponse.titleEn),
-                jobAr(therapistState.therapistProfileResponse.titleAr),
+                jobEn(therapistState.therapistProfileResponse.title.stringEn),
+                jobAr(therapistState.therapistProfileResponse.title.stringAr),
                 prefixList(therapistState.therapistProfileResponse.prefix),
-                bioEn(therapistState.therapistProfileResponse.biographyEn),
-                bioAr(therapistState.therapistProfileResponse.biographyAr),
+                bioEn(
+                    therapistState.therapistProfileResponse.biography.stringEn),
+                bioAr(
+                    therapistState.therapistProfileResponse.biography.stringAr),
                 SizedBox(height: 50),
                 aboutMeState.loading
                     ? CustomProgressIndicator()
@@ -150,7 +157,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
                       items: snapshot.data
                           .map(
                             (Job e) => DropdownMenuItem(
-                              child: Text(e.nameEn),
+                              child: Text(e.name.getLocalizedString()),
                               value: e,
                             ),
                           )
@@ -189,11 +196,15 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
 
   AboutTherapistModel aboutMeModel() {
     return AboutTherapistModel(
-      titleEn: _jobEn.text,
-      titleAr: _jobAr.text,
+      title: LocaleString(
+        stringEn: _jobEn.text,
+        stringAr: _jobAr.text,
+      ),
       prefix: _selectedPrefix,
-      biographyEn: _bioEn.text,
-      biographyAr: _bioAr.text,
+      biography: LocaleString(
+        stringEn: _bioEn.text,
+        stringAr: _bioAr.text,
+      ),
       jobId: _selectedJobId,
       languageId: [1, 2],
     );

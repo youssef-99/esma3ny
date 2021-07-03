@@ -45,8 +45,8 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
     TherapistProfileResponse _therapist =
         _therapistProfileState.therapistProfileResponse;
 
-    name.text = _therapist.nameEn;
-    nameAr.text = _therapist.nameAr;
+    name.text = _therapist.name.stringEn;
+    nameAr.text = _therapist.name.stringAr;
     email.text = _therapist.email;
     phone.text = _therapist.phone;
     dateOfBirth.text = _therapist.dateOfBirth;

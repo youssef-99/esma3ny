@@ -45,20 +45,21 @@ class _AboutMePageState extends State<AboutMePage> {
                           Icons.work,
                           snapshot
                               .data[state.therapistProfileResponse.jobId - 1]
-                              .nameEn,
+                              .name
+                              .getLocalizedString(),
                           () {})
                       : SizedBox()),
-              customListTile(
-                  Icons.work, state.therapistProfileResponse.titleEn, () {}),
-              customListTile(
-                  Icons.work, state.therapistProfileResponse.titleAr, () {}),
+              customListTile(Icons.work,
+                  state.therapistProfileResponse.title.stringEn, () {}),
+              customListTile(Icons.work,
+                  state.therapistProfileResponse.title.stringAr, () {}),
               customListTile(
                   Icons.person, state.therapistProfileResponse.prefix, () {}),
               // customListTile(Icons.language, state.therapistProfileResponse., (){}),
               customListTile(Icons.menu_book_sharp,
-                  state.therapistProfileResponse.biographyEn, () {}),
+                  state.therapistProfileResponse.biography.stringEn, () {}),
               customListTile(Icons.menu_book_sharp,
-                  state.therapistProfileResponse.biographyAr, () {}),
+                  state.therapistProfileResponse.biography.stringAr, () {}),
               languages(state.therapistProfileResponse.languages),
             ],
           ),
@@ -77,7 +78,7 @@ class _AboutMePageState extends State<AboutMePage> {
           .map(
             (language) => S2Choice(
               value: language.id,
-              title: language.nameEn,
+              title: language.name.getLocalizedString(),
             ),
           )
           .toList(),

@@ -1,30 +1,31 @@
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:flutter/foundation.dart';
 
 class Doctor {
   final int id;
-  final String nameEn;
-  final String nameAr;
-  final String titleEn;
-  final String titleAr;
+  final LocaleString name;
+  final LocaleString title;
   final ProfileImage profileImage;
 
   Doctor({
     @required this.id,
-    @required this.nameEn,
-    @required this.nameAr,
-    @required this.titleEn,
-    @required this.titleAr,
+    @required this.name,
+    @required this.title,
     @required this.profileImage,
   });
 
   factory Doctor.fromJson(Map<String, dynamic> json) {
     return Doctor(
       id: json['id'],
-      nameEn: json['name_en'],
-      nameAr: json['name_ar'],
-      titleEn: json['title_en'],
-      titleAr: json['title_ar'],
+      name: LocaleString(
+        stringEn: json['name_en'],
+        stringAr: json['name_ar'],
+      ),
+      title: LocaleString(
+        stringEn: json['title_en'],
+        stringAr: json['title_ar'],
+      ),
       profileImage: ProfileImage.fromjson(
         json['profile_image'],
       ),

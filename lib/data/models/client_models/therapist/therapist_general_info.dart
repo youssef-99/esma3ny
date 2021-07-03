@@ -1,37 +1,38 @@
 import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
 
 class TherapistListInfo {
   final id;
-  final nameEn;
-  final nameAr;
+  final LocaleString name;
   final jobId;
-  final titleEn;
-  final titleAr;
+  final LocaleString title;
   final ProfileImage profileImage;
   final Job job;
 
   TherapistListInfo({
     this.id,
-    this.nameEn,
-    this.nameAr,
+    this.name,
     this.job,
     this.jobId,
     this.profileImage,
-    this.titleAr,
-    this.titleEn,
+    this.title,
   });
 
   factory TherapistListInfo.fromJson(Map<String, dynamic> json) {
     return TherapistListInfo(
       id: json['id'],
-      nameEn: json['name_en'],
-      nameAr: json['name_ar'],
+      name: LocaleString(
+        stringEn: json['name_en'],
+        stringAr: json['name_ar'],
+      ),
       job: json['job'] == null ? null : Job.fromJson(json['job']),
       jobId: json['job_id'],
       profileImage: ProfileImage.fromjson(json['profile_image']),
-      titleAr: json['title_ar'],
-      titleEn: json['title_en'],
+      title: LocaleString(
+        stringAr: json['title_ar'],
+        stringEn: json['title_en'],
+      ),
     );
   }
 }

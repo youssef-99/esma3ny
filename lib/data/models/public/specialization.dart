@@ -1,21 +1,22 @@
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:flutter/foundation.dart';
 
 class Specialization {
   final id;
-  final nameEn;
-  final nameAr;
+  final LocaleString name;
 
   Specialization({
     @required this.id,
-    @required this.nameEn,
-    @required this.nameAr,
+    @required this.name,
   });
 
   factory Specialization.fromJson(Map<String, dynamic> json) {
     return Specialization(
       id: json['id'],
-      nameEn: json['name_en'],
-      nameAr: json['name_ar'],
+      name: LocaleString(
+        stringEn: json['name_en'],
+        stringAr: json['name_ar'],
+      ),
     );
   }
 }

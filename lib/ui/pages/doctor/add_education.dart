@@ -1,4 +1,5 @@
 import 'package:esma3ny/data/models/public/education.dart';
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/ui/provider/therapist/add_education_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
@@ -149,11 +150,15 @@ class _AddEducationState extends State<AddEducation> {
 
   Education education() {
     return Education(
-      degreeAr: _degreeAr.text,
-      degreeEn: _degreeEn.text,
+      degree: LocaleString(
+        stringAr: _degreeAr.text,
+        stringEn: _degreeEn.text,
+      ),
       from: _from.text,
-      schoolAr: _schoolAr.text,
-      schoolEn: _schoolEn.text,
+      school: LocaleString(
+        stringAr: _schoolAr.text,
+        stringEn: _schoolEn.text,
+      ),
       to: _to.text,
     );
   }

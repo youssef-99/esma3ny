@@ -42,7 +42,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                   children: [
                     therapistName(),
                     Text(
-                      widget.therapist.titleEn,
+                      widget.therapist.title.getLocalizedString(),
                       style: TextStyle(
                         // color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -69,7 +69,6 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
       );
 
   therapistImage() => Container(
-        margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
         child: CachedImage(
           url: widget.therapist.profileImage.small,
@@ -88,7 +87,8 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
       );
 
   therapistName() => AutoSizeText(
-        widget.therapist.nameEn,
+        widget.therapist.name.getLocalizedString(),
+        overflow: TextOverflow.ellipsis,
         maxLines: 1,
         style: TextStyle(color: CustomColors.orange, fontSize: 20),
       );

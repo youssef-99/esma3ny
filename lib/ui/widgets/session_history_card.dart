@@ -60,7 +60,8 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
                 children: [
                   therapistName(),
                   AutoSizeText(
-                    widget.sessionHistoryModel.doctor.titleEn,
+                    widget.sessionHistoryModel.doctor.title
+                        .getLocalizedString(),
                     style: Theme.of(context).textTheme.caption,
                   ),
                   SizedBox(height: 20),
@@ -108,7 +109,7 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
               context, MaterialPageRoute(builder: (_) => TherapistProfile()));
         },
         child: AutoSizeText(
-          widget.sessionHistoryModel.doctor.nameEn,
+          widget.sessionHistoryModel.doctor.name.getLocalizedString(),
           maxLines: 1,
           style: TextStyle(color: CustomColors.orange, fontSize: 20),
         ),

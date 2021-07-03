@@ -76,8 +76,8 @@ class EditBasicInfoState extends ChangeNotifier {
 
   initTherapist(TherapistProfileResponse therapistProfileResponse) {
     Therapist therapist = Therapist(
-      name: therapistProfileResponse.nameEn,
-      nameAr: therapistProfileResponse.nameAr,
+      name: therapistProfileResponse.name.stringEn,
+      nameAr: therapistProfileResponse.name.stringAr,
       email: therapistProfileResponse.email,
       phone: therapistProfileResponse.phone,
       gender: therapistProfileResponse.gender,

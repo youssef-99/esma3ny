@@ -1,11 +1,10 @@
+import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:flutter/foundation.dart';
 
 class Experience {
   final id;
-  final nameEn;
-  final nameAr;
-  final titleEn;
-  final titleAr;
+  final LocaleString name;
+  final LocaleString title;
   final from;
   final to;
   final city;
@@ -13,10 +12,8 @@ class Experience {
 
   Experience({
     this.id,
-    @required this.nameEn,
-    @required this.nameAr,
-    @required this.titleEn,
-    @required this.titleAr,
+    @required this.name,
+    @required this.title,
     @required this.from,
     @required this.to,
     @required this.city,
@@ -26,10 +23,14 @@ class Experience {
   factory Experience.fromJson(Map<String, dynamic> json) {
     return Experience(
         id: json['id'],
-        nameEn: json['name_en'],
-        nameAr: json['name_ar'],
-        titleEn: json['title_en'],
-        titleAr: json['title_ar'],
+        name: LocaleString(
+          stringEn: json['name_en'],
+          stringAr: json['name_ar'],
+        ),
+        title: LocaleString(
+          stringEn: json['title_en'],
+          stringAr: json['title_en'],
+        ),
         from: json['from'],
         to: json['to'],
         city: json['city'],
@@ -38,10 +39,10 @@ class Experience {
 
   Map<String, dynamic> toJson() {
     return {
-      'name_en': nameEn,
-      'name_ar': nameAr,
-      'title_en': titleEn,
-      'title_ar': titleAr,
+      'name_en': name.stringEn,
+      'name_ar': name.stringAr,
+      'title_en': title.stringEn,
+      'title_ar': title.stringAr,
       'from': from,
       'to': to,
       'country_id': countryId,

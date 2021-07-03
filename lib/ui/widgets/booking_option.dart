@@ -179,7 +179,8 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     showMaterialModalBottomSheet(
                         context: context,
                         builder: (_) => SessionBookingReview(
-                              therapistName: state.therapist.nameEn,
+                              therapistName:
+                                  state.therapist.name.getLocalizedString(),
                               fees: state.sessionPriceResponse,
                               sessionType: state.sessionTypeText,
                               date: state.selectedDate,

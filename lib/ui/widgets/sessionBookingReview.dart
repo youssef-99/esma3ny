@@ -36,7 +36,8 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            customListTile('Your Therapist', state.therapist.nameEn),
+            customListTile(
+                'Your Therapist', state.therapist.name.getLocalizedString()),
             customListTile('Session Type',
                 '${state.selectedTimeSlot.duration} ${state.sessionTypeText}'),
             state.sessionPriceResponse != null

@@ -87,7 +87,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                 onChanged: (bool val) async {
                                   if (val) {
                                     await state.changeLocale();
-                                    Navigator.pop(context);
+                                    Navigator.pushReplacementNamed(
+                                        context, '/');
                                   }
                                 },
                                 activeColor: Colors.green,
@@ -103,6 +104,8 @@ class _SettingsPageState extends State<SettingsPage> {
                                   if (val) {
                                     await state.changeLocale();
                                     Navigator.pop(context);
+                                    Navigator.pushReplacementNamed(
+                                        context, '/');
                                   }
                                 },
                                 activeColor: Colors.green,
