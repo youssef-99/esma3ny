@@ -5,6 +5,7 @@ import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:provider/provider.dart';
 import '../theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TherapistListCard extends StatefulWidget {
   final TherapistListInfo therapist;
@@ -79,7 +80,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
           style: Theme.of(context).textTheme.bodyText2,
           children: <TextSpan>[
             TextSpan(
-              text: 'specialized at: ',
+              text: AppLocalizations.of(context).specialized_at,
             ),
             TextSpan(
               text: _therapist.title.getLocalizedString(),
@@ -99,7 +100,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
               .setId(_therapist.id);
           Navigator.pushNamed(context, 'therapist_profile');
         },
-        child: Text('See more'),
+        child: Text(AppLocalizations.of(context).see_more),
         style: ElevatedButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),

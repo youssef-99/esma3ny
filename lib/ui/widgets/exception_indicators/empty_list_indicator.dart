@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class EmptyListIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) => const ExceptionIndicator(
-        title: 'Too much filtering',
+        title: 'No results found!',
         message: 'We couldn\'t find any results matching your applied filters.',
         assetName: 'assets/empty-box.png',
       );

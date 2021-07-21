@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/client_models/health_profile.dart';
+import 'package:esma3ny/data/models/client_models/health_profile_helper.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
@@ -25,7 +26,7 @@ class ClientRepositoryImpl implements ClientRepository {
     Map<String, dynamic> creditials = {
       'email': email,
       'password': pass,
-      'device_name': 'deviceName',
+      'device_name': deviceName,
     };
 
     Response response = await _apiBaseHelper.postHTTP(
@@ -158,5 +159,15 @@ class ClientRepositoryImpl implements ClientRepository {
       'stripeToken': stripeToken,
     });
     print(response.data);
+  }
+
+  @override
+  Future<String> updateHealthProfile(
+      HealthProfileJson healthProfileJson) async {
+    Response response = await _apiBaseHelper.patchHTTP(
+        '$_route/health_profile', healthProfileJson.tojson());
+
+    print(response.data);
+    return response.data['msg'];
   }
 }

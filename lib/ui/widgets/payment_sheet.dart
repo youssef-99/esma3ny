@@ -30,10 +30,13 @@ class PaymentSheetState extends State<PaymentSheet> {
   initState() {
     super.initState();
 
-    StripePayment.setOptions(StripeOptions(
-        publishableKey: "pk_test_aSaULNS8cJU6Tvo20VAXy6rp",
+    StripePayment.setOptions(
+      StripeOptions(
+        publishableKey: "pk_test_vs2mJM5i18UsWUw58nkhYNK6004VW6Y7YE",
         merchantId: "Test",
-        androidPayMode: 'test'));
+        androidPayMode: 'test',
+      ),
+    );
   }
 
   void setError(error) {
@@ -49,7 +52,8 @@ class PaymentSheetState extends State<PaymentSheet> {
       ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Column(
+        child: ListView(
+          // mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             CreditCardWidget(
               cardNumber: cardNumber,
@@ -60,57 +64,55 @@ class PaymentSheetState extends State<PaymentSheet> {
               obscureCardNumber: true,
               obscureCardCvv: true,
             ),
-            Expanded(
-              child: CreditCardForm(
-                formKey: formKey,
-                obscureCvv: true,
-                obscureNumber: true,
-                cardNumber: cardNumber,
-                cvvCode: cvvCode,
-                cardHolderName: cardHolderName,
-                expiryDate: expiryDate,
-                themeColor: Colors.blue,
-                cardNumberDecoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue)),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
-                  labelText: 'Number',
-                  hintText: 'XXXX XXXX XXXX XXXX',
-                  labelStyle: TextStyle(color: Colors.blue),
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                expiryDateDecoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue)),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
-                  labelText: 'Expired Date',
-                  labelStyle: TextStyle(color: Colors.blue),
-                  hintText: 'MM/YY',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                cvvCodeDecoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue)),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
-                  labelText: 'CVV',
-                  labelStyle: TextStyle(color: Colors.grey),
-                  hintText: 'XXX',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                cardHolderDecoration: const InputDecoration(
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue)),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)),
-                  labelStyle: TextStyle(color: Colors.blue),
-                  labelText: 'Card Holder',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-                onCreditCardModelChange: onCreditCardModelChange,
+            CreditCardForm(
+              formKey: formKey,
+              obscureCvv: true,
+              obscureNumber: true,
+              cardNumber: cardNumber,
+              cvvCode: cvvCode,
+              cardHolderName: cardHolderName,
+              expiryDate: expiryDate,
+              themeColor: Colors.blue,
+              cardNumberDecoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                labelText: 'Number',
+                hintText: 'XXXX XXXX XXXX XXXX',
+                labelStyle: TextStyle(color: Colors.blue),
+                hintStyle: TextStyle(color: Colors.grey),
               ),
+              expiryDateDecoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                labelText: 'Expired Date',
+                labelStyle: TextStyle(color: Colors.blue),
+                hintText: 'MM/YY',
+                hintStyle: TextStyle(color: Colors.grey),
+              ),
+              cvvCodeDecoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                labelText: 'CVV',
+                labelStyle: TextStyle(color: Colors.grey),
+                hintText: 'XXX',
+                hintStyle: TextStyle(color: Colors.grey),
+              ),
+              cardHolderDecoration: const InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey)),
+                labelStyle: TextStyle(color: Colors.blue),
+                labelText: 'Card Holder',
+                hintStyle: TextStyle(color: Colors.grey),
+              ),
+              onCreditCardModelChange: onCreditCardModelChange,
             ),
             Consumer<BookSessionState>(
               builder: (context, state, child) => state.loading

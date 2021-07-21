@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../data/models/enums/RoleEnum.dart';
 import '../../theme/colors.dart';
 import 'role.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PickedRole extends StatelessWidget {
   final RoleEnum roleType;
@@ -13,7 +14,9 @@ class PickedRole extends StatelessWidget {
       backColor: CustomColors.lightBlue,
       avatarColor: CustomColors.white,
       circleAvatarColor: CustomColors.blue,
-      roleType: roleType,
+      roleType: roleType == RoleEnum.Client
+          ? AppLocalizations.of(context).client
+          : AppLocalizations.of(context).therapist,
     );
   }
 }

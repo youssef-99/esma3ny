@@ -49,10 +49,16 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    lanchUrl('tel:${widget.therapist.phone}', Icons.phone,
-                        widget.therapist.phone),
-                    lanchUrl('mailto:${widget.therapist.email}', Icons.email,
-                        widget.therapist.email),
+                    lanchUrl(
+                      'tel:${widget.therapist.phone}',
+                      Icons.phone,
+                      widget.therapist.phone,
+                    ),
+                    lanchUrl(
+                      'mailto:${widget.therapist.email}',
+                      Icons.email,
+                      widget.therapist.email,
+                    ),
                   ],
                 ),
               ],
@@ -98,11 +104,15 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
         children: [
           Icon(icon),
           SizedBox(width: 20),
-          Text(
-            text,
-            style: TextStyle(
-              color: CustomColors.grey,
-              fontWeight: FontWeight.bold,
+          SizedBox(
+            width: 200,
+            child: Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: CustomColors.grey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

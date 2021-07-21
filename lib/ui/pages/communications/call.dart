@@ -197,18 +197,10 @@ class _CallPageState extends State<CallPage> {
         ));
       case 2:
         return Container(
-            child: Stack(
+            child: Column(
           children: <Widget>[
             _expandedVideoRow([views[1]]),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                margin: EdgeInsets.symmetric(vertical: 100, horizontal: 50),
-                width: 150,
-                height: 200,
-                child: _expandedVideoRow([views[0]]),
-              ),
-            )
+            _expandedVideoRow([views[0]]),
           ],
         ));
       case 3:
@@ -295,54 +287,54 @@ class _CallPageState extends State<CallPage> {
   //         ),
 
   /// Info panel to show logs
-  Widget _panel() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 48),
-      alignment: Alignment.bottomCenter,
-      child: FractionallySizedBox(
-        heightFactor: 0.5,
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 48),
-          child: ListView.builder(
-            reverse: true,
-            itemCount: _infoStrings.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (_infoStrings.isEmpty) {
-                return null;
-              }
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 3,
-                  horizontal: 10,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 2,
-                          horizontal: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.yellowAccent,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: Text(
-                          _infoStrings[index],
-                          style: TextStyle(color: Colors.blueGrey),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _panel() {
+  //   return Container(
+  //     padding: const EdgeInsets.symmetric(vertical: 48),
+  //     alignment: Alignment.bottomCenter,
+  //     child: FractionallySizedBox(
+  //       heightFactor: 0.5,
+  //       child: Container(
+  //         padding: const EdgeInsets.symmetric(vertical: 48),
+  //         child: ListView.builder(
+  //           reverse: true,
+  //           itemCount: _infoStrings.length,
+  //           itemBuilder: (BuildContext context, int index) {
+  //             if (_infoStrings.isEmpty) {
+  //               return null;
+  //             }
+  //             return Padding(
+  //               padding: const EdgeInsets.symmetric(
+  //                 vertical: 3,
+  //                 horizontal: 10,
+  //               ),
+  //               child: Row(
+  //                 mainAxisSize: MainAxisSize.min,
+  //                 children: [
+  //                   Flexible(
+  //                     child: Container(
+  //                       padding: const EdgeInsets.symmetric(
+  //                         vertical: 2,
+  //                         horizontal: 5,
+  //                       ),
+  //                       decoration: BoxDecoration(
+  //                         color: Colors.yellowAccent,
+  //                         borderRadius: BorderRadius.circular(5),
+  //                       ),
+  //                       child: Text(
+  //                         _infoStrings[index],
+  //                         style: TextStyle(color: Colors.blueGrey),
+  //                       ),
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   void _onCallEnd(BuildContext context) {
     Navigator.pop(context);
@@ -359,19 +351,19 @@ class _CallPageState extends State<CallPage> {
     _engine.switchCamera();
   }
 
-  void _onSetBackgroundImage() async {
-    await _engine.setLiveTranscoding(
-      LiveTranscoding(
-        [TranscodingUser(_users[0], 0, 0)],
-        backgroundImage: AgoraImage(
-            'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.searchenginejournal.com%2Fgoogle-removes-some-filters-from-image-search-results%2F323241%2F&psig=AOvVaw2E-Q-3TYCXVP0fyeGkOLAl&ust=1614216332294000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjjlsquge8CFQAAAAAdAAAAABAD',
-            0,
-            0,
-            100,
-            100),
-      ),
-    );
-  }
+  // void _onSetBackgroundImage() async {
+  //   await _engine.setLiveTranscoding(
+  //     LiveTranscoding(
+  //       [TranscodingUser(_users[0], 0, 0)],
+  //       backgroundImage: AgoraImage(
+  //           'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.searchenginejournal.com%2Fgoogle-removes-some-filters-from-image-search-results%2F323241%2F&psig=AOvVaw2E-Q-3TYCXVP0fyeGkOLAl&ust=1614216332294000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPjjlsquge8CFQAAAAAdAAAAABAD',
+  //           0,
+  //           0,
+  //           100,
+  //           100),
+  //     ),
+  //   );
+  // }
 
   void _onDisableVideo() {
     setState(() {

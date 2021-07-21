@@ -47,11 +47,13 @@ class ExceptionHandling {
       await function();
       if (isShow)
         Fluttertoast.showToast(
-            msg: doneMessage,
-            backgroundColor: Colors.green,
-            timeInSecForIosWeb: 4);
+          msg: doneMessage,
+          backgroundColor: Colors.green,
+          timeInSecForIosWeb: 4,
+        );
     } on InvalidData catch (e) {
-      Fluttertoast.showToast(msg: e.msg);
+      Fluttertoast.showToast(
+          msg: e.msg, timeInSecForIosWeb: 4, backgroundColor: Colors.red);
     } on NetworkConnectionException catch (_) {
       Fluttertoast.showToast(
           msg: 'Network error check your internet exception');

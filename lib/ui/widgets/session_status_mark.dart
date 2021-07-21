@@ -2,6 +2,7 @@ import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SessionStatusMark extends StatelessWidget {
   final SessionStatus sessionStatus;
   String status;

@@ -1,47 +1,81 @@
 import 'package:flutter/foundation.dart';
 
-class HealthProfileHelper {
-  final List<MapEntry<String, String>> maritalStatus;
-  final List<MapEntry<String, String>> education;
-  final List<MapEntry<String, String>> degree;
-  final List<MapEntry<String, String>> problems;
-  final List<MapEntry<String, String>> services;
+class HealthProfileJson {
+  final String forMe;
+  final String name;
+  final String gender;
+  final String dateOfBirth;
+  final String relation;
+  final String refer;
+  final int nationalityId;
+  final String maritalStatus;
+  final int children;
+  final Education education;
+  final Map<String, String> services;
+  final List<String> problems;
+  final String problemStartedAt;
+  final String hasFamilyDiagnosed;
+  final familyProblem;
+  final String note;
 
-  HealthProfileHelper({
+  HealthProfileJson({
+    @required this.forMe,
+    @required this.name,
+    @required this.gender,
+    @required this.dateOfBirth,
+    @required this.relation,
+    @required this.refer,
+    @required this.nationalityId,
     @required this.maritalStatus,
+    @required this.children,
     @required this.education,
-    @required this.degree,
-    @required this.problems,
     @required this.services,
+    @required this.problems,
+    @required this.problemStartedAt,
+    @required this.hasFamilyDiagnosed,
+    @required this.familyProblem,
+    @required this.note,
   });
 
-  factory HealthProfileHelper.fromJson(Map<String, dynamic> json) {
-    final List<MapEntry<String, String>> maritalStatus = [];
-    json['marital_status'].forEach(
-        (String key, dynamic value) => maritalStatus.add(MapEntry(key, value)));
+  tojson() {
+    return {
+      'for_you': forMe,
+      'name': name,
+      'gender': gender,
+      'date_of_birth': dateOfBirth,
+      'relation_to_client': relation,
+      'referrer': refer,
+      'nationality_id': nationalityId,
+      'marital_status': maritalStatus,
+      'childrens': children,
+      'education': education.toJson(),
+      'services': services,
+      'problems': problems,
+      'problems_started_at': problemStartedAt,
+      'has_family_diagnosed': hasFamilyDiagnosed,
+      'family_problems': {
+        'problems': {'1': 'true', '2': 'true', '3': 'false'},
+        'notes': familyProblem['notes']
+      },
+      'notes': note,
+    };
+  }
+}
 
-    final List<MapEntry<String, String>> education = [];
-    json['education'].forEach(
-        (String key, dynamic value) => education.add(MapEntry(key, value)));
+class Education {
+  final String type;
+  final String degree;
 
-    final List<MapEntry<String, String>> degree = [];
-    json['degree'].forEach(
-        (String key, dynamic value) => degree.add(MapEntry(key, value)));
+  Education({
+    @required this.type,
+    @required this.degree,
+  });
 
-    final List<MapEntry<String, String>> problems = [];
-    json['problems'].forEach(
-        (String key, dynamic value) => problems.add(MapEntry(key, value)));
+  factory Education.fromJson(Map<String, dynamic> json) {
+    return Education(type: json['type'], degree: json['degree']);
+  }
 
-    final List<MapEntry<String, String>> services = [];
-    json['services'].forEach(
-        (String key, dynamic value) => services.add(MapEntry(key, value)));
-
-    return HealthProfileHelper(
-      maritalStatus: maritalStatus,
-      education: education,
-      degree: degree,
-      problems: problems,
-      services: services,
-    );
+  Map<String, String> toJson() {
+    return {'type': type, 'degree': degree};
   }
 }

@@ -1,4 +1,3 @@
-import 'package:esma3ny/ui/pages/comming_soon.dart';
 import 'package:esma3ny/ui/pages/doctor/appointments.dart';
 import 'package:esma3ny/ui/pages/doctor/calender.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';

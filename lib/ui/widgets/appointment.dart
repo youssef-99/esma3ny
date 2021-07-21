@@ -63,7 +63,7 @@ class AppointmentCard extends StatelessWidget {
       margin: EdgeInsets.only(right: 10),
       decoration: decoration(CustomColors.orange, 100),
       child: CachedImage(
-        url: '',
+        url: appointment.client.image.small,
         raduis: 70,
       ));
 

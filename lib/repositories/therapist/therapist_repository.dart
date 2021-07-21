@@ -8,7 +8,6 @@ import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/therapist/Therapist.dart';
 import 'package:esma3ny/data/models/therapist/about_therapist.dart';
-import 'package:esma3ny/data/models/therapist/appointment.dart';
 import 'package:esma3ny/data/models/therapist/new_time_slote.dart';
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/models/therapist/time_slote.dart';
@@ -25,7 +24,7 @@ class TherapistRepository {
     Map<String, dynamic> creditials = {
       'email': email,
       'password': pass,
-      'device_name': 'deviceName',
+      'device_name': deviceName,
     };
 
     Response response = await _apiBaseHelper.postHTTP(

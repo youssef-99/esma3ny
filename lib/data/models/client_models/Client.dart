@@ -10,7 +10,7 @@ class ClientModel {
   final String phone;
   final String gender;
   final String dateOfBirth;
-  final String countryId;
+  final countryId;
   final deviceName;
   final String stripeId;
   final String age;

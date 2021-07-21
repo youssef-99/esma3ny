@@ -1,5 +1,6 @@
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
+import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:esma3ny/data/models/public/room.dart';
 import 'package:flutter/foundation.dart';
 
@@ -55,7 +56,7 @@ class Appointment {
       endTime: json['end_time'],
       status: sessionStatus,
       lastChargeType: json['last_charge_type'],
-      room: Room.fromJson(json['room']),
+      room: json['room'] == null ? null : Room.fromJson(json['room']),
       client: Client.fromJson(json['patient']),
       type: json['type'],
     );
@@ -67,12 +68,14 @@ class Client {
   final name;
   final dateOfBirth;
   final age;
+  final ProfileImage image;
 
   Client({
     @required this.id,
     @required this.name,
     @required this.dateOfBirth,
     @required this.age,
+    @required this.image,
   });
 
   factory Client.fromJson(Map<String, dynamic> json) {
@@ -81,6 +84,7 @@ class Client {
       name: json['name'],
       dateOfBirth: json['date_of_birth'],
       age: ['age'],
+      image: ProfileImage.fromjson(json['profile_image']),
     );
   }
 }

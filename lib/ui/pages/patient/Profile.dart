@@ -7,7 +7,6 @@ import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
-import 'package:esma3ny/ui/widgets/waiting_wiget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,5 +1,6 @@
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/models/client_models/health_profile.dart';
+import 'package:esma3ny/data/models/client_models/health_profile_helper.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_filter.dart';
 import 'package:esma3ny/data/models/public/session_price_response.dart';
 
@@ -21,4 +22,5 @@ abstract class ClientRepository {
   Future<void> uploadProfilePic(String imagePath, ClientModel client);
   Future<dynamic> getSessionHistory(int pageKey);
   Future<HealthProfileHelper> getHealthProfileHelper();
+  Future<String> updateHealthProfile(HealthProfileJson healthProfileJson);
 }

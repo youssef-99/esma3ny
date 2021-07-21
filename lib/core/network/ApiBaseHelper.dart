@@ -1,4 +1,5 @@
 // import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:data_connection_checker/data_connection_checker.dart';
@@ -104,6 +105,18 @@ class ApiBaseHelper {
       Response response = await baseAPI.put(checkUrl(url), data: data);
       return response;
     } on DioError catch (e) {
+      ExceptionHandling.handleDioExceprion(e);
+    }
+  }
+
+  // ignore: missing_return
+  Future<Response> patchHTTP(String url, dynamic data) async {
+    try {
+      Response response =
+          await baseAPI.patch(checkUrl(url), data: json.encode(data));
+      return response;
+    } on DioError catch (e) {
+      print(e.error);
       ExceptionHandling.handleDioExceprion(e);
     }
   }

@@ -1,5 +1,4 @@
 import 'package:esma3ny/core/exceptions/exceptions.dart';
-import 'package:esma3ny/data/models/public/certificate.dart';
 import 'package:esma3ny/data/models/public/education.dart';
 import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
 import 'package:flutter/material.dart';

@@ -270,7 +270,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     child: Text('+${country.code}      ${country.name}'),
                   ))
               .toList(),
-          onSaved: (value) {
+          onSaved: (int value) {
             selectedCountry = value;
           },
         ),
@@ -299,7 +299,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
       phone: phone.text,
       gender: selectedGender,
       dateOfBirth: dateOfBirth.text,
-      countryId: selectedCountry.toString(),
+      countryId: selectedCountry,
       password: password.text,
       confirmPassword: confirmPassword.text,
     );

@@ -7,9 +7,11 @@ import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:esma3ny/ui/provider/public/roleState.dart';
 import 'package:esma3ny/ui/provider/public/signup_form_state.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/textFields/validation_error.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -77,7 +79,7 @@ class _SignupFormState extends State<SignupForm> {
               children: [
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Name',
+                    hint: AppLocalizations.of(context).name,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.person,
                     controller: name,
@@ -87,7 +89,7 @@ class _SignupFormState extends State<SignupForm> {
                 ValidationError(
                   textField: TextFieldForm(
                     prefixIcon: Icons.email,
-                    hint: 'Email',
+                    hint: AppLocalizations.of(context).email,
                     validate: FormBuilderValidators.compose([
                       FormBuilderValidators.required(context),
                       FormBuilderValidators.email(context)
@@ -98,13 +100,16 @@ class _SignupFormState extends State<SignupForm> {
                 ),
                 ValidationError(
                   textField: PasswordFormField(
-                      controller: password, label: 'Password', require: true),
+                    controller: password,
+                    label: AppLocalizations.of(context).password,
+                    require: true,
+                  ),
                   error: signupState.errors['password'],
                 ),
                 ValidationError(
                   textField: PasswordFormField(
                     controller: confirmPassword,
-                    label: 'Confirm Password',
+                    label: AppLocalizations.of(context).confirm_password,
                     require: true,
                   ),
                   error: signupState.errors['password_confirmation'],
@@ -113,8 +118,9 @@ class _SignupFormState extends State<SignupForm> {
                   textField: FormBuilderDropdown(
                     name: 'gender',
                     decoration: InputDecoration(
-                        prefixIcon: prefixIcon(Icons.person),
-                        labelText: 'Gender'),
+                      prefixIcon: prefixIcon(Icons.person),
+                      labelText: AppLocalizations.of(context).gender,
+                    ),
                     allowClear: true,
                     validator: FormBuilderValidators.compose(
                         [FormBuilderValidators.required(context)]),
@@ -139,7 +145,7 @@ class _SignupFormState extends State<SignupForm> {
                     initialDatePickerMode: DatePickerMode.year,
                     decoration: InputDecoration(
                       prefixIcon: prefixIcon(Icons.date_range),
-                      labelText: 'Date Of Birth',
+                      labelText: AppLocalizations.of(context).date_of_birth,
                     ),
                     enabled: true,
                     validator: FormBuilderValidators.required(context),
@@ -150,8 +156,9 @@ class _SignupFormState extends State<SignupForm> {
                   textField: FormBuilderDropdown(
                     name: 'country',
                     decoration: InputDecoration(
-                        prefixIcon: prefixIcon(Icons.person),
-                        labelText: 'Country'),
+                      prefixIcon: prefixIcon(Icons.person),
+                      labelText: AppLocalizations.of(context).country,
+                    ),
                     allowClear: true,
                     validator: FormBuilderValidators.compose(
                         [FormBuilderValidators.required(context)]),
@@ -172,7 +179,7 @@ class _SignupFormState extends State<SignupForm> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Phone Number',
+                    hint: AppLocalizations.of(context).phone_number,
                     validate: FormBuilderValidators.compose([
                       FormBuilderValidators.required(context),
                       FormBuilderValidators.numeric(context),
@@ -185,19 +192,23 @@ class _SignupFormState extends State<SignupForm> {
                 FormBuilderCheckbox(
                   name: 'agree',
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 10)),
-                  validator: FormBuilderValidators.equal(context, true,
-                      errorText:
-                          'You should accept the terms and condition to continue'),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                  ),
+                  validator: FormBuilderValidators.equal(
+                    context,
+                    true,
+                    errorText:
+                        'You should accept the terms and condition to continue',
+                  ),
                   title: Row(
                     children: [
                       Text(
-                        'I accept the ',
+                        AppLocalizations.of(context).i_accept,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       Text(
-                        'terms and conditions',
+                        AppLocalizations.of(context).terms_and_conditions,
                         style: TextStyle(
                             decoration: TextDecoration.underline,
                             fontSize: 16,
@@ -211,7 +222,7 @@ class _SignupFormState extends State<SignupForm> {
                 signupState.loading
                     ? Column(
                         children: [
-                          CircularProgressIndicator(),
+                          CustomProgressIndicator(),
                         ],
                       )
                     : ElevatedButton(
@@ -241,7 +252,7 @@ class _SignupFormState extends State<SignupForm> {
                           padding: EdgeInsets.symmetric(vertical: 10),
                         ),
                         child: Text(
-                          'Sign up',
+                          AppLocalizations.of(context).signup,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
@@ -260,7 +271,7 @@ class _SignupFormState extends State<SignupForm> {
       phone: phone.text,
       gender: selectedGender,
       dateOfBirth: dateOfBirth.text,
-      countryId: selectedCountry.toString(),
+      countryId: selectedCountry,
       password: password.text,
       confirmPassword: confirmPassword.text,
       deviceName: await getDeviceName(),

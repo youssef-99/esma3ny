@@ -1,4 +1,3 @@
-import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/data/models/public/country.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/locale_string.dart';

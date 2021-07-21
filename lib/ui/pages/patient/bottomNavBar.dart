@@ -1,12 +1,8 @@
-import 'package:esma3ny/data/models/client_models/Client.dart';
-import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:esma3ny/ui/pages/patient/settings.dart';
 import 'package:esma3ny/ui/pages/patient/upcomin_session_page.dart';
-import 'package:esma3ny/ui/provider/client/edit_profile_state.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../theme/colors.dart';
 import 'Profile.dart';
@@ -20,7 +16,6 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   PublicRepository _publicRepository = PublicRepository();
-  ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
 
   List screens = [
     // HomeClient(),

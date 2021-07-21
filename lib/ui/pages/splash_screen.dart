@@ -6,6 +6,7 @@ import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:esma3ny/core/.env.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -41,10 +42,15 @@ class _SplashScreenState extends State<SplashScreen>
     isLoggedTherapist = role == THERAPIST;
   }
 
+  _setLnag() async {
+    LANG = await SharedPrefrencesHelper.getLocale ? 'en' : 'ar';
+  }
+
   @override
   void initState() {
     _getCountries();
     _checkLogging();
+    _setLnag();
 
     _animationController = AnimationController(
       vsync: this,

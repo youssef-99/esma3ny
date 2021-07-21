@@ -50,7 +50,7 @@ class _State extends State<JoinChannelAudio> {
   _addListeners() {
     _engine.setEventHandler(RtcEngineEventHandler(
       joinChannelSuccess: (channel, uid, elapsed) {
-        log('joinChannelSuccess ${channel} ${uid} ${elapsed}');
+        log('joinChannelSuccess $channel $uid $elapsed');
         setState(() {
           isJoined = true;
         });

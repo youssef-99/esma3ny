@@ -29,6 +29,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
       final isLastPage = newPage['current_page'] == newPage['last_page'];
       List<Appointment> newPageDecoded = [];
       newPage['data'].forEach((appointment) {
+        print(appointment);
         newPageDecoded.add(Appointment.fromJson(appointment));
       });
       final newItems = newPageDecoded;

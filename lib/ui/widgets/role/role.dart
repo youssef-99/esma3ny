@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../data/models/enums/RoleEnum.dart';
-
 class Role extends StatelessWidget {
   final Color backColor, circleAvatarColor, avatarColor;
-  final RoleEnum roleType;
+  final String roleType;
   Role({
     @required this.backColor,
     @required this.roleType,
@@ -21,7 +19,7 @@ class Role extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            roleType.toString().substring(9),
+            roleType,
             style: Theme.of(context).textTheme.headline5,
           ),
           SizedBox(height: 10),

@@ -7,6 +7,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../theme/colors.dart';
 
@@ -49,7 +50,7 @@ class _LoginState extends State<Login> {
           logo(),
           roleButtons(),
           form(),
-          forgotPassword(),
+          // forgotPassword(),
           confirmButton(),
           createOneText(),
         ],
@@ -73,8 +74,10 @@ class _LoginState extends State<Login> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            roleButton('Client', CustomColors.orange),
-            roleButton('Therapist', CustomColors.blue),
+            roleButton(
+                AppLocalizations.of(context).client, CustomColors.orange),
+            roleButton(
+                AppLocalizations.of(context).therapist, CustomColors.blue),
           ],
         ),
       );
@@ -83,7 +86,7 @@ class _LoginState extends State<Login> {
         builder: (context, state, child) => Expanded(
           child: InkWell(
             onTap: () {
-              if (role == 'Client') {
+              if (role == AppLocalizations.of(context).client) {
                 state.clientPressed();
               } else {
                 state.therapistPressed();
@@ -91,7 +94,7 @@ class _LoginState extends State<Login> {
             },
             child: Container(
               decoration: BoxDecoration(
-                gradient: role == 'Client'
+                gradient: role == AppLocalizations.of(context).client
                     ? (state.client ? grediant(color) : null)
                     : (state.therapist ? grediant(color) : null),
                 borderRadius: BorderRadius.circular(5),
@@ -126,7 +129,7 @@ class _LoginState extends State<Login> {
               FormBuilderTextField(
                 name: 'email',
                 decoration: InputDecoration(
-                  hintText: 'Email',
+                  hintText: AppLocalizations.of(context).email,
                   prefixIcon: Icon(Icons.email),
                 ),
                 validator: FormBuilderValidators.compose([
@@ -140,7 +143,7 @@ class _LoginState extends State<Login> {
                 name: 'password',
                 obscureText: state.showPassword,
                 decoration: InputDecoration(
-                  hintText: 'Password',
+                  hintText: AppLocalizations.of(context).password,
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: IconButton(
                     onPressed: () => state.changePsswordVisibilty(),
@@ -208,7 +211,7 @@ class _LoginState extends State<Login> {
                     }
                   },
                   child: Text(
-                    'Login',
+                    AppLocalizations.of(context).login,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
@@ -217,7 +220,7 @@ class _LoginState extends State<Login> {
 
   createOneText() => TextButton(
         child: Text(
-          'Create Account',
+          AppLocalizations.of(context).create_account,
           style: TextStyle(
             color: CustomColors.blue,
             decoration: TextDecoration.underline,

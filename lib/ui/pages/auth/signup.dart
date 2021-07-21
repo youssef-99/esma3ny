@@ -7,6 +7,7 @@ import '../../theme/colors.dart';
 import '../../widgets/SignupForm.dart';
 import '../../widgets/role/pickedRole.dart';
 import '../../widgets/role/unpickedRole.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -19,7 +20,7 @@ class _SignupState extends State<Signup> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: CustomColors.blue,
-        title: Text('Sign Up'),
+        title: Text(AppLocalizations.of(context).signup),
       ),
       body: Container(
         child: columnBody(),

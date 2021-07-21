@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../theme/colors.dart';
 import '../../widgets/filtersSheet.dart';
@@ -89,12 +90,12 @@ class _TherapistsListState extends State<TherapistsList>
           vsync: this,
           child: !isSearch
               ? Text(
-                  'Therapists',
+                  AppLocalizations.of(context).therapists,
                   style: Theme.of(context).appBarTheme.titleTextStyle,
                 )
               : TextField(),
         ),
-        leading: appBarLeading(),
+        // leading: appBarLeading(),
         actions: [
           actionButton(
             Icons.filter_alt_rounded,

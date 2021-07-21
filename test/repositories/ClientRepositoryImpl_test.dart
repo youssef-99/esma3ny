@@ -1,8 +1,5 @@
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
-import 'package:esma3ny/data/models/client_models/health_profile.dart';
-import 'package:esma3ny/data/models/client_models/time_slot_response.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
-import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';

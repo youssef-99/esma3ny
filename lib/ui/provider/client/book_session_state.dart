@@ -219,7 +219,7 @@ class BookSessionState extends ChangeNotifier {
     notifyListeners();
 
     await ExceptionHandling.hanleToastException(() async {
-      await _clientRepositoryImpl.payNow(id, 'tok_visa');
+      await _clientRepositoryImpl.payNow(id, _stripeToken.tokenId);
     }, 'Your Session Booked Successfully', true);
 
     print(_stripeToken.tokenId);

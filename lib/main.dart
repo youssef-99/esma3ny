@@ -20,7 +20,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/localization/form_builder_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'ui/pages/auth/login.dart';
@@ -80,7 +79,7 @@ class _MyAppState extends State<MyApp> {
             ],
             supportedLocales: [
               const Locale('en', ''), // English, no country code
-              const Locale('ar', ''), // Arabic, no country code
+              const Locale('ar', 'SA'), // Arabic, no country code
             ],
             locale: locale.currentLocale,
             title: 'Esma3ny',
