@@ -64,7 +64,7 @@ class ClientCard extends StatelessWidget {
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
         child: CachedImage(
-          url: '',
+          url: sessionHistory.profileImage.small,
           raduis: 70,
         ),
       );

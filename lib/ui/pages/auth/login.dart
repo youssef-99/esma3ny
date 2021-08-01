@@ -179,43 +179,38 @@ class _LoginState extends State<Login> {
       );
 
   confirmButton() => Consumer2<LoginState, RoleState>(
-        builder: (context, state, roleState, widget) => state.loading
-            ? Column(
-                children: [
-                  CustomProgressIndicator(),
-                ],
-              )
-            : Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: CustomColors.blue,
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                  ),
-                  onPressed: () async {
-                    _key.currentState.save();
+        builder: (context, state, roleState, widget) => Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: CustomColors.blue,
+              padding: EdgeInsets.symmetric(vertical: 10),
+            ),
+            onPressed: () async {
+              _key.currentState.save();
 
-                    if (_key.currentState.validate()) {
-                      await state.login(
-                          _email.text, _password.text, roleState.client);
+              if (_key.currentState.validate()) {
+                await state.login(
+                    _email.text, _password.text, roleState.client);
 
-                      if (state.exception == null) {
-                        if (roleState.client)
-                          Navigator.pushReplacementNamed(
-                              context, 'Bottom_Nav_Bar');
-                        else
-                          Navigator.pushReplacementNamed(
-                              context, 'Bottom_Nav_Bar_therapist');
-                      }
-                      handleException(state.exception);
-                    }
-                  },
-                  child: Text(
+                if (state.exception == null) {
+                  if (roleState.client)
+                    Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar');
+                  else
+                    Navigator.pushReplacementNamed(
+                        context, 'Bottom_Nav_Bar_therapist');
+                }
+                handleException(state.exception);
+              }
+            },
+            child: state.loading
+                ? CustomProgressIndicator()
+                : Text(
                     AppLocalizations.of(context).login,
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                ),
-              ),
+          ),
+        ),
       );
 
   createOneText() => TextButton(

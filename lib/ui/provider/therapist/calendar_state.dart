@@ -95,7 +95,7 @@ class CalendarState extends ChangeNotifier {
         try {
           await _therapistRepository.createTimeSlots(newTimeSlot);
         } on InvalidData catch (e) {
-          errors = e.errors;
+          errors = e.errors == null ? {} : e.errors;
           notifyListeners();
           throw InvalidData(errors, msg: e.msg);
         }

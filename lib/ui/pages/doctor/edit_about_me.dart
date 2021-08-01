@@ -1,4 +1,6 @@
+import 'package:chips_choice/chips_choice.dart';
 import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/language.dart';
 import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/therapist/about_therapist.dart';
 import 'package:esma3ny/ui/provider/therapist/about_me_state.dart';
@@ -26,6 +28,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
   AboutMeState _aboutMeState;
   String _selectedPrefix;
   int _selectedJobId;
+  List<int> selectedLanguages = [];
 
   @override
   void initState() {
@@ -42,6 +45,9 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
         _therapistProfileState.therapistProfileResponse.biography.stringAr;
     _selectedPrefix = _therapistProfileState.therapistProfileResponse.prefix;
     _selectedJobId = _therapistProfileState.therapistProfileResponse.jobId;
+    _aboutMeState.getLanguages(
+        _therapistProfileState.therapistProfileResponse.languages);
+    _aboutMeState.getJobs();
     super.initState();
   }
 
@@ -59,36 +65,39 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
   }
 
   body() => Consumer2<TherapistProfileState, AboutMeState>(
-        builder: (context, therapistState, aboutMeState, child) => Container(
-          padding: EdgeInsets.all(20),
-          child: FormBuilder(
-            key: _key,
-            child: ListView(
-              children: [
-                jobs(therapistState.therapistProfileResponse.jobId),
-                jobEn(therapistState.therapistProfileResponse.title.stringEn),
-                jobAr(therapistState.therapistProfileResponse.title.stringAr),
-                prefixList(therapistState.therapistProfileResponse.prefix),
-                bioEn(
-                    therapistState.therapistProfileResponse.biography.stringEn),
-                bioAr(
-                    therapistState.therapistProfileResponse.biography.stringAr),
-                SizedBox(height: 50),
-                aboutMeState.loading
-                    ? CustomProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: () async {
-                          if (_key.currentState.validate()) {
-                            await aboutMeState.edit(aboutMeModel());
-                            await therapistState.updateProfile();
-                            if (aboutMeState.isUpdated) Navigator.pop(context);
-                          }
-                        },
-                        child: Text('Edit')),
-              ],
+        builder: (context, therapistState, aboutMeState, child) {
+          return Container(
+            padding: EdgeInsets.all(20),
+            child: FormBuilder(
+              key: _key,
+              child: ListView(
+                children: [
+                  jobs(therapistState.therapistProfileResponse.jobId),
+                  jobEn(therapistState.therapistProfileResponse.title.stringEn),
+                  jobAr(therapistState.therapistProfileResponse.title.stringAr),
+                  prefixList(therapistState.therapistProfileResponse.prefix),
+                  bioEn(therapistState
+                      .therapistProfileResponse.biography.stringEn),
+                  bioAr(therapistState
+                      .therapistProfileResponse.biography.stringAr),
+                  languages(),
+                  SizedBox(height: 50),
+                  ElevatedButton(
+                      onPressed: () async {
+                        if (_key.currentState.validate()) {
+                          await aboutMeState.edit(aboutMeModel());
+                          await therapistState.updateProfile();
+                          if (aboutMeState.isUpdated) Navigator.pop(context);
+                        }
+                      },
+                      child: aboutMeState.loading
+                          ? CustomProgressIndicator()
+                          : Text('Edit')),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       );
 
   jobEn(String title) => ValidationError(
@@ -118,11 +127,12 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
             hint: Text('Prefix'),
             initialValue: prefix,
             decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.person,
-                  color: CustomColors.blue,
-                ),
-                labelText: 'Prefix'),
+              prefixIcon: Icon(
+                Icons.person,
+                color: CustomColors.blue,
+              ),
+              labelText: 'Prefix',
+            ),
             items: state.prefixes
                 .map(
                   (e) => DropdownMenuItem(
@@ -140,37 +150,34 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
         ),
       );
 
-  jobs(int jobId) => FutureBuilder<List<Job>>(
-        future: _aboutMeState.getJobs(),
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.done
-                ? ValidationError(
-                    textField: FormBuilderDropdown(
-                      name: 'job name',
-                      initialValue: snapshot.data[jobId - 1],
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.work_outline_rounded,
-                            color: CustomColors.blue,
-                          ),
-                          labelText: 'Job Name'),
-                      items: snapshot.data
-                          .map(
-                            (Job e) => DropdownMenuItem(
-                              child: Text(e.name.getLocalizedString()),
-                              value: e,
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (Job job) {
-                        _selectedJobId = job.id;
-                      },
-                      validator: FormBuilderValidators.required(context),
-                    ),
-                    error: _aboutMeState.errors['job_id'],
-                  )
-                : SizedBox(),
-      );
+  jobs(int jobId) {
+    return ValidationError(
+      textField: FormBuilderDropdown<Job>(
+        name: 'job name',
+        initialValue: _aboutMeState.jobs[jobId - 1],
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.work_outline_rounded,
+            color: CustomColors.blue,
+          ),
+          labelText: 'Job Name',
+        ),
+        items: _aboutMeState.jobs
+            .map(
+              (Job job) => DropdownMenuItem<Job>(
+                child: Text(job.name.getLocalizedString()),
+                value: job,
+              ),
+            )
+            .toList(),
+        onChanged: (Job job) {
+          _selectedJobId = job.id;
+        },
+        validator: FormBuilderValidators.required(context),
+      ),
+      error: _aboutMeState.errors['job_id'],
+    );
+  }
 
   bioEn(String bio) => ValidationError(
         textField: TextFieldForm(
@@ -194,6 +201,31 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
         error: _aboutMeState.errors['biography_ar'],
       );
 
+  languages() => Consumer<AboutMeState>(
+        builder: (context, state, child) => ChipsChoice<int>.multiple(
+          value: state.selectedLanguage,
+          onChanged: (val) {
+            state.setLanguages(val);
+          },
+          choiceItems: C2Choice.listFrom<int, Language>(
+            source: state.languages,
+            value: (i, v) => i,
+            label: (i, v) => v.name.getLocalizedString(),
+            tooltip: (i, v) => v.id.toString(),
+            style: (i, v) {
+              return C2ChoiceStyle(
+                labelStyle: TextStyle(fontSize: 18),
+              );
+            },
+          ),
+          choiceActiveStyle: C2ChoiceStyle(
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+            color: CustomColors.orange,
+          ),
+          wrapped: true,
+        ),
+      );
+
   AboutTherapistModel aboutMeModel() {
     return AboutTherapistModel(
       title: LocaleString(
@@ -206,7 +238,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
         stringAr: _bioAr.text,
       ),
       jobId: _selectedJobId,
-      languageId: [1, 2],
+      languageId: _aboutMeState.selectedLanguage,
     );
   }
 }

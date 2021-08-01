@@ -3,13 +3,16 @@ import 'package:esma3ny/ui/pages/doctor/about_profile.dart';
 import 'package:esma3ny/ui/pages/doctor/basic_info.dart';
 import 'package:esma3ny/ui/pages/doctor/experiences.dart';
 import 'package:esma3ny/ui/pages/doctor/fees.dart';
+import 'package:esma3ny/ui/pages/doctor/specialtes_and_mainfocus.dart';
 import 'package:esma3ny/ui/provider/therapist/basic_info_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cupertino_icons/cupertino_icons.dart';
 
 class TherapistProfilePage extends StatefulWidget {
   @override
@@ -87,6 +90,16 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
                 context,
                 MaterialPageRoute(
                   builder: (_) => ExperiencePage(),
+                ),
+              ),
+            ),
+            customListTile(
+              CupertinoIcons.pen,
+              'Specialities',
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SpecialitiesAndMainFocus(),
                 ),
               ),
             ),

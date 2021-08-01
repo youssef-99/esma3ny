@@ -116,10 +116,10 @@ class _CalenderState extends State<Calender> {
         builder: (context, state, child) => ListTile(
           leading: Icon(
             Icons.brightness_1,
-            color: CustomColors.orange,
+            color: session.client == null ? CustomColors.orange : Colors.green,
           ),
           title: session.client == null
-              ? Text('Didn\'n booked yet!')
+              ? Text('Available')
               : Text(
                   '${session.client.name}',
                 ),

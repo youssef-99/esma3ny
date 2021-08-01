@@ -6,7 +6,6 @@ import 'package:esma3ny/data/models/public/room.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:esma3ny/ui/provider/client/chat_state.dart';
-import 'package:esma3ny/ui/widgets/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pusher/pusher.dart';
@@ -33,8 +32,21 @@ class _ChatScreenState extends State<ChatScreen> {
 
   // List<MessageBubble> messages = [];
 
-  ChatState _chatState;
+  _onEmojiSelected(Emoji emoji) {
+    _textEditingController
+      ..text += emoji.emoji
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: _textEditingController.text.length));
+  }
 
+  _onBackspacePressed() {
+    _textEditingController
+      ..text = _textEditingController.text.characters.skipLast(1).toString()
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: _textEditingController.text.length));
+  }
+
+  ChatState _chatState;
   initState() {
     initPusher();
     super.initState();
@@ -83,26 +95,38 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     _chatState = Provider.of<ChatState>(context);
-    return Scaffold(
-      key: scaffoldState,
-      appBar: AppBar(
-        title: Text(
-          'Chat',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+    return WillPopScope(
+      onWillPop: () async {
+        if (showEmojiPicker) {
+          setState(() {
+            showEmojiPicker = !showEmojiPicker;
+          });
+          return showEmojiPicker;
+        }
+        Navigator.pop(context);
+        return showEmojiPicker;
+      },
+      child: Scaffold(
+        key: scaffoldState,
+        appBar: AppBar(
+          title: Text(
+            'Chat',
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 20,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 20,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: messagesList(),
-            ),
-            bottomTextfield(),
-            Container(child: showEmojiPicker ? emojis() : Container())
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: messagesList(),
+              ),
+              bottomTextfield(),
+              Container(child: showEmojiPicker ? emojis() : Container())
+            ],
+          ),
         ),
       ),
     );
@@ -127,15 +151,35 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  Widget emojis() => EmojiPicker(
-        // rows: 3,
-        // columns: 7,
-        // buttonMode: ButtonMode.MATERIAL,
-        // numRecommended: 10,
-        onEmojiSelected: (category, emoji) {
-          _textEditingController.text =
-              _textEditingController.text + emoji.emoji;
-        },
+  Widget emojis() => Offstage(
+        offstage: !showEmojiPicker,
+        child: SizedBox(
+          height: 250,
+          child: EmojiPicker(
+              onEmojiSelected: (Category category, Emoji emoji) {
+                _onEmojiSelected(emoji);
+              },
+              onBackspacePressed: _onBackspacePressed,
+              config: const Config(
+                  columns: 7,
+                  emojiSizeMax: 32.0,
+                  verticalSpacing: 0,
+                  horizontalSpacing: 0,
+                  initCategory: Category.RECENT,
+                  bgColor: Color(0xFFF2F2F2),
+                  indicatorColor: Colors.blue,
+                  iconColor: Colors.grey,
+                  iconColorSelected: Colors.blue,
+                  progressIndicatorColor: Colors.blue,
+                  backspaceColor: Colors.blue,
+                  showRecentsTab: true,
+                  recentsLimit: 28,
+                  noRecentsText: 'No Recents',
+                  noRecentsStyle:
+                      TextStyle(fontSize: 20, color: Colors.black26),
+                  categoryIcons: CategoryIcons(),
+                  buttonMode: ButtonMode.MATERIAL)),
+        ),
       );
 
   Widget messagesList() {
@@ -183,35 +227,36 @@ class _ChatScreenState extends State<ChatScreen> {
                     border: InputBorder.none,
                   )),
             ),
-            IconButton(
-                icon: Icon(Icons.attach_file),
-                onPressed: () {
-                  scaffoldState.currentState
-                      .showBottomSheet((builder) => Material(
-                            elevation: 50,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              width: double.infinity,
-                              height: 200,
-                              child: GridView.count(
-                                crossAxisCount: 3,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 50, vertical: 10),
-                                primary: false,
-                                children: [
-                                  ButtonChat(() {}, Icons.photo),
-                                  ButtonChat(() {}, Icons.file_copy),
-                                  ButtonChat(() {}, Icons.camera_alt),
-                                  ButtonChat(() {}, Icons.contact_phone)
-                                ],
-                              ),
-                            ),
-                          ));
-                }),
+            // IconButton(
+            //     icon: Icon(Icons.attach_file),
+            //     onPressed: () {
+            //       scaffoldState.currentState
+            //           .showBottomSheet((builder) => Material(
+            //                 elevation: 50,
+            //                 child: Container(
+            //                   decoration: BoxDecoration(
+            //                     border: Border.all(color: Colors.grey),
+            //                     borderRadius: BorderRadius.circular(20),
+            //                   ),
+            //                   width: double.infinity,
+            //                   height: 200,
+            //                   child: GridView.count(
+            //                     crossAxisCount: 3,
+            //                     shrinkWrap: true,
+            //                     physics: NeverScrollableScrollPhysics(),
+            //                     padding: EdgeInsets.symmetric(
+            //                         horizontal: 50, vertical: 10),
+            //                     primary: false,
+            //                     children: [
+            //                       ButtonChat(() {}, Icons.photo),
+            //                       ButtonChat(() {}, Icons.file_copy),
+            //                       ButtonChat(() {}, Icons.camera_alt),
+            //                       ButtonChat(() {}, Icons.contact_phone)
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ));
+            //     }),
             IconButton(
                 icon: Icon(Icons.send),
                 onPressed: () async {

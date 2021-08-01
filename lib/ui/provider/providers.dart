@@ -16,6 +16,8 @@ import 'package:esma3ny/ui/provider/therapist/basic_info_state.dart';
 import 'package:esma3ny/ui/provider/therapist/calendar_state.dart';
 import 'package:esma3ny/ui/provider/therapist/fees_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
+import 'package:esma3ny/ui/provider/therapist/call_state.dart';
+import 'package:esma3ny/ui/provider/therapist/specialities_state.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -83,6 +85,12 @@ class Providers {
         ),
         ChangeNotifierProvider(
           create: (context) => CalendarState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SpecialitiesState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CallState(),
         ),
       ];
 }

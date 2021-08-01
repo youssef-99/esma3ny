@@ -1,12 +1,25 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
+import 'package:esma3ny/core/constants.dart';
+import 'package:esma3ny/data/models/public/login_response.dart';
 import 'package:esma3ny/data/models/public/room.dart';
+import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
+import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
+import 'package:esma3ny/ui/pages/communications/chat.dart';
+import 'package:esma3ny/ui/pages/doctor/client_health_profile.dart';
+import 'package:esma3ny/ui/pages/doctor/session_notes.dart';
+import 'package:esma3ny/ui/provider/client/chat_state.dart';
+import 'package:esma3ny/ui/provider/therapist/call_state.dart';
 import 'package:esma3ny/ui/widgets/utils/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_pusher/pusher.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class CallPage extends StatefulWidget {
   final Room room;
@@ -25,6 +38,10 @@ class _CallPageState extends State<CallPage> {
   bool micMuted = false;
   bool videoMuted = false;
   RtcEngine _engine;
+  LoginResponse _loginResponse;
+  Channel channel;
+  ChatState _chatState;
+  int numberOfMessages = 0;
 
   @override
   void dispose() {
@@ -36,12 +53,49 @@ class _CallPageState extends State<CallPage> {
     super.dispose();
   }
 
+  initPusher() async {
+    _loginResponse = await SharedPrefrencesHelper.getLoginData();
+    _chatState = Provider.of<ChatState>(context, listen: false);
+    try {
+      await Pusher.init('42af18980641fe3a9f51', PusherOptions(cluster: 'eu'),
+          enableLogging: true);
+    } on PlatformException catch (e) {
+      print(e);
+    }
+    await Pusher.connect(onConnectionStateChange: (x) {
+      print(x.currentState);
+    }, onError: (e) {
+      print(e);
+    });
+
+    channel = await Pusher.subscribe(widget.room.uuid);
+
+    await channel.bind('message', (event) {
+      if (jsonDecode(event.data)['author']['name'] != _loginResponse.name) {
+        _chatState.addMessage(jsonDecode(event.data)['message'],
+            jsonDecode(event.data)['author']['name']);
+        setState(() {
+          numberOfMessages++;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    getInitData();
+    initPusher();
     // initialize agora sdk
     _handleCameraAndMic();
     initialize();
+  }
+
+  getInitData() async {
+    if (await SharedPrefrencesHelper.isLogged() == THERAPIST) {
+      await Provider.of<CallState>(context, listen: false)
+          .getInitData('${widget.room.id}-${widget.room.uuid}');
+    }
   }
 
   Future<void> _handleCameraAndMic() async {
@@ -375,15 +429,73 @@ class _CallPageState extends State<CallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        mini: true,
-        onPressed: _onSwitchCamera,
-        child: Icon(
-          Icons.camera_rear_rounded,
-          color: Colors.blueAccent,
-        ),
-        backgroundColor: Colors.white,
-        // child: ,
+      floatingActionButton: Column(
+        children: [
+          FloatingActionButton(
+            heroTag: 'switch_cam',
+            mini: true,
+            onPressed: _onSwitchCamera,
+            child: Icon(
+              Icons.camera_rear_rounded,
+              color: Colors.blueAccent,
+            ),
+            backgroundColor: Colors.white,
+            // child: ,
+          ),
+          FloatingActionButton(
+            heroTag: 'chat',
+            mini: true,
+            onPressed: () {
+              setState(() {
+                numberOfMessages = 0;
+              });
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => ChatScreen(widget.room)));
+            },
+            child: Stack(
+              children: [
+                Icon(
+                  Icons.chat_bubble,
+                  color: Colors.blueAccent,
+                ),
+                numberOfMessages == 0
+                    ? SizedBox()
+                    : CircleAvatar(
+                        radius: 7,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          numberOfMessages.toString(),
+                          style: TextStyle(fontSize: 10, color: Colors.white),
+                        ),
+                      ),
+              ],
+            ),
+            backgroundColor: Colors.white,
+            // child: ,
+          ),
+          FloatingActionButton(
+            heroTag: 'notes',
+            mini: true,
+            backgroundColor: Colors.white,
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (_) => SessionNotes())),
+            child: Icon(
+              Icons.note_add,
+              color: Colors.blueAccent,
+            ),
+          ),
+          FloatingActionButton(
+            heroTag: 'health_profile',
+            mini: true,
+            backgroundColor: Colors.white,
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => ClientHealthProfilePage())),
+            child: Icon(
+              Icons.health_and_safety,
+              color: Colors.blueAccent,
+            ),
+          ),
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       //appBar: AppBar(),

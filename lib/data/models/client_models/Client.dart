@@ -15,6 +15,7 @@ class ClientModel {
   final String stripeId;
   final String age;
   final ProfileImage profilImage;
+  final String profileCompeleted;
 
   ClientModel({
     this.id,
@@ -30,6 +31,7 @@ class ClientModel {
     this.stripeId,
     this.deviceName,
     this.profilImage,
+    this.profileCompeleted,
   });
 
   factory ClientModel.fromJson(Map<String, dynamic> json) {
@@ -45,6 +47,7 @@ class ClientModel {
       profilImage: ProfileImage.fromjson(json['profile_image']),
       age: json['age'],
       stripeId: json['stripe_id'],
+      profileCompeleted: json['profile_completed'],
     );
   }
 

@@ -81,28 +81,25 @@ class _UpComingSessionsState extends State<UpComingSessions> {
           );
         }
         _pagingController.refresh();
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: RefreshIndicator(
-            onRefresh: () => Future.sync(
-              () => _pagingController.refresh(),
+        return RefreshIndicator(
+          onRefresh: () => Future.sync(
+            () => _pagingController.refresh(),
+          ),
+          child: PagedListView.separated(
+            builderDelegate: PagedChildBuilderDelegate<TimeSlotResponse>(
+              itemBuilder: (context, timeSlot, index) => Container(
+                child: UpcomingSessionCard(timeSlot: timeSlot),
+              ),
+              firstPageErrorIndicatorBuilder: (context) => ErrorIndicator(
+                error: _pagingController.error,
+                onTryAgain: () => _pagingController.refresh(),
+              ),
+              noItemsFoundIndicatorBuilder: (context) => EmptyListIndicator(),
             ),
-            child: PagedListView.separated(
-              builderDelegate: PagedChildBuilderDelegate<TimeSlotResponse>(
-                itemBuilder: (context, timeSlot, index) => Container(
-                  child: UpcomingSessionCard(timeSlot: timeSlot),
-                ),
-                firstPageErrorIndicatorBuilder: (context) => ErrorIndicator(
-                  error: _pagingController.error,
-                  onTryAgain: () => _pagingController.refresh(),
-                ),
-                noItemsFoundIndicatorBuilder: (context) => EmptyListIndicator(),
-              ),
-              pagingController: _pagingController,
-              padding: const EdgeInsets.all(16),
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 16,
-              ),
+            pagingController: _pagingController,
+            padding: const EdgeInsets.all(16),
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 16,
             ),
           ),
         );

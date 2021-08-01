@@ -4,6 +4,7 @@ import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
 import 'package:esma3ny/ui/widgets/appointment.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -29,7 +30,6 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
       final isLastPage = newPage['current_page'] == newPage['last_page'];
       List<Appointment> newPageDecoded = [];
       newPage['data'].forEach((appointment) {
-        print(appointment);
         newPageDecoded.add(Appointment.fromJson(appointment));
       });
       final newItems = newPageDecoded;
@@ -105,13 +105,14 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
                 isStarted: appointment.status == SessionStatus.Started,
               ),
             ),
+            firstPageProgressIndicatorBuilder: (context) =>
+                CustomProgressIndicator(),
             firstPageErrorIndicatorBuilder: (context) => ErrorIndicator(
               error: _pagingController.error,
               onTryAgain: () => _pagingController.refresh(),
             ),
             noItemsFoundIndicatorBuilder: (context) => EmptyListIndicator(),
           ),
-          // 4
           pagingController: _pagingController,
           padding: const EdgeInsets.all(16),
           separatorBuilder: (context, index) => const SizedBox(

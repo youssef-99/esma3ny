@@ -31,6 +31,11 @@ class BookSessionState extends ChangeNotifier {
   TimeSlot _selectedTimeSlot;
   Token _stripeToken;
   bool _isPaid = false;
+  bool _isProfileCompelete;
+
+  setProfileCompelete(int isCompelete) {
+    _isProfileCompelete = isCompelete == 1;
+  }
 
   setIsPressedArray(int length) {
     if (_isPressedTimeSlot != null) _isPressedTimeSlot.clear();
@@ -238,4 +243,5 @@ class BookSessionState extends ChangeNotifier {
   SessionPriceResponse get sessionPriceResponse => _sessionPriceResponse;
   String get sessionTypeText => _sessionTypeText;
   bool get isPaid => _isPaid;
+  bool get isProfileCmopelete => _isProfileCompelete;
 }

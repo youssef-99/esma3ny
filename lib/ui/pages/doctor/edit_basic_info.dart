@@ -7,6 +7,7 @@ import 'package:esma3ny/ui/provider/therapist/basic_info_state.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/textFields/TextField.dart';
 import 'package:esma3ny/ui/widgets/textFields/passwordField.dart';
 import 'package:esma3ny/ui/widgets/textFields/validation_error.dart';
@@ -101,38 +102,34 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
                 countryPicker(),
                 phoneField(),
                 SizedBox(height: 10),
-                state.loading
-                    ? Column(
-                        children: [
-                          CircularProgressIndicator(),
-                        ],
-                      )
-                    : ElevatedButton(
-                        onPressed: () async {
-                          if (_key.currentState.saveAndValidate()) {
-                            await state.edit(therapist());
-                            if (state.isupdated) {
-                              await Provider.of<TherapistProfileState>(context,
-                                      listen: false)
-                                  .updateProfile();
-                              Fluttertoast.showToast(
-                                msg: 'Profile Updated Successfully',
-                                backgroundColor: Colors.green,
-                              );
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_key.currentState.saveAndValidate()) {
+                      await state.edit(therapist());
+                      if (state.isupdated) {
+                        await Provider.of<TherapistProfileState>(context,
+                                listen: false)
+                            .updateProfile();
+                        Fluttertoast.showToast(
+                          msg: 'Profile Updated Successfully',
+                          backgroundColor: Colors.green,
+                        );
 
-                              Navigator.pop(context);
-                            }
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: CustomColors.blue,
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                        ),
-                        child: Text(
+                        Navigator.pop(context);
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: CustomColors.blue,
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                  ),
+                  child: state.loading
+                      ? CustomProgressIndicator()
+                      : Text(
                           'Edit',
                           style: Theme.of(context).textTheme.headline6,
                         ),
-                      ),
+                ),
               ],
             ),
           ),

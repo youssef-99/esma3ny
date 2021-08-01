@@ -1,11 +1,9 @@
 import 'package:esma3ny/data/models/public/certificate.dart';
 import 'package:esma3ny/data/models/public/education.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
-import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_select/smart_select.dart';
 
 class ExperiencePage extends StatelessWidget {
   @override
@@ -26,26 +24,6 @@ class ExperiencePage extends StatelessWidget {
           children: [
             Column(
               children: [
-                S2ChipsTile(
-                  values: state.therapistProfileResponse.specializations
-                      .map((Specialization specialization) => S2Choice(
-                            value: specialization.id,
-                            title: specialization.name.getLocalizedString(),
-                          ))
-                      .toList(),
-                  onTap: null,
-                  title: Text('Specialties'),
-                ),
-                S2ChipsTile(
-                  values: state.therapistProfileResponse.mainFocus
-                      .map((Specialization specialization) => S2Choice(
-                            value: specialization.id,
-                            title: specialization.name.getLocalizedString(),
-                          ))
-                      .toList(),
-                  onTap: null,
-                  title: Text('Main Focus '),
-                ),
                 titleTile('Experience',
                     () => Navigator.pushNamed(context, 'add_experience')),
                 experienceTileList(state.therapistProfileResponse.experience),

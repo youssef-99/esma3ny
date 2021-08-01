@@ -115,17 +115,17 @@ class PaymentSheetState extends State<PaymentSheet> {
               onCreditCardModelChange: onCreditCardModelChange,
             ),
             Consumer<BookSessionState>(
-              builder: (context, state, child) => state.loading
-                  ? CircularProgressIndicator()
-                  : Container(
-                      alignment: Alignment.bottomCenter,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              child: const Text(
+              builder: (context, state, child) => Container(
+                alignment: Alignment.bottomCenter,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        child: state.loading
+                            ? CircularProgressIndicator()
+                            : const Text(
                                 'Submit',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -134,40 +134,36 @@ class PaymentSheetState extends State<PaymentSheet> {
                                   package: 'flutter_credit_card',
                                 ),
                               ),
-                              onPressed: () {
-                                if (formKey.currentState.validate()) {
-                                  testCard = CreditCard(
-                                    number: cardNumber,
-                                    expMonth:
-                                        int.parse(expiryDate.split('/')[0]),
-                                    expYear:
-                                        int.parse(expiryDate.split('/')[1]),
-                                  );
+                        onPressed: () {
+                          if (formKey.currentState.validate()) {
+                            testCard = CreditCard(
+                              number: cardNumber,
+                              expMonth: int.parse(expiryDate.split('/')[0]),
+                              expYear: int.parse(expiryDate.split('/')[1]),
+                            );
 
-                                  StripePayment.createTokenWithCard(
-                                    testCard,
-                                  ).then((token) async {
-                                    state.setStripeToken(token);
+                            StripePayment.createTokenWithCard(
+                              testCard,
+                            ).then((token) async {
+                              state.setStripeToken(token);
 
-                                    if (widget.timeSlotId != null) {
-                                      await state.payNow(widget.timeSlotId);
-                                      Navigator.pop(context);
-                                    } else
-                                      await state.reserveNewSession(false);
+                              if (widget.timeSlotId != null) {
+                                await state.payNow(widget.timeSlotId);
+                                Navigator.pop(context);
+                              } else
+                                await state.reserveNewSession(false);
 
-                                    if (state.isPaid)
-                                      Navigator.popUntil(
-                                          context,
-                                          ModalRoute.withName(
-                                              'Bottom_Nav_Bar'));
-                                  }).catchError(setError);
-                                }
-                              },
-                            ),
-                          ),
-                        ],
+                              if (state.isPaid)
+                                Navigator.popUntil(context,
+                                    ModalRoute.withName('Bottom_Nav_Bar'));
+                            }).catchError(setError);
+                          }
+                        },
                       ),
                     ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

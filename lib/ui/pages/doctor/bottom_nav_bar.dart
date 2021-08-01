@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/ui/pages/doctor/appointments.dart';
 import 'package:esma3ny/ui/pages/doctor/calender.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';
@@ -21,6 +22,13 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
     TherapistProfilePage(),
     SettingsPage(),
   ];
+
+  List<FloatingNavbarItem> items = [
+    FloatingNavbarItem(icon: Icons.group, title: 'Appointments'),
+    FloatingNavbarItem(icon: Icons.calendar_today, title: 'Calender'),
+    FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
+    FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+  ];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -31,7 +39,9 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: screens[_selectedIndex],
+      body: SafeArea(
+        child: screens[_selectedIndex],
+      ),
       bottomNavigationBar: FloatingNavbar(
         onTap: _onItemTapped,
         borderRadius: 50,
@@ -40,13 +50,23 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
         selectedItemColor: CustomColors.white,
         unselectedItemColor: CustomColors.lightBlue,
         currentIndex: _selectedIndex,
-        items: [
-          // FloatingNavbarItem(icon: Icons.home, title: 'Home'),
-          FloatingNavbarItem(icon: Icons.group, title: 'Appointments'),
-          FloatingNavbarItem(icon: Icons.calendar_today, title: 'Calender'),
-          FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
-          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
-        ],
+        itemBuilder: (context, item) => InkWell(
+          onTap: () => _onItemTapped(items.indexOf(item)),
+          child: Column(
+            children: [
+              Icon(
+                item.icon,
+                color: Colors.white,
+              ),
+              AutoSizeText(
+                item.title,
+                maxFontSize: 12,
+                style: TextStyle(color: Colors.white),
+              )
+            ],
+          ),
+        ),
+        items: items,
       ),
     );
   }

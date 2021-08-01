@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
+import 'package:esma3ny/ui/provider/client/book_session_state.dart';
 import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/about_therapist.dart';
@@ -28,8 +30,15 @@ class _TherapistProfileState extends State<TherapistProfile>
   @override
   void initState() {
     id = Provider.of<ClientTherapistProfileState>(context, listen: false).id;
+    getProfile();
     controller = TabController(vsync: this, length: 4, initialIndex: 0);
     super.initState();
+  }
+
+  getProfile() async {
+    ClientModel clientModel = await _clientRepositoryImpl.getProfile();
+    Provider.of<BookSessionState>(context, listen: false)
+        .setProfileCompelete(int.parse(clientModel.profileCompeleted));
   }
 
   @override

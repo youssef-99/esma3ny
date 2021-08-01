@@ -8,6 +8,7 @@ import 'package:esma3ny/ui/pages/doctor/edit_basic_info.dart';
 import 'package:esma3ny/ui/pages/doctor/edit_session_fees.dart';
 import 'package:esma3ny/ui/pages/doctor/profile.dart';
 import 'package:esma3ny/ui/pages/doctor/session_history.dart';
+import 'package:esma3ny/ui/pages/doctor/session_notes.dart';
 import 'package:esma3ny/ui/pages/patient/Profile.dart';
 import 'package:esma3ny/ui/pages/patient/edit_profile_page.dart';
 import 'package:esma3ny/ui/pages/patient/health_profile.dart';
@@ -15,12 +16,14 @@ import 'package:esma3ny/ui/pages/patient/session_history.dart';
 import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
 import 'package:esma3ny/ui/provider/public/language_state.dart';
 import 'package:esma3ny/ui/widgets/payment_sheet.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/localization/form_builder_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:device_preview/device_preview.dart';
 
 import 'ui/pages/auth/login.dart';
 import 'ui/pages/auth/signup.dart';
@@ -37,14 +40,13 @@ void main() async {
   // await initializeDateFormatting();
 
   runApp(
-    // DevicePreview(
-    //   enabled: !kReleaseMode,
-    //   builder: (context) =>
-    MultiProvider(
-      providers: Providers.proidvers,
-      child: MyApp(),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MultiProvider(
+        providers: Providers.proidvers,
+        child: MyApp(),
+      ),
     ),
-    // ),
   );
 }
 
@@ -86,6 +88,7 @@ class _MyAppState extends State<MyApp> {
             theme: CustomThemes.lightTheme,
             darkTheme: CustomThemes.darkTheme,
             themeMode: snapshot.hasData ? snapshot.data : ThemeMode.light,
+            // initialRoute: 'session_notes',
             routes: {
               '/': (context) => SplashScreen(),
               'login': (context) => Login(),
@@ -107,6 +110,7 @@ class _MyAppState extends State<MyApp> {
               'add_experience': (context) => AddExperience(),
               'add_certificate': (context) => AddCertificate(),
               'add_education': (context) => AddEducation(),
+              'session_notes': (context) => SessionNotes(),
             },
           ),
         );

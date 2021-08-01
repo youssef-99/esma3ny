@@ -39,6 +39,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     initialCalls();
+    // print(window.viewPadding);
     super.initState();
   }
 
@@ -46,7 +47,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: screens[_selectedIndex],
+      body: SafeArea(
+        bottom: true,
+        child: screens[_selectedIndex],
+      ),
       bottomNavigationBar: FloatingNavbar(
         onTap: _onItemTapped,
         borderRadius: 50,

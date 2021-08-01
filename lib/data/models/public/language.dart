@@ -2,7 +2,7 @@ import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:flutter/foundation.dart';
 
 class Language {
-  final id;
+  final int id;
   final LocaleString name;
 
   Language({

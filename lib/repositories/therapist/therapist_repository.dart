@@ -8,6 +8,7 @@ import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/therapist/Therapist.dart';
 import 'package:esma3ny/data/models/therapist/about_therapist.dart';
+import 'package:esma3ny/data/models/therapist/client_health_profile.dart';
 import 'package:esma3ny/data/models/therapist/new_time_slote.dart';
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/models/therapist/time_slote.dart';
@@ -157,6 +158,22 @@ class TherapistRepository {
     Response response =
         await _apiBaseHelper.getHTTP('$_route/timeslots/$type?page=$pageKey');
     return response.data;
+  }
+
+  Future<dynamic> getNotes(String uid) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/rooms/$uid/get-notes');
+    return response.data['options'];
+  }
+
+  Future<ClientHealthProfile> getHealthProfile(String uid) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/clients/$uid/health-profile');
+    return ClientHealthProfile.fromJson(response.data);
+  }
+
+  Future<void> updateNotes(String uid, Map<String, dynamic> data) async {
+    await _apiBaseHelper.patchHTTP('$_route/rooms/$uid/prescription', data);
   }
 
   Future<void> logout() async {

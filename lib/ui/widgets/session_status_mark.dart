@@ -38,7 +38,7 @@ class SessionStatusMark extends StatelessWidget {
           BoxDecoration(borderRadius: BorderRadius.circular(20), color: color),
       child: Text(
         status,
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 20, color: Colors.white),
       ),
     );
   }

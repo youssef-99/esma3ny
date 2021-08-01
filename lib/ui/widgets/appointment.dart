@@ -114,12 +114,12 @@ class AppointmentCard extends StatelessWidget {
 
   checkStarting(context) {
     return button(() {
-      print(isStarted);
+      print(appointment.type == CHAT);
       if (isStarted && appointment.room != null) {
-        if (appointment.room.type == CHAT) {
+        if (appointment.type == CHAT) {
           Navigator.push(context,
               MaterialPageRoute(builder: (_) => ChatScreen(appointment.room)));
-        } else if (appointment.room.type == VIDEO) {
+        } else if (appointment.type == VIDEO) {
           Navigator.push(
               context,
               MaterialPageRoute(

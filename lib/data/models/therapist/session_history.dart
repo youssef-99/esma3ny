@@ -1,3 +1,4 @@
+import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:flutter/foundation.dart';
 
 class SessionHistory {
@@ -9,6 +10,7 @@ class SessionHistory {
   final String status;
   final String lastChargeType;
   final Client client;
+  final ProfileImage profileImage;
 
   SessionHistory(
     this.id,
@@ -19,6 +21,7 @@ class SessionHistory {
     this.status,
     this.lastChargeType,
     this.client,
+    this.profileImage,
   );
 
   factory SessionHistory.fromJson(Map<String, dynamic> json) {
@@ -31,6 +34,9 @@ class SessionHistory {
       json['status'],
       json['last_charge_type'],
       Client.fromJson(json['patient']),
+      ProfileImage.fromjson(
+        json['patient']['profile_image'],
+      ),
     );
   }
 }

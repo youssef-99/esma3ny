@@ -105,7 +105,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
           Icon(icon),
           SizedBox(width: 20),
           SizedBox(
-            width: 200,
+            width: MediaQuery.of(context).size.width * 0.4,
             child: Text(
               text,
               overflow: TextOverflow.ellipsis,
