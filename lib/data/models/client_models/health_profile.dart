@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class HealthProfileJson {
-  final String forMe;
+  final bool forMe;
   final String name;
   final String gender;
   final String dateOfBirth;
@@ -11,11 +11,11 @@ class HealthProfileJson {
   final String maritalStatus;
   final int children;
   final Education education;
-  final Map<String, String> services;
+  final List<String> services;
   final List<String> problems;
   final String problemStartedAt;
-  final String hasFamilyDiagnosed;
-  final familyProblem;
+  final bool hasFamilyDiagnosed;
+  final Map<String, String> familyProblem;
   final String note;
 
   HealthProfileJson({
@@ -47,16 +47,13 @@ class HealthProfileJson {
       'referrer': refer,
       'nationality_id': nationalityId,
       'marital_status': maritalStatus,
-      'childrens': children,
+      'children': children,
       'education': education.toJson(),
       'services': services,
       'problems': problems,
       'problems_started_at': problemStartedAt,
       'has_family_diagnosed': hasFamilyDiagnosed,
-      'family_problems': {
-        'problems': {'1': 'true', '2': 'true', '3': 'false'},
-        'notes': familyProblem['notes']
-      },
+      'family_problems': familyProblem,
       'notes': note,
     };
   }

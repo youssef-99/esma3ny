@@ -40,13 +40,14 @@ void main() async {
   // await initializeDateFormatting();
 
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MultiProvider(
-        providers: Providers.proidvers,
-        child: MyApp(),
-      ),
+    // DevicePreview(
+    //   enabled: !kReleaseMode,
+    //   builder: (context) =>
+    MultiProvider(
+      providers: Providers.proidvers,
+      child: MyApp(),
     ),
+    // ),
   );
 }
 

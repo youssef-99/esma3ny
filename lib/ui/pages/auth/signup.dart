@@ -45,16 +45,18 @@ class _SignupState extends State<Signup> {
                     role.clientPressed();
                   },
                   child: role.client
-                      ? PickedRole(RoleEnum.Client)
-                      : UnpickedRole(RoleEnum.Client),
+                      ? PickedRole(RoleEnum.Client, CustomColors.orange)
+                      : UnpickedRole(RoleEnum.Client, Colors.orangeAccent,
+                          CustomColors.white),
                 ),
               ),
               Expanded(
                 child: InkWell(
                   onTap: () => role.therapistPressed(),
                   child: role.therapist
-                      ? PickedRole(RoleEnum.Therapist)
-                      : UnpickedRole(RoleEnum.Therapist),
+                      ? PickedRole(RoleEnum.Therapist, CustomColors.blue)
+                      : UnpickedRole(RoleEnum.Therapist, CustomColors.lightBlue,
+                          CustomColors.white),
                 ),
               ),
             ],

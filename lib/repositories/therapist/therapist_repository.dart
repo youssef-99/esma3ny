@@ -176,6 +176,12 @@ class TherapistRepository {
     await _apiBaseHelper.patchHTTP('$_route/rooms/$uid/prescription', data);
   }
 
+  Future<dynamic> getBalance(int pageKey) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/profile/balance?page=$pageKey');
+    return response.data;
+  }
+
   Future<void> logout() async {
     await _apiBaseHelper.postHTTP('$_route/auth/logout', null);
     await SharedPrefrencesHelper.logout();

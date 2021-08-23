@@ -3,6 +3,7 @@ import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.da
 import 'package:esma3ny/ui/provider/client/upcoming_sessions_state.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
+import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/upcoming_session_card.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -77,7 +78,7 @@ class _UpComingSessionsState extends State<UpComingSessions> {
   body() => Consumer<UpcommingSessionState>(builder: (context, state, child) {
         if (state.loading) {
           return Center(
-            child: CircularProgressIndicator(),
+            child: CustomProgressIndicator(),
           );
         }
         _pagingController.refresh();

@@ -9,8 +9,9 @@ class FeesState extends ChangeNotifier {
   Map<String, dynamic> _errors = {};
   bool _isUpdated = false;
   bool _loading = false;
+  String _accountType = '';
 
-  Future<void> edit(Fees fees, String accountType) async {
+  Future<void> edit(Fees fees) async {
     _loading = true;
     _errors = {};
     _isUpdated = false;
@@ -20,7 +21,7 @@ class FeesState extends ChangeNotifier {
     await ExceptionHandling.hanleToastException(
       () async {
         try {
-          _msg = await _therapistRepository.updateFees(fees, accountType);
+          _msg = await _therapistRepository.updateFees(fees, _accountType);
           Fluttertoast.showToast(msg: _msg, timeInSecForIosWeb: 5);
           _isUpdated = true;
           notifyListeners();
@@ -35,6 +36,10 @@ class FeesState extends ChangeNotifier {
     );
     _loading = false;
     notifyListeners();
+  }
+
+  setAccountValue(String accountType) {
+    _accountType = accountType;
   }
 
   Map<String, dynamic> get errors => _errors;

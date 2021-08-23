@@ -116,23 +116,28 @@ class _CallPageState extends State<CallPage> {
       return;
     }
 
-    await _initAgoraRtcEngine();
+    try {
+      await _initAgoraRtcEngine();
+    } catch (e) {
+      print(e);
+    }
     _addAgoraEventHandlers();
     // ignore: deprecated_member_use
     await _engine.enableWebSdkInteroperability(true);
 
     VideoEncoderConfiguration configuration = VideoEncoderConfiguration();
-    configuration.dimensions = VideoDimensions(1920, 1080);
+    configuration.dimensions = VideoDimensions(width: 1920, height: 1080);
     configuration.frameRate = VideoFrameRate.Fps30;
     configuration.orientationMode = VideoOutputOrientationMode.Adaptative;
     await _engine.setVideoEncoderConfiguration(configuration);
-    await _engine.joinChannel(widget.room.token, widget.room.uuid, null, 0);
+    await _engine.joinChannel(widget.room.token, widget.room.uuid, null, null);
   }
 
   /// Create agora sdk instance and initialize
   Future<void> _initAgoraRtcEngine() async {
-    _engine = await RtcEngine.createWithConfig(RtcEngineConfig(APP_ID));
+    _engine = await RtcEngine.createWithContext(RtcEngineContext(APP_ID));
     await _engine.enableVideo();
+
     await _engine.setChannelProfile(ChannelProfile.Communication);
     await _engine.setClientRole(ClientRole.Broadcaster);
   }

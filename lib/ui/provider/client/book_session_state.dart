@@ -32,6 +32,7 @@ class BookSessionState extends ChangeNotifier {
   Token _stripeToken;
   bool _isPaid = false;
   bool _isProfileCompelete;
+  bool _isFree = false;
 
   setProfileCompelete(int isCompelete) {
     _isProfileCompelete = isCompelete == 1;
@@ -49,8 +50,18 @@ class BookSessionState extends ChangeNotifier {
     _selectedTimeSlot = null;
   }
 
-  setAvailableTimeSlots(List<AvailableTimeSlotResponse> availableTimeSlots) {
+  setAvailableTimeSlots(List<AvailableTimeSlotResponse> availableTimeSlots,
+      {bool free}) {
+    _isFree = free;
+    if (_isFree) {
+      availableTimeSlots.removeWhere((element) {
+        element.timeSlots
+            .removeWhere((element) => element.duration == '60 minutes');
+        return element.timeSlots.length == 0;
+      });
+    }
     _availableTimeSlots = availableTimeSlots;
+
     updateCalender();
   }
 
@@ -62,6 +73,9 @@ class BookSessionState extends ChangeNotifier {
   void getToDaySessions(bool notify) {
     bool isContain = false;
     _availableTimeSlots.forEach((timeSlot) {
+      timeSlot.timeSlots.forEach((TimeSlot timeSlot) {
+        print(timeSlot.id);
+      });
       if (format.format(DateTime.now()) == timeSlot.date) {
         isContain = true;
         _selectedTimeSlots = timeSlot.timeSlots;
@@ -95,8 +109,10 @@ class BookSessionState extends ChangeNotifier {
   initSelectedDate() {
     bool isContain = false;
     _availableTimeSlots.forEach((timeSlot) {
+      print(timeSlot.timeSlots[0].id);
       if (_selectedDate == timeSlot.date) {
         isContain = true;
+
         _selectedTimeSlots = timeSlot.timeSlots;
         setIsPressedArray(_selectedTimeSlots.length);
         notifyListeners();
@@ -204,13 +220,18 @@ class BookSessionState extends ChangeNotifier {
     notifyListeners();
 
     await ExceptionHandling.hanleToastException(() async {
-      if (payLater) {
+      if (_isFree) {
         await _clientRepositoryImpl.reserveNewSession(
-            selectedTimeSlot.id, _sessionTypeText, payLater, null);
+            selectedTimeSlot.id, _sessionTypeText, true, null, 'free');
       } else {
-        await _clientRepositoryImpl.reserveNewSession(selectedTimeSlot.id,
-            _sessionTypeText, payLater, _stripeToken.tokenId);
-        _isPaid = true;
+        if (payLater) {
+          await _clientRepositoryImpl.reserveNewSession(
+              selectedTimeSlot.id, _sessionTypeText, payLater, null, 'paid');
+        } else {
+          await _clientRepositoryImpl.reserveNewSession(selectedTimeSlot.id,
+              _sessionTypeText, payLater, _stripeToken.tokenId, 'paid');
+          _isPaid = true;
+        }
       }
     }, 'Your Session Booked Successfully', true);
 
@@ -244,4 +265,5 @@ class BookSessionState extends ChangeNotifier {
   String get sessionTypeText => _sessionTypeText;
   bool get isPaid => _isPaid;
   bool get isProfileCmopelete => _isProfileCompelete;
+  bool get isFree => _isFree;
 }

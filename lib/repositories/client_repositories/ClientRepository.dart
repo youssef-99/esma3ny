@@ -13,7 +13,7 @@ abstract class ClientRepository {
   Future<void> getDoctorsList(FilterTherapist filterTherapist, int pageKey);
   Future<void> getDoctorInfo(int id);
   Future<dynamic> reserveNewSession(
-      int id, String type, bool payLater, String stripeToken);
+      int id, String type, bool payLater, String stripeToken, String payType);
   Future<void> showReservedTimeSlots(int pageKey);
   Future<void> cancelSession(int id);
   Future<void> rescheduleSession(int oldSessionId, int newSeesionId);

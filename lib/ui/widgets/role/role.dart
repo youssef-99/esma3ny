@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Role extends StatelessWidget {
-  final Color backColor, circleAvatarColor, avatarColor;
+  final Color backColor, circleAvatarColor, avatarColor, textColor;
   final String roleType;
   Role({
     @required this.backColor,
     @required this.roleType,
     @required this.avatarColor,
     @required this.circleAvatarColor,
+    @required this.textColor,
   });
 
   @override
@@ -20,7 +21,8 @@ class Role extends StatelessWidget {
         children: [
           Text(
             roleType,
-            style: Theme.of(context).textTheme.headline5,
+            style: TextStyle(
+                color: textColor, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 10),
           CircleAvatar(

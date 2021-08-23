@@ -49,13 +49,15 @@ class ClientRepositoryImpl implements ClientRepository {
   }
 
   @override
-  Future<dynamic> reserveNewSession(
-      int id, String type, bool payLater, String stripeToken) async {
+  Future<dynamic> reserveNewSession(int id, String type, bool payLater,
+      String stripeToken, String payType) async {
+    print(payType);
     Response response = await _apiBaseHelper.postHTTP('$_route/timeslots/$id', {
       'terms_and_conditions': true,
-      'type': type,
-      'paylater': payLater.toString(),
+      'session_type': type,
+      'paylater': payLater,
       'stripeToken': stripeToken,
+      'type': payType
     });
     return response.data;
   }

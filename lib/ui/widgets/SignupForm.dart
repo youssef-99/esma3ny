@@ -37,7 +37,7 @@ class _SignupFormState extends State<SignupForm> {
   String selectedGender;
   int selectedCountry;
 
-  List<String> genderOptions = ['Male', 'Female', 'Other'];
+  List<String> genderOptions = ['Male', 'Female'];
   List<Country> countries = [];
   PublicRepository _publicRepository = PublicRepository();
 
@@ -248,7 +248,9 @@ class _SignupFormState extends State<SignupForm> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: CustomColors.blue,
+                          primary: roleState.client
+                              ? CustomColors.orange
+                              : CustomColors.blue,
                           padding: EdgeInsets.symmetric(vertical: 10),
                         ),
                         child: Text(

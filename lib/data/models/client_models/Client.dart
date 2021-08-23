@@ -16,6 +16,8 @@ class ClientModel {
   final String age;
   final ProfileImage profilImage;
   final String profileCompeleted;
+  final String hasSessionFree;
+  final String realTimeZone;
 
   ClientModel({
     this.id,
@@ -32,6 +34,8 @@ class ClientModel {
     this.deviceName,
     this.profilImage,
     this.profileCompeleted,
+    this.hasSessionFree,
+    this.realTimeZone,
   });
 
   factory ClientModel.fromJson(Map<String, dynamic> json) {
@@ -48,6 +52,8 @@ class ClientModel {
       age: json['age'],
       stripeId: json['stripe_id'],
       profileCompeleted: json['profile_completed'],
+      hasSessionFree: json['has_free_session'],
+      realTimeZone: json['real_timezone'],
     );
   }
 

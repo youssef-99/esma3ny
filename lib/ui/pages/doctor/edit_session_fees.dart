@@ -89,107 +89,129 @@ class _EditSessionFeesState extends State<EditSessionFees> {
           padding: const EdgeInsets.all(8.0),
           child: FormBuilder(
             key: key,
-            child: ListView(
-              children: [
-                Text(
-                  'Video Fees',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
-                ),
-                TextFieldForm(
-                  hint: 'Price for 60 Minute [USD]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _fullVideoUsd,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 30 Minute [USD]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _halfVideoUsd,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 60 Minute [EGP]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _fullVideoEgp,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 30 Minute [EGP]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _halfVideoEgp,
-                ),
-                Text(
-                  'Audio Fees',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
-                ),
-                TextFieldForm(
-                  hint: 'Price for 60 Minute [USD]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _fullAudioUsd,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 30 Minute [USD]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _halfAudioUsd,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 60 Minute [EGP]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _fullAudioEgp,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 30 Minute [EGP]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _halfAudioEgp,
-                ),
-                Text(
-                  'Chat Fees',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
-                ),
-                TextFieldForm(
-                  hint: 'Price for 60 Minute [USD]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _fullChatUsd,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 30 Minute [USD]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _halfChatUsd,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 60 Minute [EGP]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _fullChatEgp,
-                ),
-                TextFieldForm(
-                  hint: 'Price for 30 Minute [EGP]',
-                  validate: FormBuilderValidators.required(context),
-                  prefixIcon: Icons.monetization_on,
-                  controller: _halfChatEgp,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      if (mounted) {
-                        if (key.currentState.validate()) {
-                          await state.edit(fees(), FOREIGN);
-                          await _therapistProfileState.updateProfile();
-                          if (state.isUpdated) Navigator.pop(context);
-                        }
-                      }
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  FormBuilderDropdown(
+                    items: [
+                      DropdownMenuItem(
+                        child: Text('Local Fees'),
+                        value: LOCAL,
+                      ),
+                      DropdownMenuItem(
+                        child: Text('Foreign Fees'),
+                        value: FOREIGN,
+                      ),
+                    ],
+                    validator: FormBuilderValidators.required(context),
+                    onChanged: (value) {
+                      state.setAccountValue(value);
                     },
-                    child: Text('edit'))
-              ],
+                    name: 'account type',
+                    decoration: InputDecoration(labelText: 'Account Type'),
+                  ),
+                  Text(
+                    'Video Fees',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 60 Minute [USD]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _fullVideoUsd,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 30 Minute [USD]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _halfVideoUsd,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 60 Minute [EGP]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _fullVideoEgp,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 30 Minute [EGP]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _halfVideoEgp,
+                  ),
+                  Text(
+                    'Audio Fees',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 60 Minute [USD]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _fullAudioUsd,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 30 Minute [USD]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _halfAudioUsd,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 60 Minute [EGP]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _fullAudioEgp,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 30 Minute [EGP]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _halfAudioEgp,
+                  ),
+                  Text(
+                    'Chat Fees',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 60 Minute [USD]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _fullChatUsd,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 30 Minute [USD]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _halfChatUsd,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 60 Minute [EGP]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _fullChatEgp,
+                  ),
+                  TextFieldForm(
+                    hint: 'Price for 30 Minute [EGP]',
+                    validate: FormBuilderValidators.required(context),
+                    prefixIcon: Icons.monetization_on,
+                    controller: _halfChatEgp,
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        if (mounted) {
+                          if (key.currentState.validate()) {
+                            await state.edit(fees());
+                            await _therapistProfileState.updateProfile();
+                            if (state.isUpdated) Navigator.pop(context);
+                          }
+                        }
+                      },
+                      child: Text('edit'))
+                ],
+              ),
             ),
           ),
         ),

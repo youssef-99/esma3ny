@@ -21,6 +21,7 @@ class HealthProfileState extends ChangeNotifier {
   List<TextEditingController> familyProblemNotes = [];
   HealthProfileJson _healthProfileJson;
 
+  bool _loading = false;
   bool _isMe = false;
   bool isDone = false;
   List<bool> services = [];
@@ -79,10 +80,11 @@ class HealthProfileState extends ChangeNotifier {
   }
 
   _makeHealthProfile() {
-    Map<String, String> services = {};
+    List<String> services = [];
     for (int i = 0; i < _healthProfileHelper.services.length; i++) {
-      services[_healthProfileHelper.services[i].key] =
-          this.services[i].toString();
+      if (this.services[i]) {
+        services.add(_healthProfileHelper.services[i].key);
+      }
     }
 
     List<String> problems = [];
@@ -90,22 +92,17 @@ class HealthProfileState extends ChangeNotifier {
       problems.add(_healthProfileHelper.problems[this.problems[i]].key);
     }
 
-    Map<int, String> familyProblem = {};
-    List<String> familyNotes = [];
+    Map<String, String> familyProblem = {};
 
     for (int i = 1; i <= specializationSelections.length; i++) {
-      familyProblem[i] = specializationSelections[i - 1].toString();
-      if (familyProblemNotes[i - 1].text.isNotEmpty)
-        familyNotes.add(familyProblemNotes[i - 1].text);
+      if (specializationSelections[i - 1]) {
+        String problem = familyProblemNotes[i - 1].text;
+        familyProblem[i.toString()] = problem.isEmpty ? "" : problem;
+      }
     }
 
-    Map<String, dynamic> allFamilyProblems = {
-      'problems': familyProblem,
-      'notes': familyNotes,
-    };
-
     _healthProfileJson = HealthProfileJson(
-      forMe: (!_isMe).toString(),
+      forMe: !_isMe,
       name: name.text,
       gender: selectedGender,
       dateOfBirth: dateOfBirth.text,
@@ -118,13 +115,15 @@ class HealthProfileState extends ChangeNotifier {
       services: services,
       problems: problems,
       problemStartedAt: problemStartedAt.text,
-      hasFamilyDiagnosed: isFamilyProblem.toString(),
-      familyProblem: allFamilyProblems,
+      hasFamilyDiagnosed: isFamilyProblem,
+      familyProblem: familyProblem,
       note: notes.text,
     );
   }
 
   submitHealthProfile() async {
+    _loading = true;
+    notifyListeners();
     _makeHealthProfile();
     print(_healthProfileJson.tojson());
     isDone = false;
@@ -139,8 +138,11 @@ class HealthProfileState extends ChangeNotifier {
       doneMessage,
       false,
     );
+    _loading = false;
+    notifyListeners();
   }
 
   List<int> get problems => _problemsChips;
   bool get isMe => _isMe;
+  bool get loading => _loading;
 }

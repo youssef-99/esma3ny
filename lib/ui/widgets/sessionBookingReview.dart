@@ -42,25 +42,35 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
             customListTile('Session Type',
                 '${state.selectedTimeSlot.duration} ${state.sessionTypeText}'),
             state.sessionPriceResponse != null
-                ? customListTile('Session Fees',
-                    '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}')
+                ? customListTile(
+                    'Session Fees',
+                    state.isFree
+                        ? 'Free Session'
+                        : '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}',
+                  )
                 : SizedBox(),
             customListTile('Date', state.selectedDate),
             customListTile('Time', state.selectedTimeSlot.startTime),
-            payState(),
+            state.isFree ? SizedBox(height: 50) : payState(),
             state.loading
                 ? CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () async {
                       if (state.isProfileCmopelete) {
-                        if (payLater) {
-                          await state.reserveNewSession(payLater);
-                          showMaterialModalBottomSheet(
-                              context: context, builder: (_) => PaymentSheet());
-                          Navigator.pop(context);
-                          Navigator.pop(context);
+                        if (state.isFree) {
+                          await state.reserveNewSession(false);
                         } else {
-                          Navigator.pushNamed(context, 'payment_sheet');
+                          if (payLater) {
+                            await state.reserveNewSession(payLater);
+                            showMaterialModalBottomSheet(
+                              context: context,
+                              builder: (_) => PaymentSheet(),
+                            );
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.pushNamed(context, 'payment_sheet');
+                          }
                         }
                       } else {
                         Navigator.push(context,
@@ -70,7 +80,8 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
                     child: Text(
                       'Confirm',
                       style: TextStyle(color: Colors.white),
-                    ))
+                    ),
+                  ),
           ],
         ),
       ),
@@ -90,9 +101,12 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
       );
 
   payState() => CheckboxListTile(
-      title: Text('Pay Later'),
-      value: payLater,
-      onChanged: (value) => setState(() {
+        title: Text('Pay Later'),
+        value: payLater,
+        onChanged: (value) => setState(
+          () {
             payLater = value;
-          }));
+          },
+        ),
+      );
 }

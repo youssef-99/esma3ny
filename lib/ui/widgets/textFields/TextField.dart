@@ -16,6 +16,7 @@ class TextFieldForm extends StatelessWidget {
     @required this.controller,
     this.maxLines = 1,
   });
+  final focus = FocusNode();
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
@@ -23,6 +24,7 @@ class TextFieldForm extends StatelessWidget {
       name: hint,
       validator: validate,
       maxLines: maxLines,
+      focusNode: focus,
       decoration: InputDecoration(
         labelText: hint,
         prefixIcon: Icon(
@@ -30,6 +32,9 @@ class TextFieldForm extends StatelessWidget {
           color: CustomColors.blue,
         ),
       ),
+      onSubmitted: (val) {
+        FocusScope.of(context).requestFocus(focus);
+      },
     );
   }
 }

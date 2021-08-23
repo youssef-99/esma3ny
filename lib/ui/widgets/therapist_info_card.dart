@@ -4,6 +4,7 @@ import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_in
 import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
 import 'package:esma3ny/repositories/public/public_repository.dart';
 import 'package:esma3ny/ui/provider/client/book_session_state.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/booking_option.dart';
 import 'package:esma3ny/ui/widgets/chached_image.dart';
@@ -32,6 +33,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
   body() => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               children: [
@@ -118,31 +120,56 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
         ],
       );
 
-  bottomSection() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          button(() {}, 'Start your free session', CustomColors.orange),
-          button(
-            () async {
-              List<AvailableTimeSlotResponse> list;
-              await ExceptionHandling.hanleToastException(() async {
-                list = await _publicRepository.showTherapistTimeSlots(
-                    widget.therapist.id,
-                    format.format(DateTime.now()).toString());
-              }, '', false);
+  bottomSection() => Consumer<ClientTherapistProfileState>(
+        builder: (context, state, child) => Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              state.client.hasSessionFree == '1'
+                  ? button(() async {
+                      List<AvailableTimeSlotResponse> list;
+                      await ExceptionHandling.hanleToastException(() async {
+                        list = await _publicRepository.showTherapistTimeSlots(
+                            widget.therapist.id,
+                            format.format(DateTime.now()).toString());
+                      }, '', false);
 
-              Provider.of<BookSessionState>(context, listen: false)
-                  .setAvailableTimeSlots(list);
+                      Provider.of<BookSessionState>(context, listen: false)
+                          .setAvailableTimeSlots(list, free: true);
 
-              showMaterialModalBottomSheet(
-                context: context,
-                builder: (context) => BookingOptionModalSheet(widget.therapist),
-              );
-            },
-            'Book',
-            CustomColors.blue,
+                      showMaterialModalBottomSheet(
+                        context: context,
+                        builder: (context) =>
+                            BookingOptionModalSheet(widget.therapist),
+                      );
+                    }, 'Start your free session', CustomColors.orange)
+                  : SizedBox(),
+              SizedBox(width: 10),
+              button(
+                () async {
+                  List<AvailableTimeSlotResponse> list;
+                  await ExceptionHandling.hanleToastException(() async {
+                    list = await _publicRepository.showTherapistTimeSlots(
+                        widget.therapist.id,
+                        format.format(DateTime.now()).toString());
+                  }, '', false);
+
+                  Provider.of<BookSessionState>(context, listen: false)
+                      .setAvailableTimeSlots(list, free: false);
+
+                  showMaterialModalBottomSheet(
+                    context: context,
+                    builder: (context) =>
+                        BookingOptionModalSheet(widget.therapist),
+                  );
+                },
+                'Book',
+                CustomColors.blue,
+              ),
+            ],
           ),
-        ],
+        ),
       );
   button(onPressed, String text, Color color) => ElevatedButton(
         onPressed: onPressed,

@@ -1,5 +1,6 @@
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/ui/pages/doctor/about_profile.dart';
+import 'package:esma3ny/ui/pages/doctor/balance.dart';
 import 'package:esma3ny/ui/pages/doctor/basic_info.dart';
 import 'package:esma3ny/ui/pages/doctor/experiences.dart';
 import 'package:esma3ny/ui/pages/doctor/fees.dart';
@@ -116,7 +117,12 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             customListTile(
               Icons.money,
               'Balance',
-              () {},
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => BalancePage(),
+                ),
+              ),
             ),
             customListTile(
                 Icons.history,

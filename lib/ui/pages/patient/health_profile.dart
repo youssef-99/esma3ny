@@ -48,7 +48,6 @@ class _HealthProfileState extends State<HealthProfile> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
-                print(snapshot.data.education);
                 return Consumer<HealthProfileState>(
                   builder: (context, state, child) => FormBuilder(
                     key: key,
@@ -179,7 +178,9 @@ class _HealthProfileState extends State<HealthProfile> {
                                   }
                                 }
                               },
-                              child: Text('submit')),
+                              child: state.loading
+                                  ? CustomProgressIndicator()
+                                  : Text('submit')),
                         ],
                       ),
                     ),

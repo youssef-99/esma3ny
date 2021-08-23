@@ -1,59 +1,53 @@
 import 'package:esma3ny/data/models/public/fees.dart';
-import 'package:esma3ny/data/models/public/login_response.dart';
-import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
+import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TherapistFeesList extends StatelessWidget {
   final Fees fees;
   TherapistFeesList(this.fees);
 
-  isEgp(id) => id == '62';
+  isEgp(id) => id == 'Africa/Cairo';
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: FutureBuilder(
-        future: SharedPrefrencesHelper.getLoginData().then(
-          (LoginResponse value) => value.country.id,
+      child: Consumer<ClientTherapistProfileState>(
+        builder: (context, state, child) => ListView(
+          children: [
+            customListTile(
+              'Video',
+              isEgp(state.client.realTimeZone)
+                  ? fees.video.egp.half
+                  : fees.video.usd.half,
+              isEgp(state.client.realTimeZone)
+                  ? fees.video.egp.full
+                  : fees.video.usd.full,
+              isEgp(state.client.realTimeZone),
+            ),
+            customListTile(
+              'Audio',
+              isEgp(state.client.realTimeZone)
+                  ? fees.audio.egp.half
+                  : fees.audio.usd.half,
+              isEgp(state.client.realTimeZone)
+                  ? fees.audio.egp.full
+                  : fees.audio.usd.full,
+              isEgp(state.client.realTimeZone),
+            ),
+            customListTile(
+              'Chat',
+              isEgp(state.client.realTimeZone)
+                  ? fees.chat.egp.half
+                  : fees.chat.usd.half,
+              isEgp(state.client.realTimeZone)
+                  ? fees.video.egp.full
+                  : fees.video.usd.full,
+              isEgp(state.client.realTimeZone),
+            ),
+          ],
         ),
-        builder: (context, snapshot) =>
-            snapshot.connectionState == ConnectionState.done
-                ? ListView(
-                    children: [
-                      customListTile(
-                        'Video',
-                        isEgp(snapshot.data)
-                            ? fees.video.egp.half
-                            : fees.video.usd.half,
-                        isEgp(snapshot.data)
-                            ? fees.video.egp.full
-                            : fees.video.usd.full,
-                        isEgp(snapshot.data),
-                      ),
-                      customListTile(
-                        'Audio',
-                        isEgp(snapshot.data)
-                            ? fees.audio.egp.half
-                            : fees.audio.usd.half,
-                        isEgp(snapshot.data)
-                            ? fees.audio.egp.full
-                            : fees.audio.usd.full,
-                        isEgp(snapshot.data),
-                      ),
-                      customListTile(
-                        'Chat',
-                        isEgp(snapshot.data)
-                            ? fees.chat.egp.half
-                            : fees.chat.usd.half,
-                        isEgp(snapshot.data)
-                            ? fees.video.egp.full
-                            : fees.video.usd.full,
-                        isEgp(snapshot.data),
-                      ),
-                    ],
-                  )
-                : SizedBox(),
       ),
     );
   }

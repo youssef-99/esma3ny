@@ -56,9 +56,10 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     child: Text(
                       'Today',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   ElevatedButton(
@@ -68,9 +69,10 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     child: Text(
                       'Tomorrow',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ],
@@ -78,7 +80,9 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
               TextButton(
                 onPressed: () {
                   showMaterialModalBottomSheet(
-                      context: context, builder: (context) => Calender());
+                    context: context,
+                    builder: (context) => Calender(),
+                  );
                 },
                 child: Text('Or Choose Date'),
               ),
@@ -167,7 +171,9 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
               ),
               Text(
                 state.sessionPriceResponse != null
-                    ? '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}'
+                    ? state.isFree
+                        ? 'Free'
+                        : '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}'
                     : 'Fees',
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 3),
               ),
@@ -177,22 +183,24 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     Fluttertoast.showToast(msg: 'Choose Time Slot To Continue');
                   else
                     showMaterialModalBottomSheet(
-                        context: context,
-                        builder: (_) => SessionBookingReview(
-                              therapistName:
-                                  state.therapist.name.getLocalizedString(),
-                              fees: state.sessionPriceResponse,
-                              sessionType: state.sessionTypeText,
-                              date: state.selectedDate,
-                              timeSlot: state.selectedTimeSlot,
-                            ));
+                      context: context,
+                      builder: (_) => SessionBookingReview(
+                        therapistName:
+                            state.therapist.name.getLocalizedString(),
+                        fees: state.sessionPriceResponse,
+                        sessionType: state.sessionTypeText,
+                        date: state.selectedDate,
+                        timeSlot: state.selectedTimeSlot,
+                      ),
+                    );
                 },
                 child: Text(
                   'Conintue',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

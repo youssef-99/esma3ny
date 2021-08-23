@@ -37,6 +37,10 @@ class _TherapistProfileState extends State<TherapistProfile>
 
   getProfile() async {
     ClientModel clientModel = await _clientRepositoryImpl.getProfile();
+
+    Provider.of<ClientTherapistProfileState>(context, listen: false)
+        .setClient(clientModel);
+
     Provider.of<BookSessionState>(context, listen: false)
         .setProfileCompelete(int.parse(clientModel.profileCompeleted));
   }

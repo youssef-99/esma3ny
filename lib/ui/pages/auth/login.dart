@@ -183,7 +183,8 @@ class _LoginState extends State<Login> {
           padding: const EdgeInsets.symmetric(vertical: 20.0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: CustomColors.blue,
+              primary:
+                  roleState.client ? CustomColors.orange : CustomColors.blue,
               padding: EdgeInsets.symmetric(vertical: 10),
             ),
             onPressed: () async {
