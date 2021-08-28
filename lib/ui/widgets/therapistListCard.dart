@@ -83,7 +83,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
               text: AppLocalizations.of(context).specialized_at,
             ),
             TextSpan(
-              text: _therapist.title.getLocalizedString(),
+              text: _therapist.job.name.getLocalizedString(),
               style: TextStyle(
                 color: CustomColors.blue,
               ),

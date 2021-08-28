@@ -35,10 +35,6 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
     _therapistProfileState =
         Provider.of<TherapistProfileState>(context, listen: false);
     _aboutMeState = Provider.of<AboutMeState>(context, listen: false);
-    _jobEn.text =
-        _therapistProfileState.therapistProfileResponse.title.stringEn;
-    _jobAr.text =
-        _therapistProfileState.therapistProfileResponse.title.stringAr;
     _bioEn.text =
         _therapistProfileState.therapistProfileResponse.biography.stringEn;
     _bioAr.text =
@@ -73,8 +69,6 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
               child: ListView(
                 children: [
                   jobs(therapistState.therapistProfileResponse.jobId),
-                  jobEn(therapistState.therapistProfileResponse.title.stringEn),
-                  jobAr(therapistState.therapistProfileResponse.title.stringAr),
                   prefixList(therapistState.therapistProfileResponse.prefix),
                   bioEn(therapistState
                       .therapistProfileResponse.biography.stringEn),

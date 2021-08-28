@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/core/device_info/device_info.dart';
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
+import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/data/models/public/certificate.dart';
 import 'package:esma3ny/data/models/public/education.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
@@ -129,6 +130,7 @@ class TherapistRepository {
     Response response = await _apiBaseHelper.postHTTP(
         '$_route/profile/fees', fees.toJson(accountType));
     String msg = response.data['msg'];
+    print(fees.toJson(accountType));
     return msg;
   }
 
@@ -180,6 +182,26 @@ class TherapistRepository {
     Response response =
         await _apiBaseHelper.getHTTP('$_route/profile/balance?page=$pageKey');
     return response.data;
+  }
+
+  Future<dynamic> getPrevClients(int pageKey) async {
+    Response response = await _apiBaseHelper.getHTTP('$_route/clients');
+    print(response.statusCode);
+    return response.data;
+  }
+
+  Future<ClientModel> getClientData(int id) async {
+    Response response = await _apiBaseHelper.getHTTP('$_route/clients/$id');
+    ClientModel client = ClientModel.fromJson(response.data['client']);
+    return client;
+  }
+
+  Future<ClientHealthProfile> getClientHealthProfile(int id) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/clients/$id/health-profile');
+    ClientHealthProfile clientHealthProfile =
+        ClientHealthProfile.fromJson(response.data);
+    return clientHealthProfile;
   }
 
   Future<void> logout() async {

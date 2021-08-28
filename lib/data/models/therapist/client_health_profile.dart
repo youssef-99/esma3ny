@@ -45,7 +45,8 @@ class ClientHealthProfile {
       dateOfBirth: json['date_of_birth'],
       relation: json['relation_to_client'],
       refer: json['referrer'],
-      nationality: json['nationality']['name'],
+      nationality:
+          json['nationality'] == null ? '' : json['nationality']['name'],
       maritalStatus: json['marital_status'],
       children: json['childrens'],
       education: Educations.fromJson(json['education']),

@@ -12,7 +12,6 @@ import 'package:flutter/foundation.dart';
 class TherapistProfileResponse {
   final id;
   final LocaleString name;
-  final LocaleString title;
   final email;
   final phone;
   final gender;
@@ -22,6 +21,8 @@ class TherapistProfileResponse {
   final LocaleString biography;
   final joiningDate;
   final jobId;
+  final bool isStripeActivated;
+  final bool hasForeignAccount;
   final Fees fees;
   final Job job;
   final ProfileImage profileImage;
@@ -36,7 +37,6 @@ class TherapistProfileResponse {
     @required this.id,
     @required this.email,
     @required this.name,
-    @required this.title,
     @required this.biography,
     @required this.countryId,
     @required this.dateOfBirth,
@@ -54,6 +54,8 @@ class TherapistProfileResponse {
     @required this.certificates,
     @required this.educations,
     @required this.experience,
+    @required this.isStripeActivated,
+    @required this.hasForeignAccount,
   });
 
   factory TherapistProfileResponse.fromJson(Map<String, dynamic> json) {
@@ -95,10 +97,6 @@ class TherapistProfileResponse {
         stringEn: json['name_en'],
         stringAr: json['name_ar'],
       ),
-      title: LocaleString(
-        stringEn: json['title_en'] == '' ? 'Empty' : json['title_en'],
-        stringAr: json['title_ar'] == '' ? 'Empty' : json['title_ar'],
-      ),
       biography: LocaleString(
         stringEn: json['biography_en'] == '' ? 'Empty' : json['biography_en'],
         stringAr: json['biography_ar'] == '' ? 'Empty' : json['biography_ar'],
@@ -119,6 +117,8 @@ class TherapistProfileResponse {
       certificates: certificateList,
       educations: educationList,
       experience: experienceList,
+      hasForeignAccount: json['has_foreign_account'] == '1',
+      isStripeActivated: json['stripe_connect_activated'] == '1',
     );
   }
 }

@@ -95,7 +95,7 @@ class _BalancePageState extends State<BalancePage> {
                   itemBuilder: (context, transaction, index) => Container(
                     child: ListTile(
                       title: Text(
-                        '${transaction.amount} ${transaction.currency}',
+                        '${transaction.amount / 100} ${transaction.currency}',
                       ),
                       subtitle: Container(
                         child: Text(

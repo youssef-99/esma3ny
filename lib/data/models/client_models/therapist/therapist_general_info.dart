@@ -6,7 +6,6 @@ class TherapistListInfo {
   final id;
   final LocaleString name;
   final jobId;
-  final LocaleString title;
   final ProfileImage profileImage;
   final Job job;
 
@@ -16,7 +15,6 @@ class TherapistListInfo {
     this.job,
     this.jobId,
     this.profileImage,
-    this.title,
   });
 
   factory TherapistListInfo.fromJson(Map<String, dynamic> json) {
@@ -29,10 +27,6 @@ class TherapistListInfo {
       job: json['job'] == null ? null : Job.fromJson(json['job']),
       jobId: json['job_id'],
       profileImage: ProfileImage.fromjson(json['profile_image']),
-      title: LocaleString(
-        stringAr: json['title_ar'],
-        stringEn: json['title_en'],
-      ),
     );
   }
 }

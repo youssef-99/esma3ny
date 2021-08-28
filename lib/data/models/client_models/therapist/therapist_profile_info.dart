@@ -11,7 +11,6 @@ import 'package:flutter/foundation.dart';
 class Therapist {
   final id;
   final LocaleString name;
-  final LocaleString title;
   final email;
   final phone;
   final gender;
@@ -33,7 +32,6 @@ class Therapist {
     @required this.id,
     @required this.email,
     @required this.name,
-    @required this.title,
     @required this.biography,
     @required this.countryId,
     @required this.dateOfBirth,
@@ -84,10 +82,6 @@ class Therapist {
       name: LocaleString(
         stringEn: json['name_en'],
         stringAr: json['name_ar'],
-      ),
-      title: LocaleString(
-        stringEn: json['title_en'],
-        stringAr: json['title_ar'],
       ),
       biography: LocaleString(
         stringEn: json['biography_en'],

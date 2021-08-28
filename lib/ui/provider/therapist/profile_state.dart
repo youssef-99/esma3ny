@@ -39,6 +39,10 @@ class TherapistProfileState extends ChangeNotifier {
     await _therapistRepository.deleteCertificate(id);
   }
 
+  bool showBalance() =>
+      _therapistProfileResponse.hasForeignAccount &&
+      !_therapistProfileResponse.isStripeActivated;
+
   update() => notifyListeners();
 
   TherapistProfileResponse get therapistProfileResponse =>

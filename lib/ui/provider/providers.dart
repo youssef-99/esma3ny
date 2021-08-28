@@ -6,6 +6,7 @@ import 'package:esma3ny/ui/provider/client/health_profile_state.dart';
 import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/provider/public/language_state.dart';
 import 'package:esma3ny/ui/provider/public/login_state.dart';
+import 'package:esma3ny/ui/provider/public/reload_page.dart';
 import 'package:esma3ny/ui/provider/public/signup_form_state.dart';
 import 'package:esma3ny/ui/provider/client/upcoming_sessions_state.dart';
 import 'package:esma3ny/ui/provider/therapist/about_me_state.dart';
@@ -91,6 +92,9 @@ class Providers {
         ),
         ChangeNotifierProvider(
           create: (context) => CallState(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ReloadPageState(),
         ),
       ];
 }

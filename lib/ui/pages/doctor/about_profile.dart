@@ -49,10 +49,6 @@ class _AboutMePageState extends State<AboutMePage> {
                               .getLocalizedString(),
                           () {})
                       : SizedBox()),
-              customListTile(Icons.work,
-                  state.therapistProfileResponse.title.stringEn, () {}),
-              customListTile(Icons.work,
-                  state.therapistProfileResponse.title.stringAr, () {}),
               customListTile(
                   Icons.person, state.therapistProfileResponse.prefix, () {}),
               // customListTile(Icons.language, state.therapistProfileResponse., (){}),

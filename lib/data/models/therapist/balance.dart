@@ -23,7 +23,7 @@ class BalanceAmount {
 
 class Transaction {
   final id;
-  final String amount;
+  final double amount;
   final String currency;
   final String transferred;
   final String doctorId;
@@ -43,7 +43,7 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],
-      amount: json['amount'],
+      amount: double.parse(json['amount']),
       currency: json['currency'],
       transferred: json['transferred'],
       doctorId: json['doctor_id'],

@@ -44,7 +44,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                   children: [
                     therapistName(),
                     Text(
-                      widget.therapist.title.getLocalizedString(),
+                      widget.therapist.job.name.getLocalizedString(),
                       style: TextStyle(
                         // color: Colors.black,
                         fontWeight: FontWeight.bold,
