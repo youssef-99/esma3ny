@@ -43,7 +43,6 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
     _selectedJobId = _therapistProfileState.therapistProfileResponse.jobId;
     _aboutMeState.getLanguages(
         _therapistProfileState.therapistProfileResponse.languages);
-    _aboutMeState.getJobs();
     super.initState();
   }
 
@@ -145,41 +144,55 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
       );
 
   jobs(int jobId) {
-    return ValidationError(
-      textField: FormBuilderDropdown<Job>(
-        name: 'job name',
-        initialValue: _aboutMeState.jobs[jobId - 1],
-        decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.work_outline_rounded,
-            color: CustomColors.blue,
-          ),
-          labelText: 'Job Name',
-        ),
-        items: _aboutMeState.jobs
-            .map(
-              (Job job) => DropdownMenuItem<Job>(
-                child: Text(job.name.getLocalizedString()),
-                value: job,
-              ),
-            )
-            .toList(),
-        onChanged: (Job job) {
-          _selectedJobId = job.id;
-        },
-        validator: FormBuilderValidators.required(context),
-      ),
-      error: _aboutMeState.errors['job_id'],
-    );
+    return _aboutMeState.jobs.isEmpty
+        ? FutureBuilder(
+            future: _aboutMeState.getJobs(),
+            builder: (context, snapshot) =>
+                snapshot.connectionState == ConnectionState.done
+                    ? jobField(jobId)
+                    : SizedBox(),
+          )
+        : jobField(jobId);
   }
+
+  jobField(int jobId) => ValidationError(
+        textField: FormBuilderDropdown<Job>(
+          name: 'job name',
+          initialValue: _aboutMeState.jobs[jobId - 1],
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.work_outline_rounded,
+              color: CustomColors.blue,
+            ),
+            labelText: 'Job Name',
+          ),
+          items: _aboutMeState.jobs
+              .map(
+                (Job job) => DropdownMenuItem<Job>(
+                  child: Text(job.name.getLocalizedString()),
+                  value: job,
+                ),
+              )
+              .toList(),
+          onChanged: (Job job) {
+            _selectedJobId = job.id;
+          },
+          validator: FormBuilderValidators.required(context),
+        ),
+        error: _aboutMeState.errors['job_id'],
+      );
 
   bioEn(String bio) => ValidationError(
         textField: TextFieldForm(
           hint: 'Bio in English',
           prefixIcon: Icons.menu_book_sharp,
-          validate: FormBuilderValidators.required(context),
+          validate: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(context, 100),
+            FormBuilderValidators.required(context),
+          ]),
           controller: _bioEn,
           maxLines: 3,
+          autoValidateMode: AutovalidateMode.always,
         ),
         error: _aboutMeState.errors['biography_en'],
       );
@@ -188,9 +201,13 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
         textField: TextFieldForm(
           hint: 'Bio in Arabic',
           prefixIcon: Icons.menu_book_sharp,
-          validate: FormBuilderValidators.required(context),
           controller: _bioAr,
           maxLines: 3,
+          validate: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(context, 100),
+            FormBuilderValidators.required(context),
+          ]),
+          autoValidateMode: AutovalidateMode.always,
         ),
         error: _aboutMeState.errors['biography_ar'],
       );
@@ -203,7 +220,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
           },
           choiceItems: C2Choice.listFrom<int, Language>(
             source: state.languages,
-            value: (i, v) => i,
+            value: (i, v) => i + 1,
             label: (i, v) => v.name.getLocalizedString(),
             tooltip: (i, v) => v.id.toString(),
             style: (i, v) {

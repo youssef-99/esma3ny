@@ -43,7 +43,6 @@ class _UpComingSessionsState extends State<UpComingSessions> {
         _pagingController.appendPage(newItems, nextPageKey);
       }
     } catch (error) {
-      print('asxasxas');
       _pagingController.error = error;
     }
   }

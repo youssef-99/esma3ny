@@ -30,7 +30,6 @@ class _TherapistProfileState extends State<TherapistProfile>
   @override
   void initState() {
     id = Provider.of<ClientTherapistProfileState>(context, listen: false).id;
-    getProfile();
     controller = TabController(vsync: this, length: 4, initialIndex: 0);
     super.initState();
   }
@@ -45,6 +44,11 @@ class _TherapistProfileState extends State<TherapistProfile>
         .setProfileCompelete(int.parse(clientModel.profileCompeleted));
   }
 
+  Future<Therapist> getData() async {
+    await getProfile();
+    return await _clientRepositoryImpl.getDoctorInfo(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +59,7 @@ class _TherapistProfileState extends State<TherapistProfile>
         ),
       ),
       body: FutureBuilder(
-        future: _clientRepositoryImpl.getDoctorInfo(id),
+        future: getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return CustomProgressIndicator();

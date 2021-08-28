@@ -125,7 +125,8 @@ class _HealthProfileState extends State<HealthProfile> {
                           CheckboxListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
-                                'Have any of your family members been diagnosed or treated for a psychiatric problem?'),
+                              'Have any of your family members been diagnosed or treated for a psychiatric problem?',
+                            ),
                             value: state.isFamilyProblem,
                             onChanged: (value) {
                               state.isFamilyProblemPressed();
@@ -144,11 +145,16 @@ class _HealthProfileState extends State<HealthProfile> {
                                             title: Text(
                                                 e.name.getLocalizedString()),
                                             subtitle: TextField(
-                                              controller:
-                                                  state.familyProblemNotes[i],
-                                            ),
+                                                controller:
+                                                    state.familyProblemNotes[i],
+                                                decoration: InputDecoration(
+                                                  errorText: state
+                                                          .validateFamily[i]
+                                                      ? 'Field Can\'t Be Empty'
+                                                      : null,
+                                                )),
                                             onChanged: (value) {
-                                              state.addSpecialization(i);
+                                              state.addSpecialization(i, value);
                                             },
                                           ),
                                         ),
@@ -174,6 +180,8 @@ class _HealthProfileState extends State<HealthProfile> {
                                     Provider.of<BookSessionState>(context,
                                             listen: false)
                                         .setProfileCompelete(1);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
                                     Navigator.pop(context);
                                   }
                                 }

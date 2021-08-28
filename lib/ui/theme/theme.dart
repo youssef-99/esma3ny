@@ -30,6 +30,9 @@ class CustomThemes extends ChangeNotifier {
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
+          iconTheme: IconThemeData(
+            color: CustomColors.orange, //change your color here
+          ),
         ),
         textTheme: TextTheme(
           headline6: TextStyle(

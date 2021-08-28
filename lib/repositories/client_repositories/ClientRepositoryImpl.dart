@@ -46,6 +46,7 @@ class ClientRepositoryImpl implements ClientRepository {
         '$_route/auth/register', client.toJsonSignup());
 
     await SharedPrefrencesHelper.storeToken(response.data['token']);
+    await SharedPrefrencesHelper.setLoginData(response.data['data'], CLIENT);
   }
 
   @override

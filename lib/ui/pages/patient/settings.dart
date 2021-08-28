@@ -3,6 +3,7 @@ import 'package:esma3ny/data/models/public/login_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
+import 'package:esma3ny/ui/pages/public/about.dart';
 import 'package:esma3ny/ui/provider/public/language_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/theme/theme.dart';
@@ -120,7 +121,8 @@ class _SettingsPageState extends State<SettingsPage> {
             launch('mailto:esma3ny@support.com');
           }, null),
           customListTile(Icons.error_outline_outlined, 'About Us', () {
-            launch('https://esma3ny.org/');
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => AboutUs()));
           }, null),
           customListTile(Icons.logout, 'Log out', () async {
             if (role == CLIENT) {

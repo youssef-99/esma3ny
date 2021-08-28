@@ -9,12 +9,14 @@ class TextFieldForm extends StatelessWidget {
   final IconData prefixIcon;
   final TextEditingController controller;
   final int maxLines;
+  final AutovalidateMode autoValidateMode;
   TextFieldForm({
     @required this.hint,
     @required this.validate,
     @required this.prefixIcon,
     @required this.controller,
     this.maxLines = 1,
+    this.autoValidateMode = AutovalidateMode.disabled,
   });
   final focus = FocusNode();
   @override
@@ -35,6 +37,7 @@ class TextFieldForm extends StatelessWidget {
       onSubmitted: (val) {
         FocusScope.of(context).requestFocus(focus);
       },
+      autovalidateMode: autoValidateMode,
     );
   }
 }

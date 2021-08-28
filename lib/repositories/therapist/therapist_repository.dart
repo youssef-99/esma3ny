@@ -11,6 +11,7 @@ import 'package:esma3ny/data/models/therapist/Therapist.dart';
 import 'package:esma3ny/data/models/therapist/about_therapist.dart';
 import 'package:esma3ny/data/models/therapist/client_health_profile.dart';
 import 'package:esma3ny/data/models/therapist/new_time_slote.dart';
+import 'package:esma3ny/data/models/therapist/prev_session_notes.dart';
 import 'package:esma3ny/data/models/therapist/therapist_profile_response.dart';
 import 'package:esma3ny/data/models/therapist/time_slote.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
@@ -45,6 +46,7 @@ class TherapistRepository {
         '$_route/auth/register', therapist.toJsonSignup());
 
     await SharedPrefrencesHelper.storeToken(response.data['token']);
+    await SharedPrefrencesHelper.setLoginData(response.data['data'], THERAPIST);
   }
 
   Future<TherapistProfileResponse> getProfile() async {
@@ -185,8 +187,14 @@ class TherapistRepository {
   }
 
   Future<dynamic> getPrevClients(int pageKey) async {
-    Response response = await _apiBaseHelper.getHTTP('$_route/clients');
-    print(response.statusCode);
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/clients?page=$pageKey');
+    return response.data;
+  }
+
+  Future<dynamic> searchPrevClients(String name) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/clients?name=$name');
     return response.data;
   }
 
@@ -202,6 +210,26 @@ class TherapistRepository {
     ClientHealthProfile clientHealthProfile =
         ClientHealthProfile.fromJson(response.data);
     return clientHealthProfile;
+  }
+
+  Future<dynamic> getPrevSessions(int id, int pageKey) async {
+    Response response =
+        await _apiBaseHelper.getHTTP('$_route/clients/$id?page=$pageKey');
+    return response.data;
+  }
+
+  Future<PrevSessionNotes> getPrevSessionNotes(
+    int clientId,
+    int sessionId,
+  ) async {
+    Response response = await _apiBaseHelper
+        .getHTTP('$_route/clients/$clientId/timeslot/$sessionId');
+    print(sessionId);
+
+    PrevSessionNotes prevSessionNotes =
+        PrevSessionNotes.fromjson(response.data);
+
+    return prevSessionNotes;
   }
 
   Future<void> logout() async {

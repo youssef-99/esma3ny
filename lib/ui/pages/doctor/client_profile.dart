@@ -1,6 +1,7 @@
 import 'package:esma3ny/data/models/client_models/Client.dart';
 import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
 import 'package:esma3ny/ui/pages/doctor/prev_client_health_profile.dart';
+import 'package:esma3ny/ui/pages/doctor/previous_sessions.dart';
 import 'package:esma3ny/ui/provider/public/reload_page.dart';
 import 'package:esma3ny/ui/widgets/basic_profile.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
@@ -69,7 +70,15 @@ class ClientProfile extends StatelessWidget {
                                   ),
                               child: Text('Health Profile')),
                           ElevatedButton(
-                              onPressed: () {}, child: Text('Sessions')),
+                              onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => PreviousSessions(
+                                        id: id,
+                                      ),
+                                    ),
+                                  ),
+                              child: Text('Sessions')),
                         ],
                       ),
                     ),

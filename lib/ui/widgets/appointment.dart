@@ -77,10 +77,15 @@ class AppointmentCard extends StatelessWidget {
         color: CustomColors.white,
       );
 
-  clientName() => AutoSizeText(
-        appointment.client.name,
-        maxLines: 1,
-        style: TextStyle(color: CustomColors.orange, fontSize: 20),
+  clientName() => Container(
+        // width: 200,
+        child: AutoSizeText(
+          appointment.client.name,
+          maxLines: 1,
+          minFontSize: 12,
+          style: TextStyle(
+              color: CustomColors.orange, fontWeight: FontWeight.bold),
+        ),
       );
 
   customListTile(IconData icon, String text) => Row(

@@ -174,7 +174,7 @@ class _TherapistsListState extends State<TherapistsList>
   _showCupertinoModalBottomSheet() => showCupertinoModalBottomSheet(
         context: context,
         builder: (context) => Container(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: 450,
           child: FilterSheet(_dateController),
         ),
       );

@@ -1,4 +1,3 @@
-import 'package:esma3ny/data/models/public/job.dart';
 import 'package:flutter/foundation.dart';
 
 import 'note_model.dart';

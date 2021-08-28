@@ -36,6 +36,7 @@ class HealthProfileState extends ChangeNotifier {
   String selectedGender = 'male';
   List<Specialization> specializations = [];
   List<bool> specializationSelections = [];
+  List<bool> validateFamily = [];
 
   Future<HealthProfileHelper> getHealthProfileData() async {
     _healthProfileHelper = await _clientRepositoryImpl.getHealthProfileHelper();
@@ -48,6 +49,7 @@ class HealthProfileState extends ChangeNotifier {
     specializations = await SharedPrefrencesHelper.getSpecializations;
     specializationSelections =
         List.generate(specializations.length, (index) => false);
+    validateFamily = List.generate(specializations.length, (index) => false);
 
     familyProblemNotes = List.generate(
         specializations.length, (index) => TextEditingController());
@@ -64,8 +66,9 @@ class HealthProfileState extends ChangeNotifier {
     notifyListeners();
   }
 
-  addSpecialization(int idx) {
+  addSpecialization(int idx, bool value) {
     specializationSelections[idx] = !specializationSelections[idx];
+    validateFamily[idx] = value;
     notifyListeners();
   }
 

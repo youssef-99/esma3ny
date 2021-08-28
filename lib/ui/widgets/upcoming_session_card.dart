@@ -15,6 +15,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'chached_image.dart';
+
 class UpcomingSessionCard extends StatefulWidget {
   final TimeSlotResponse timeSlot;
   UpcomingSessionCard({@required this.timeSlot});
@@ -80,14 +82,7 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
   therapistImage() => Container(
         margin: EdgeInsets.only(right: 10),
         decoration: decoration(CustomColors.orange, 100),
-        child: ClipOval(
-          child: Image.network(
-            timeSlot.doctorProfileImage.small,
-            width: 130,
-            height: 130,
-            fit: BoxFit.fill,
-          ),
-        ),
+        child: CachedImage(url: timeSlot.doctorProfileImage.small, raduis: 60),
       );
 
   decoration(Color borderColor, double borderRaduis) => BoxDecoration(

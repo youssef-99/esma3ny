@@ -221,8 +221,8 @@ class BookSessionState extends ChangeNotifier {
 
     await ExceptionHandling.hanleToastException(() async {
       if (_isFree) {
-        await _clientRepositoryImpl.reserveNewSession(
-            selectedTimeSlot.id, _sessionTypeText, true, null, 'free');
+        return await _clientRepositoryImpl.reserveNewSession(
+            selectedTimeSlot.id, _sessionTypeText, true, null, 'free') != null;
       } else {
         if (payLater) {
           await _clientRepositoryImpl.reserveNewSession(

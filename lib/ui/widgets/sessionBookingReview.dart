@@ -58,7 +58,11 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
                     onPressed: () async {
                       if (state.isProfileCmopelete) {
                         if (state.isFree) {
-                          await state.reserveNewSession(false);
+                          if (await state.reserveNewSession(false)) {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                            setState(() {});
+                          }
                         } else {
                           if (payLater) {
                             await state.reserveNewSession(payLater);

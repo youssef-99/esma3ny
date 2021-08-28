@@ -22,7 +22,6 @@ class AboutMeState extends ChangeNotifier {
   Future<void> getJobs() async {
     if (SharedPrefrencesHelper.job == null) await _publicRepository.getJob();
     jobs = await SharedPrefrencesHelper.job;
-    notifyListeners();
   }
 
   Future<void> getLanguages(List<Language> selectedLanguages) async {
@@ -37,7 +36,7 @@ class AboutMeState extends ChangeNotifier {
 
     _selectedTags = [];
     for (Language language in selectedLanguages) {
-      _selectedTags.add(language.id - 1);
+      _selectedTags.add(language.id);
     }
   }
 

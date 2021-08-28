@@ -42,6 +42,7 @@ dependencies:
   agora_rtc_engine: ^4.0.2
   permission_handler: ^8.0.1
   flutter_conditional_rendering: ^2.0.0
+  flutter_html: ^2.1.1
 
   
 dev_dependencies:

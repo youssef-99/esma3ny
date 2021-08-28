@@ -1,10 +1,13 @@
 import 'package:esma3ny/data/models/therapist/previous_client.dart';
 import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
 import 'package:esma3ny/ui/pages/doctor/client_profile.dart';
+import 'package:esma3ny/ui/provider/therapist/search_bar_state.dart';
+import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class PreviousClientsPage extends StatefulWidget {
   @override
@@ -21,8 +24,11 @@ class _PreviousClientsPageState extends State<PreviousClientsPage> {
   TherapistRepository _therapistRepository = TherapistRepository();
 
   Future<void> _fetchPage(int pageKey) async {
+    SearchBarState state = Provider.of<SearchBarState>(context, listen: false);
     try {
-      final newPage = await _therapistRepository.getPrevClients(pageKey);
+      final newPage = state.isSearchPressed
+          ? await _therapistRepository.searchPrevClients(state.searchTerm)
+          : await _therapistRepository.getPrevClients(pageKey);
 
       final isLastPage = newPage['current_page'] == newPage['last_page'];
       List<PreviousClient> newPageDecoded = [];
@@ -60,10 +66,32 @@ class _PreviousClientsPageState extends State<PreviousClientsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Clients',
-          style: Theme.of(context).appBarTheme.titleTextStyle,
+        title: Consumer<SearchBarState>(
+          builder: (context, state, child) => state.isSearchPressed
+              ? TextField(
+                  controller: state.searchController,
+                  decoration: InputDecoration(hintText: 'Search'),
+                  onSubmitted: (value) {
+                    state.onSubmitted(value);
+                    _pagingController.refresh();
+                  },
+                )
+              : Text(
+                  'Clients',
+                  style: Theme.of(context).appBarTheme.titleTextStyle,
+                ),
         ),
+        actions: [
+          Consumer<SearchBarState>(
+            builder: (context, state, child) => IconButton(
+              onPressed: () => state.searchPressed(),
+              icon: Icon(
+                state.isSearchPressed ? Icons.cancel_sharp : Icons.search,
+                color: CustomColors.orange,
+              ),
+            ),
+          )
+        ],
       ),
       body: body(),
     );
