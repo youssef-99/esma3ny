@@ -10,13 +10,13 @@ class ClientModel {
   final String phone;
   final String gender;
   final String dateOfBirth;
-  final countryId;
+  final int countryId;
   final deviceName;
   final String stripeId;
   final String age;
   final ProfileImage profilImage;
-  final String profileCompeleted;
-  final String hasSessionFree;
+  final bool profileCompeleted;
+  final bool hasSessionFree;
   final String realTimeZone;
 
   ClientModel({

@@ -93,8 +93,8 @@ class _PreviousSessionsState extends State<PreviousSessions> {
                 borderRadius: BorderRadius.circular(5),
                 child: ListTile(
                   title: Text(session.day),
-                  subtitle: Text(
-                      'booked at: ${format.format(DateTime.parse(session.bookedAt))}'),
+                  // subtitle: Text(
+                  //     'booked at: ${format.format(DateTime.parse(session.bookedAt))}'),
                   trailing: IconButton(
                     icon: Icon(
                       Icons.note_alt,

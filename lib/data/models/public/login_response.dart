@@ -5,15 +5,16 @@ import 'package:flutter/foundation.dart';
 class LoginResponse {
   final String name;
   final String email;
+  final int uid;
   final ProfileImage profileImage;
   final Country country;
 
-  LoginResponse({
-    @required this.name,
-    @required this.email,
-    @required this.profileImage,
-    @required this.country,
-  });
+  LoginResponse(
+      {@required this.name,
+      @required this.email,
+      @required this.profileImage,
+      @required this.country,
+      @required this.uid});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
@@ -21,6 +22,7 @@ class LoginResponse {
       email: json['email'],
       profileImage: ProfileImage.fromjson(json['profile_image']),
       country: Country.fromJson(json['country']),
+      uid: json['uid'],
     );
   }
 

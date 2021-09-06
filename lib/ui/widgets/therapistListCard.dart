@@ -16,6 +16,14 @@ class TherapistListCard extends StatefulWidget {
 
 class _TherapistListCardState extends State<TherapistListCard> {
   TherapistListInfo get _therapist => widget.therapist;
+  String mainFocus = '';
+  @override
+  void initState() {
+    _therapist.mainFocus.forEach((mainFocus) {
+      this.mainFocus += ", " + mainFocus.name.getLocalizedString();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +91,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
               text: AppLocalizations.of(context).specialized_at,
             ),
             TextSpan(
-              text: _therapist.job.name.getLocalizedString(),
+              text: mainFocus,
               style: TextStyle(
                 color: CustomColors.blue,
               ),

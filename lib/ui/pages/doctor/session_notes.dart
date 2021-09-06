@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:esma3ny/data/models/therapist/note_model.dart';
 import 'package:esma3ny/ui/pages/doctor/preview_session_notes.dart';
 import 'package:esma3ny/ui/provider/therapist/call_state.dart';
@@ -11,10 +13,18 @@ class SessionNotes extends StatefulWidget {
 }
 
 class _SessionNotesState extends State<SessionNotes> {
+  CallState _callState;
+
+  @override
+  void initState() {
+    _callState = Provider.of<CallState>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -25,6 +35,7 @@ class _SessionNotesState extends State<SessionNotes> {
             labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
             labelColor: CustomColors.orange,
             tabs: [
+              Tab(text: 'Notes'),
               Tab(text: 'Subjectives'),
               Tab(text: 'Objectives'),
               Tab(text: 'Assessment'),
@@ -45,6 +56,7 @@ class _SessionNotesState extends State<SessionNotes> {
   body() => Consumer<CallState>(
         builder: (context, state, child) => TabBarView(
           children: [
+            typingNotesTap(),
             tab(state.subjective.notes),
             tab(state.objective.notes),
             tab(state.assessment.notes),
@@ -56,6 +68,36 @@ class _SessionNotesState extends State<SessionNotes> {
   tab(List<NoteModel> notes) => ListView.builder(
         itemCount: notes.length,
         itemBuilder: (context, idx) => Note(notes[idx]),
+      );
+
+  typingNotesTap() => Consumer<CallState>(
+        builder: (context, state, child) => Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: [
+              TextField(
+                minLines: 3,
+                maxLines: 10,
+                controller: _callState.clientNotes,
+                decoration: InputDecoration(labelText: 'Client Notes'),
+                onSubmitted: (value) => state.updateNotes('notes'),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                minLines: 3,
+                maxLines: 10,
+                controller: _callState.publicNotes,
+                decoration: InputDecoration(labelText: 'Public Notes'),
+                onSubmitted: (value) => state.updateNotes('public_notes'),
+              ),
+              CheckboxListTile(
+                value: state.isCompelete,
+                onChanged: (value) => state.setProfileComplete(value),
+                title: Text('Notes Compeleted'),
+              ),
+            ],
+          ),
+        ),
       );
 }
 

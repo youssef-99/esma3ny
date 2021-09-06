@@ -51,7 +51,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
     phone.text = client.phone;
     dateOfBirth.text = client.dateOfBirth;
     selectedGender = client.gender;
-    selectedCountry = int.parse(client.countryId);
+    selectedCountry = client.countryId;
     profileImage = client.profilImage.small;
   }
 
@@ -160,12 +160,13 @@ class _EditProfileFormState extends State<EditProfileForm> {
                     Navigator.pop(context);
                   }),
               ListTile(
-                  leading: Icon(Icons.photo),
-                  title: Text('Gallery'),
-                  onTap: () {
-                    pickImage(ImageSource.gallery);
-                    Navigator.pop(context);
-                  })
+                leading: Icon(Icons.photo),
+                title: Text('Gallery'),
+                onTap: () {
+                  pickImage(ImageSource.gallery);
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),

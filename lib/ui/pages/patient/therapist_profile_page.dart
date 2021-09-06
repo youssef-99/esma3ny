@@ -41,7 +41,7 @@ class _TherapistProfileState extends State<TherapistProfile>
         .setClient(clientModel);
 
     Provider.of<BookSessionState>(context, listen: false)
-        .setProfileCompelete(int.parse(clientModel.profileCompeleted));
+        .setProfileCompelete(clientModel.profileCompeleted);
   }
 
   Future<Therapist> getData() async {

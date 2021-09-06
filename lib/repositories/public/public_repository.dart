@@ -41,11 +41,16 @@ class PublicRepository {
 
   Future<void> sendChatMessage(
       int sessionId, String roomId, String message) async {
-    print(message);
-    Response response = await _apiBaseHelper.postHTTP(
+    await _apiBaseHelper.postHTTP(
       'patient/rooms/$sessionId-$roomId/message',
       {'message': message},
     );
-    print(response.data);
+  }
+
+  Future<dynamic> getSessionPics(id, token, uid) async {
+    print('patient/rooms/$id-$token/user/$uid');
+    Response response =
+        await _apiBaseHelper.getHTTP('patient/rooms/$id-$token/user/$uid');
+    return response.data;
   }
 }

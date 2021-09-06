@@ -126,7 +126,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              state.client.hasSessionFree == '1'
+              state.client.hasSessionFree
                   ? button(() async {
                       List<AvailableTimeSlotResponse> list;
                       await ExceptionHandling.hanleToastException(() async {

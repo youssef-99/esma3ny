@@ -62,13 +62,14 @@ class Note extends StatelessWidget {
       builder: (context, state, child) => ListTile(
         leading: IconButton(
           onPressed: () {
+            print(noteModel.type);
             if (noteModel.type == 'assessment')
               state.deleteAssessment(idx);
             else if (noteModel.type == 'plan')
               state.deletePlan(idx);
-            else if (noteModel.type == 'subjective')
+            else if (noteModel.type == 'subjective') {
               state.deleteSubjectives(idx);
-            else
+            } else
               state.deleteObjectives(idx);
           },
           icon: Icon(Icons.delete),

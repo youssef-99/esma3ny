@@ -34,8 +34,8 @@ class BookSessionState extends ChangeNotifier {
   bool _isProfileCompelete;
   bool _isFree = false;
 
-  setProfileCompelete(int isCompelete) {
-    _isProfileCompelete = isCompelete == 1;
+  setProfileCompelete(bool isCompelete) {
+    _isProfileCompelete = isCompelete;
   }
 
   setIsPressedArray(int length) {
@@ -73,9 +73,6 @@ class BookSessionState extends ChangeNotifier {
   void getToDaySessions(bool notify) {
     bool isContain = false;
     _availableTimeSlots.forEach((timeSlot) {
-      timeSlot.timeSlots.forEach((TimeSlot timeSlot) {
-        print(timeSlot.id);
-      });
       if (format.format(DateTime.now()) == timeSlot.date) {
         isContain = true;
         _selectedTimeSlots = timeSlot.timeSlots;
@@ -102,14 +99,12 @@ class BookSessionState extends ChangeNotifier {
         initSelectedDate();
       });
     }
-
     initSelectedDate();
   }
 
   initSelectedDate() {
     bool isContain = false;
     _availableTimeSlots.forEach((timeSlot) {
-      print(timeSlot.timeSlots[0].id);
       if (_selectedDate == timeSlot.date) {
         isContain = true;
 
@@ -222,7 +217,8 @@ class BookSessionState extends ChangeNotifier {
     await ExceptionHandling.hanleToastException(() async {
       if (_isFree) {
         return await _clientRepositoryImpl.reserveNewSession(
-            selectedTimeSlot.id, _sessionTypeText, true, null, 'free') != null;
+                selectedTimeSlot.id, _sessionTypeText, true, null, 'free') !=
+            null;
       } else {
         if (payLater) {
           await _clientRepositoryImpl.reserveNewSession(

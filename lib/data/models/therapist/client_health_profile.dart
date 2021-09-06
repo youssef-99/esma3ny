@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class ClientHealthProfile {
-  final String forMe;
+  final bool forMe;
   final String name;
   final String dateOfBirth;
   final String gender;
@@ -14,7 +14,7 @@ class ClientHealthProfile {
   final List<dynamic> problems;
   final familyProblem;
   final String problemStartedAt;
-  final String hasFamilyDiagnosed;
+  final bool hasFamilyDiagnosed;
   final String nationality;
   final String note;
 

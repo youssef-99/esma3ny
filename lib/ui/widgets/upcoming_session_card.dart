@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/client_models/time_slot_response.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
+import 'package:esma3ny/ui/pages/communications/audio.dart';
 import 'package:esma3ny/ui/pages/communications/call.dart';
 import 'package:esma3ny/ui/pages/communications/chat.dart';
 import 'package:esma3ny/ui/pages/patient/therapist_profile_page.dart';
@@ -132,7 +133,6 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           button(() {
-            print(timeSlot.sessionId);
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -182,15 +182,25 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
       }, 'Pay Now', CustomColors.orange);
     }
     return button(() {
-      print(isStarted);
       if (isStarted && timeSlot.room != null) {
-        // TODO: go to Session Page
         if (timeSlot.room.type == CHAT) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => ChatScreen(timeSlot.room)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) =>
+                      ChatScreen(timeSlot.room, true, null, timeSlot.endTime)));
         } else if (timeSlot.room.type == VIDEO) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => CallPage(room: timeSlot.room)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => CallPage(
+                      room: timeSlot.room, endTime: timeSlot.endTime)));
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => JoinChannelAudio(
+                      room: timeSlot.room, endTime: timeSlot.endTime)));
         }
       } else {
         Fluttertoast.showToast(msg: 'Session didn\'t started yet!');

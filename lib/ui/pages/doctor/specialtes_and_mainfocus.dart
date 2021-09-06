@@ -1,4 +1,3 @@
-import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/provider/therapist/specialities_state.dart';

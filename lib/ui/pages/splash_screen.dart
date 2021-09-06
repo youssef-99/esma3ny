@@ -37,7 +37,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   _checkLogging() async {
     role = await SharedPrefrencesHelper.isLogged();
-    print(role);
     isLoggedClient = role == CLIENT;
     isLoggedTherapist = role == THERAPIST;
   }

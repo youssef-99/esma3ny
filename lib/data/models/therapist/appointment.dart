@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 class Appointment {
   final int id;
   final String duration;
-  final String clientId;
+  final int clientId;
   final String startTime;
   final String endTime;
   final SessionStatus status;

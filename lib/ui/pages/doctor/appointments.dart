@@ -1,12 +1,14 @@
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:esma3ny/data/models/therapist/appointment.dart';
 import 'package:esma3ny/repositories/therapist/therapist_repository.dart';
+import 'package:esma3ny/ui/provider/therapist/call_state.dart';
 import 'package:esma3ny/ui/widgets/appointment.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:provider/provider.dart';
 
 class AppointmentsPage extends StatefulWidget {
   @override
@@ -50,6 +52,8 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+    Provider.of<CallState>(context, listen: false)
+        .setTherapistPagingController(_pagingController);
     super.initState();
   }
 

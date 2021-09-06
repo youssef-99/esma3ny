@@ -17,6 +17,7 @@ import 'package:esma3ny/data/models/therapist/time_slote.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
 import 'package:http_parser/http_parser.dart';
 
+// TODO: Use 8 or more characters with a mix of letters and at least one number
 class TherapistRepository {
   ApiBaseHelper _apiBaseHelper = ApiBaseHelper();
   final _route = 'doctor';
@@ -165,14 +166,14 @@ class TherapistRepository {
   }
 
   Future<dynamic> getNotes(String uid) async {
-    Response response =
-        await _apiBaseHelper.getHTTP('$_route/rooms/$uid/get-notes');
-    return response.data['options'];
+    Response response = await _apiBaseHelper.getHTTP('$_route/rooms/$uid');
+    print(response.data);
+    return response.data;
   }
 
-  Future<ClientHealthProfile> getHealthProfile(String uid) async {
+  Future<ClientHealthProfile> getHealthProfile(int id) async {
     Response response =
-        await _apiBaseHelper.getHTTP('$_route/clients/$uid/health-profile');
+        await _apiBaseHelper.getHTTP('$_route/clients/$id/health-profile');
     return ClientHealthProfile.fromJson(response.data);
   }
 
@@ -224,12 +225,15 @@ class TherapistRepository {
   ) async {
     Response response = await _apiBaseHelper
         .getHTTP('$_route/clients/$clientId/timeslot/$sessionId');
-    print(sessionId);
 
     PrevSessionNotes prevSessionNotes =
         PrevSessionNotes.fromjson(response.data);
 
     return prevSessionNotes;
+  }
+
+  Future<void> endSession(String uuid) async {
+    await _apiBaseHelper.deleteHTTP('$_route/rooms/$uuid');
   }
 
   Future<void> logout() async {

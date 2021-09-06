@@ -179,7 +179,7 @@ class _HealthProfileState extends State<HealthProfile> {
                                   if (state.isDone) {
                                     Provider.of<BookSessionState>(context,
                                             listen: false)
-                                        .setProfileCompelete(1);
+                                        .setProfileCompelete(true);
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                     Navigator.pop(context);

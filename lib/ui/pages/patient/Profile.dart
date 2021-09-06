@@ -123,8 +123,7 @@ class _ProfileState extends State<Profile> {
             customListTile(Icons.person, client.gender),
             customListTile(Icons.date_range, client.dateOfBirth),
             FutureBuilder(
-                future: SharedPrefrencesHelper.getCountryName(
-                    int.parse(client.countryId)),
+                future: SharedPrefrencesHelper.getCountryName(client.countryId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     print(snapshot.data);

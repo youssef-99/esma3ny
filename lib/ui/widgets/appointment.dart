@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/enums/sessionStatus.dart';
 import 'package:esma3ny/data/models/therapist/appointment.dart';
+import 'package:esma3ny/ui/pages/communications/audio.dart';
 import 'package:esma3ny/ui/pages/communications/call.dart';
 import 'package:esma3ny/ui/pages/communications/chat.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
@@ -122,13 +123,33 @@ class AppointmentCard extends StatelessWidget {
       print(appointment.type == CHAT);
       if (isStarted && appointment.room != null) {
         if (appointment.type == CHAT) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (_) => ChatScreen(appointment.room)));
-        } else if (appointment.type == VIDEO) {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (_) => CallPage(room: appointment.room)));
+                  builder: (_) => ChatScreen(appointment.room, true,
+                      appointment.clientId, appointment.endTime)));
+        } else if (appointment.type == VIDEO) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CallPage(
+                room: appointment.room,
+                clientId: appointment.clientId,
+                endTime: appointment.endTime,
+              ),
+            ),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => JoinChannelAudio(
+                room: appointment.room,
+                clientId: appointment.clientId,
+                endTime: appointment.endTime,
+              ),
+            ),
+          );
         }
       } else {
         Fluttertoast.showToast(msg: 'Session didn\'t started yet!');

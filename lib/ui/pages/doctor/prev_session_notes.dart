@@ -43,9 +43,9 @@ class PrevSessionNotesPage extends StatelessWidget {
                   child: ListView(
                     children: [
                       note('Subjective', snapshot.data.subjective),
-                      note('Objective', snapshot.data.subjective),
-                      note('assessment', snapshot.data.subjective),
-                      note('plan', snapshot.data.subjective),
+                      note('Objective', snapshot.data.objective),
+                      note('assessment', snapshot.data.assessment),
+                      note('plan', snapshot.data.plan),
                       boldText('Notes'),
                       Text(snapshot.data.notes),
                       Divider(),
@@ -83,7 +83,7 @@ class PrevSessionNotesPage extends StatelessWidget {
                       Icons.circle,
                       color: CustomColors.orange,
                     ),
-                    title: Text(note.title.substring(2)),
+                    title: Text(note.title),
                   ),
                 )
                 .toList(),

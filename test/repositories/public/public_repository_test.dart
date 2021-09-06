@@ -14,17 +14,19 @@ class MockApiBaseHelper extends Mock implements ApiBaseHelper {}
 
 void main() {
   PublicRepository publicRepository = PublicRepository();
+  ClientRepositoryImpl clientRepositoryImpl = ClientRepositoryImpl();
 
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
 
   test(
-    'time slot',
+    'akcjnkasncajnsckajnsckasncknakcjns',
     () async {
-      await publicRepository.getCountries();
-      List<Country> co = await SharedPrefrencesHelper.getCountries;
-      print(co[0].code);
-      print(await SharedPrefrencesHelper.getCountryName(co[0].id));
+      await clientRepositoryImpl.login(
+          'youssefwilliam970@gmail.com', '123456%');
+      dynamic asd = await publicRepository.getSessionPics(
+          '8', '9451a404-cdc1-44e9-9cc6-27223b30662b', 21);
+      print(asd);
     },
   );
 }

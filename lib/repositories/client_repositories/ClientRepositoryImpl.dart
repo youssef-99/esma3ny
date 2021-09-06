@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/data/models/client_models/health_profile.dart';
 import 'package:esma3ny/data/models/client_models/health_profile_helper.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:dio/dio.dart';
@@ -172,5 +174,13 @@ class ClientRepositoryImpl implements ClientRepository {
 
     print(response.data);
     return response.data['msg'];
+  }
+
+  Future<void> authorizeReferral(bool value, uid) async {
+    Response response = await _apiBaseHelper
+        .postHTTP('$_route/rooms/$uid/share-notes', {'allow_share': value});
+    Fluttertoast.showToast(
+        msg: 'Session notes shared successfully',
+        backgroundColor: Colors.green);
   }
 }

@@ -11,7 +11,7 @@ class HealthProfileWidget extends StatelessWidget {
       padding: const EdgeInsets.all(15.0),
       child: ListView(
         children: [
-          _clientHealthProfile.forMe == '0'
+          _clientHealthProfile.forMe
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -67,7 +67,7 @@ class HealthProfileWidget extends StatelessWidget {
           title('Family Problems:'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: _clientHealthProfile.familyProblem.entries
+            children: _clientHealthProfile.familyProblem
                 .map<Widget>(
                   (entry) => text('${entry.key}: ${entry.value}'),
                 )

@@ -1,6 +1,7 @@
 import 'package:esma3ny/data/models/client_models/time_slot_response.dart';
 import 'package:esma3ny/repositories/client_repositories/ClientRepositoryImpl.dart';
 import 'package:esma3ny/ui/provider/client/upcoming_sessions_state.dart';
+import 'package:esma3ny/ui/provider/therapist/call_state.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/empty_list_indicator.dart';
 import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/progress_indicator.dart';
@@ -52,6 +53,8 @@ class _UpComingSessionsState extends State<UpComingSessions> {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+    Provider.of<CallState>(context, listen: false)
+        .setClientPagingController(_pagingController);
     super.initState();
   }
 

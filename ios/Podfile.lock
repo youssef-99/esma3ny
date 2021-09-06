@@ -1,12 +1,46 @@
 PODS:
-  - agora_rtc_engine (4.0.2):
-    - AgoraRtcEngine_iOS (= 3.4.2)
+  - agora_rtc_engine (4.0.6):
+    - AgoraRtcEngine_iOS (= 3.4.6)
     - Flutter
-  - AgoraRtcEngine_iOS (3.4.2)
+  - AgoraRtcEngine_iOS (3.4.6)
   - CryptoSwift (0.15.0)
   - device_info (0.0.1):
     - Flutter
+  - DKImagePickerController/Core (4.3.2):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.3.2)
+  - DKImagePickerController/PhotoGallery (4.3.2):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.3.2)
+  - DKPhotoGallery (0.0.17):
+    - DKPhotoGallery/Core (= 0.0.17)
+    - DKPhotoGallery/Model (= 0.0.17)
+    - DKPhotoGallery/Preview (= 0.0.17)
+    - DKPhotoGallery/Resource (= 0.0.17)
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Core (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Model (0.0.17):
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Preview (0.0.17):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SwiftyGif
+  - DKPhotoGallery/Resource (0.0.17):
+    - SDWebImage
+    - SwiftyGif
   - emoji_picker_flutter (0.0.1):
+    - Flutter
+  - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
   - flutter_pusher (1.0.2):
@@ -24,11 +58,16 @@ PODS:
     - Flutter
   - "permission_handler (5.1.0+2)":
     - Flutter
+  - proximity_sensor (0.0.1):
+    - Flutter
   - PusherSwift (7.2.0):
     - CryptoSwift (~> 0.9)
     - ReachabilitySwift (= 4.3.0)
     - Starscream (~> 3.0.5)
   - ReachabilitySwift (4.3.0)
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
   - shared_preferences (0.0.1):
     - Flutter
   - sqflite (0.0.2):
@@ -39,34 +78,50 @@ PODS:
   - stripe_payment (1.0.0):
     - Flutter
     - Stripe (~> 19.4.0)
+  - SwiftyGif (5.4.0)
   - Toast (4.0.0)
   - url_launcher (0.0.1):
+    - Flutter
+  - video_player (0.0.1):
+    - Flutter
+  - wakelock (0.0.1):
+    - Flutter
+  - webview_flutter (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
+  - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_pusher (from `.symlinks/plugins/flutter_pusher/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - proximity_sensor (from `.symlinks/plugins/proximity_sensor/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - stripe_payment (from `.symlinks/plugins/stripe_payment/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - video_player (from `.symlinks/plugins/video_player/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
+  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
   trunk:
     - AgoraRtcEngine_iOS
     - CryptoSwift
+    - DKImagePickerController
+    - DKPhotoGallery
     - FMDB
     - PusherSwift
     - ReachabilitySwift
+    - SDWebImage
     - Starscream
     - Stripe
+    - SwiftyGif
     - Toast
 
 EXTERNAL SOURCES:
@@ -76,6 +131,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/device_info/ios"
   emoji_picker_flutter:
     :path: ".symlinks/plugins/emoji_picker_flutter/ios"
+  file_picker:
+    :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
   flutter_pusher:
@@ -88,6 +145,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  proximity_sensor:
+    :path: ".symlinks/plugins/proximity_sensor/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
@@ -96,13 +155,22 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/stripe_payment/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
+  video_player:
+    :path: ".symlinks/plugins/video_player/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
+  webview_flutter:
+    :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
-  agora_rtc_engine: 9c1a4eb2a33c2ff2dc860fe4a77a27be0345bb9d
-  AgoraRtcEngine_iOS: 3a4d64f2866ffc122e090a693153bb673021f6fe
+  agora_rtc_engine: d3178bd63d453a2d0111bd45475f17ce1fcc754d
+  AgoraRtcEngine_iOS: 8aa4a8e46bd81963607857b1d46703b93e4de156
   CryptoSwift: 769f58a9e89f64e8796c2e59ce5f002dc81a2438
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
+  DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
+  DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   emoji_picker_flutter: 4f9a1ac31d355e1bf9622a1e821a809149130127
+  file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_pusher: dc41a8d13038fe79f9bf055b5794b210b725379f
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
@@ -110,15 +178,21 @@ SPEC CHECKSUMS:
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  proximity_sensor: 87bc974f9d94b03b4b5911ff1f93a61e561e6183
   PusherSwift: a5369a01e8a9106b4897e9186265af1426726062
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   Stripe: 5914399ac5878056b985d56b409cb4bb1e7fc7e8
   stripe_payment: 1cbe9c339c21b5ecf01035e80eea351067c67c56
+  SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
+  webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 

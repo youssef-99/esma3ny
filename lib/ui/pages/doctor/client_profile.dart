@@ -52,7 +52,7 @@ class ClientProfile extends StatelessWidget {
                       phone: snapshot.data.phone,
                       gender: snapshot.data.gender,
                       dateOfBirth: snapshot.data.dateOfBirth,
-                      countryId: snapshot.data.countryId,
+                      countryId: snapshot.data.countryId.toString(),
                       profileImage: snapshot.data.profilImage.small,
                       isEditable: false,
                       widget: Row(
