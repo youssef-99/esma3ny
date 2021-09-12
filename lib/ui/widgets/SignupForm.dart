@@ -46,7 +46,8 @@ class _SignupFormState extends State<SignupForm> {
       await _publicRepository.getCountries();
     } catch (e) {
       Fluttertoast.showToast(
-        msg: 'Error occured check your internet connection',
+        msg: AppLocalizations.of(context)
+            .network_error_check_your_internet_connection,
         timeInSecForIosWeb: 10,
         backgroundColor: Colors.red,
       );
@@ -105,6 +106,10 @@ class _SignupFormState extends State<SignupForm> {
                     require: true,
                   ),
                   error: signupState.errors['password'],
+                ),
+                Text(
+                  AppLocalizations.of(context).password_requirments,
+                  style: Theme.of(context).textTheme.caption,
                 ),
                 ValidationError(
                   textField: PasswordFormField(
@@ -288,7 +293,7 @@ class _SignupFormState extends State<SignupForm> {
       phone: phone.text,
       gender: selectedGender,
       dateOfBirth: dateOfBirth.text,
-      countryId: selectedCountry.toString(),
+      countryId: selectedCountry,
       password: password.text,
       confirmPassword: confirmPassword.text,
       deviceName: await getDeviceName(),

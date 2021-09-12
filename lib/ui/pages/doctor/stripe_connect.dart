@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConnectStripe extends StatelessWidget {
   Future<void> _launchInBrowser(String url) async {
@@ -24,7 +25,7 @@ class ConnectStripe extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'It looks that you don\'t connect your bank account yet with Esma3ny please complete it before requesting activating your account.',
+              AppLocalizations.of(context).stripe_connect,
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -33,7 +34,7 @@ class ConnectStripe extends StatelessWidget {
               onPressed: () async {
                 await _launchInBrowser('https://esma3ny.org/en/doctor/login');
               },
-              child: Text('Connect Now'),
+              child: Text(AppLocalizations.of(context).connect),
             )
           ],
         ),

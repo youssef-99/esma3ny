@@ -6,6 +6,7 @@ import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BalancePage extends StatefulWidget {
   @override
@@ -68,7 +69,7 @@ class _BalancePageState extends State<BalancePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Balance',
+          AppLocalizations.of(context).balance,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -83,10 +84,16 @@ class _BalancePageState extends State<BalancePage> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      balanceBox(CustomColors.lightBlue,
-                          _balanceAmount.egp / 100, 'EGP'),
                       balanceBox(
-                          CustomColors.orange, _balanceAmount.usd / 100, 'USD')
+                        CustomColors.lightBlue,
+                        _balanceAmount.egp / 100,
+                        AppLocalizations.of(context).egp,
+                      ),
+                      balanceBox(
+                        CustomColors.orange,
+                        _balanceAmount.usd / 100,
+                        AppLocalizations.of(context).usd,
+                      )
                     ],
                   ),
             Expanded(
@@ -99,11 +106,11 @@ class _BalancePageState extends State<BalancePage> {
                       ),
                       subtitle: Container(
                         child: Text(
-                          transaction.transferred == '0'
-                              ? 'pending'
-                              : 'transferred',
+                          transaction.transferred
+                              ? AppLocalizations.of(context).pending
+                              : AppLocalizations.of(context).transferred,
                           style: TextStyle(
-                            color: transaction.transferred == '0'
+                            color: transaction.transferred
                                 ? CustomColors.orange
                                 : Colors.green,
                           ),

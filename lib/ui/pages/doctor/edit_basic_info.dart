@@ -17,6 +17,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditBasicInfoPage extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
   int selectedCountry;
   String profileImage;
 
-  List<String> genderOptions = ['male', 'female', 'other'];
+  List<String> genderOptions = ['male', 'female'];
   TherapistProfileState _therapistProfileState;
   EditBasicInfoState _editBasicInfoState;
 
@@ -53,7 +54,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
     dateOfBirth.text = _therapist.dateOfBirth;
     print(_therapist.dateOfBirth);
     selectedGender = _therapist.gender;
-    selectedCountry = int.parse(_therapist.countryId);
+    selectedCountry = _therapist.countryId;
     profileImage = _therapist.profileImage.small;
     _editBasicInfoState =
         Provider.of<EditBasicInfoState>(context, listen: false);
@@ -79,7 +80,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Edit Basic Info',
+          AppLocalizations.of(context).edit,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -96,6 +97,10 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
                 nameFieldAr(),
                 emailField(),
                 passwordField(),
+                Text(
+                  AppLocalizations.of(context).password_requirments,
+                  style: Theme.of(context).textTheme.caption,
+                ),
                 confirmPasswordField(),
                 genderPicker(),
                 datePicker(),
@@ -111,7 +116,8 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
                                 listen: false)
                             .updateProfile();
                         Fluttertoast.showToast(
-                          msg: 'Profile Updated Successfully',
+                          msg: AppLocalizations.of(context)
+                              .profile_updated_message,
                           backgroundColor: Colors.green,
                         );
 
@@ -126,7 +132,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
                   child: state.loading
                       ? CustomProgressIndicator()
                       : Text(
-                          'Edit',
+                          AppLocalizations.of(context).edit,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                 ),
@@ -151,10 +157,10 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
   changeImage() => TextButton(
       onPressed: () =>
           showDialog(context: context, builder: (context) => choosePick()),
-      child: Text('Change Your Profile Picture'));
+      child: Text(AppLocalizations.of(context).change_prof_pic));
 
   choosePick() => AlertDialog(
-        title: Text('Choose Way'),
+        // title: Text(''),
         titleTextStyle: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
         content: SizedBox(
@@ -164,14 +170,14 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
             children: [
               ListTile(
                   leading: Icon(Icons.camera),
-                  title: Text('Camera'),
+                  title: Text(AppLocalizations.of(context).camera),
                   onTap: () {
                     pickImage(ImageSource.camera);
                     Navigator.pop(context);
                   }),
               ListTile(
                   leading: Icon(Icons.photo),
-                  title: Text('Gallery'),
+                  title: Text(AppLocalizations.of(context).gallery),
                   onTap: () {
                     pickImage(ImageSource.gallery);
                     Navigator.pop(context);
@@ -183,7 +189,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
 
   nameFieldEn() => ValidationError(
         textField: TextFieldForm(
-          hint: 'Name',
+          hint: AppLocalizations.of(context).name_in_english,
           validate: FormBuilderValidators.required(context),
           prefixIcon: Icons.person,
           controller: name,
@@ -194,7 +200,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
 
   nameFieldAr() => ValidationError(
         textField: TextFieldForm(
-          hint: 'Name in arabic',
+          hint: AppLocalizations.of(context).name_in_arabic,
           validate: FormBuilderValidators.required(context),
           prefixIcon: Icons.person,
           controller: nameAr,
@@ -206,7 +212,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
   emailField() => ValidationError(
         textField: TextFieldForm(
           prefixIcon: Icons.email,
-          hint: 'Email',
+          hint: AppLocalizations.of(context).email,
           validate: FormBuilderValidators.compose([
             FormBuilderValidators.required(context),
             FormBuilderValidators.email(context)
@@ -219,7 +225,9 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
 
   passwordField() => ValidationError(
         textField: PasswordFormField(
-            controller: password, label: 'Password', require: false),
+            controller: password,
+            label: AppLocalizations.of(context).password,
+            require: false),
         error: Provider.of<EditBasicInfoState>(context, listen: false)
             .errors['password'],
       );
@@ -227,18 +235,24 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
   confirmPasswordField() => ValidationError(
         textField: PasswordFormField(
           controller: confirmPassword,
-          label: 'Confirm Password',
+          label: AppLocalizations.of(context).confirm_password,
           require: false,
         ),
         error: Provider.of<EditBasicInfoState>(context, listen: false)
             .errors['password_confirmation'],
       );
 
+  getLocaleGender(String gender) {
+    if (gender == 'male') return AppLocalizations.of(context).male;
+    return AppLocalizations.of(context).female;
+  }
+
   genderPicker() => ValidationError(
         textField: FormBuilderDropdown(
           name: 'gender',
           decoration: InputDecoration(
-              prefixIcon: prefixIcon(Icons.person), labelText: 'Gender'),
+              prefixIcon: prefixIcon(Icons.person),
+              labelText: AppLocalizations.of(context).gender),
           allowClear: true,
           validator: FormBuilderValidators.compose(
               [FormBuilderValidators.required(context)]),
@@ -246,7 +260,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
           items: genderOptions
               .map((gender) => DropdownMenuItem(
                     value: gender,
-                    child: Text('$gender'),
+                    child: Text(getLocaleGender(gender)),
                   ))
               .toList(),
           onSaved: (String value) {
@@ -267,7 +281,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
           initialDatePickerMode: DatePickerMode.year,
           decoration: InputDecoration(
             prefixIcon: prefixIcon(Icons.date_range),
-            labelText: 'Date Of Birth',
+            labelText: AppLocalizations.of(context).date_of_birth,
           ),
           enabled: true,
           validator: FormBuilderValidators.required(context),
@@ -285,7 +299,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
                   initialValue: snapshot.data[selectedCountry - 1].id,
                   decoration: InputDecoration(
                       prefixIcon: prefixIcon(Icons.person),
-                      labelText: 'Country'),
+                      labelText: AppLocalizations.of(context).country),
                   allowClear: true,
                   validator: FormBuilderValidators.compose(
                       [FormBuilderValidators.required(context)]),
@@ -308,7 +322,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
 
   phoneField() => ValidationError(
         textField: TextFieldForm(
-          hint: 'Phone Number',
+          hint: AppLocalizations.of(context).phone_number,
           validate: FormBuilderValidators.compose([
             FormBuilderValidators.required(context),
             FormBuilderValidators.numeric(context),
@@ -328,7 +342,7 @@ class _EditBasicInfoPageState extends State<EditBasicInfoPage> {
       phone: phone.text,
       gender: selectedGender,
       dateOfBirth: dateOfBirth.text,
-      countryId: selectedCountry.toString(),
+      countryId: selectedCountry,
       password: password.text,
       confirmPassword: confirmPassword.text,
     );

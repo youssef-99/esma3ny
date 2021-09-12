@@ -3,6 +3,7 @@ import 'package:esma3ny/ui/provider/therapist/call_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SessionNotesPreview extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class SessionNotesPreview extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Notes Preview',
+            AppLocalizations.of(context).notes_preview,
             style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
           bottom: const TabBar(

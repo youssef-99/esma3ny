@@ -2,6 +2,7 @@ import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeesPage extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class FeesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Fees',
+          AppLocalizations.of(context).fees,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
@@ -25,19 +26,22 @@ class FeesPage extends StatelessWidget {
           child: ListView(
             children: [
               customListTile(
-                'Video',
+                AppLocalizations.of(context).video,
                 state.therapistProfileResponse.fees.video.usd,
                 state.therapistProfileResponse.fees.video.egp,
+                context,
               ),
               customListTile(
-                'Audio',
+                AppLocalizations.of(context).audio,
                 state.therapistProfileResponse.fees.audio.usd,
                 state.therapistProfileResponse.fees.audio.egp,
+                context,
               ),
               customListTile(
-                'Chat',
+                AppLocalizations.of(context).chat,
                 state.therapistProfileResponse.fees.chat.usd,
                 state.therapistProfileResponse.fees.video.egp,
+                context,
               ),
             ],
           ),
@@ -46,8 +50,8 @@ class FeesPage extends StatelessWidget {
     );
   }
 
-  customListTile(
-          String type, FeesAmount feesAmountUSD, FeesAmount feesAmountEGP) =>
+  customListTile(String type, FeesAmount feesAmountUSD,
+          FeesAmount feesAmountEGP, context) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -57,11 +61,15 @@ class FeesPage extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.brightness_1_outlined),
-            title: Text('30 Min'),
+            title: Text(AppLocalizations.of(context).price_for_60_min),
             trailing: Column(
               children: [
-                Text('${feesAmountUSD.full.toString()} USD'),
-                Text('${feesAmountEGP.full.toString()} EGP')
+                Text(
+                  '${feesAmountUSD.full.toString()} ${AppLocalizations.of(context).usd}',
+                ),
+                Text(
+                  '${feesAmountEGP.full.toString()} ${AppLocalizations.of(context).egp}',
+                )
               ],
             ),
           ),
@@ -70,8 +78,10 @@ class FeesPage extends StatelessWidget {
             title: Text('60 Min'),
             trailing: Column(
               children: [
-                Text('${feesAmountUSD.half.toString()} USD'),
-                Text('${feesAmountEGP.half.toString()} EGP')
+                Text(
+                    '${feesAmountUSD.half.toString()} ${AppLocalizations.of(context).usd}'),
+                Text(
+                    '${feesAmountEGP.half.toString()} ${AppLocalizations.of(context).egp}')
               ],
             ),
           ),

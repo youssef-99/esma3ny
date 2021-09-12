@@ -3,9 +3,11 @@ import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'chached_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BasicProfile extends StatelessWidget {
-  final String name, email, phone, gender, dateOfBirth, countryId, profileImage;
+  final String name, email, phone, gender, dateOfBirth, profileImage;
+  final int countryId;
   final bool isEditable;
   final Widget widget;
   BasicProfile({
@@ -62,10 +64,12 @@ class BasicProfile extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, 'edit_therapist_bais_info');
+                          context,
+                          'edit_therapist_bais_info',
+                        );
                       },
                       child: Text(
-                        'Edit',
+                        AppLocalizations.of(context).edit,
                         style: TextStyle(
                           fontSize: 20,
                           decoration: TextDecoration.underline,
@@ -81,9 +85,7 @@ class BasicProfile extends StatelessWidget {
             customListTile(Icons.person, gender),
             customListTile(Icons.date_range, dateOfBirth),
             FutureBuilder(
-              future: SharedPrefrencesHelper.getCountryName(
-                int.parse(countryId),
-              ),
+              future: SharedPrefrencesHelper.getCountryName(countryId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return customListTile(Icons.location_city, snapshot.data);

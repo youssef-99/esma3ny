@@ -7,6 +7,7 @@ import 'package:esma3ny/ui/widgets/payment_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SessionBookingReview extends StatefulWidget {
   final String therapistName;
@@ -37,20 +38,22 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            customListTile(
-                'Your Therapist', state.therapist.name.getLocalizedString()),
-            customListTile('Session Type',
+            customListTile(AppLocalizations.of(context).your_therapist,
+                state.therapist.name.getLocalizedString()),
+            customListTile(AppLocalizations.of(context).session_type,
                 '${state.selectedTimeSlot.duration} ${state.sessionTypeText}'),
             state.sessionPriceResponse != null
                 ? customListTile(
-                    'Session Fees',
+                    AppLocalizations.of(context).session_fees,
                     state.isFree
-                        ? 'Free Session'
+                        ? AppLocalizations.of(context).free_session
                         : '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}',
                   )
                 : SizedBox(),
-            customListTile('Date', state.selectedDate),
-            customListTile('Time', state.selectedTimeSlot.startTime),
+            customListTile(
+                AppLocalizations.of(context).date, state.selectedDate),
+            customListTile(AppLocalizations.of(context).time,
+                state.selectedTimeSlot.startTime),
             state.isFree ? SizedBox(height: 50) : payState(),
             state.loading
                 ? CircularProgressIndicator()
@@ -105,7 +108,7 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
       );
 
   payState() => CheckboxListTile(
-        title: Text('Pay Later'),
+        title: Text(AppLocalizations.of(context).pay_later),
         value: payLater,
         onChanged: (value) => setState(
           () {

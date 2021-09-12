@@ -78,7 +78,7 @@ class _TherapistListCardState extends State<TherapistListCard> {
 
   jobTitle() => Text(
         _therapist.job == null
-            ? 'Unknown'
+            ? AppLocalizations.of(context).unknown
             : _therapist.job.name.getLocalizedString(),
         style: Theme.of(context).textTheme.caption,
       );

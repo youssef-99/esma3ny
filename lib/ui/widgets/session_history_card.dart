@@ -9,6 +9,7 @@ import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SessionHistoryCard extends StatefulWidget {
   final SessionHistoryModel sessionHistoryModel;
@@ -59,14 +60,14 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   therapistName(),
-                  AutoSizeText(
-                    widget.sessionHistoryModel.doctor.title
-                        .getLocalizedString(),
-                    style: Theme.of(context).textTheme.caption,
-                  ),
+                  // AutoSizeText(
+                  //   widget.sessionHistoryModel.doctor.title
+                  //       .getLocalizedString(),
+                  //   style: Theme.of(context).textTheme.caption,
+                  // ),
                   SizedBox(height: 20),
                   customListTile(Icons.timer,
-                      '${widget.sessionHistoryModel.duration} Min / ${widget.sessionHistoryModel.type}'),
+                      '${widget.sessionHistoryModel.duration} ${AppLocalizations.of(context).min} / ${widget.sessionHistoryModel.type}'),
                   // customListTile(
                   //     Icons.money, '${timeSlot.amount} / ${timeSlot.currency}'),
                 ],
@@ -133,7 +134,7 @@ class _SessionHistoryCardState extends State<SessionHistoryCard> {
   bottomSection() => Align(
         alignment: AlignmentDirectional.bottomEnd,
         child: SessionStatusMark(
-          sessionStatus: widget.sessionHistoryModel.status == STARTED
+          sessionStatus: widget.sessionHistoryModel.status == FINIDHED
               ? SessionStatus.Finished
               : SessionStatus.Cancelled,
         ),

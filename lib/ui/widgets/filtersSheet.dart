@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../theme/colors.dart';
 import '../theme/constant.dart';
 import 'customDatePicker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FilterSheet extends StatefulWidget {
   final _dateController;
@@ -24,14 +25,6 @@ class _FilterSheetState extends State<FilterSheet> {
   int genderTag = 1;
   int feesTag = 1;
   List<String> genders = ['any', 'male', 'female'];
-  List<String> fees = [
-    'any',
-    'less 150',
-    '150-200',
-    '200-300',
-    '300-500',
-    'above 500'
-  ];
 
   @override
   void initState() {
@@ -44,7 +37,7 @@ class _FilterSheetState extends State<FilterSheet> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Filters',
+          AppLocalizations.of(context).filters,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
@@ -66,15 +59,17 @@ class _FilterSheetState extends State<FilterSheet> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              specializationFilterColumn(Icons.apps, 'Specialization'),
-              languageFilterColumn(Icons.public, 'Languanges'),
-              jobsFilterColumn(Icons.work, 'Jobs'),
+              specializationFilterColumn(
+                  Icons.apps, AppLocalizations.of(context).specialization),
+              languageFilterColumn(
+                  Icons.public, AppLocalizations.of(context).languages),
+              jobsFilterColumn(Icons.work, AppLocalizations.of(context).jobs),
               // group(
               //   listTile(Icons.watch_later, 'Availability'),
               //   datePicker(),
               // ),
               group(
-                listTile(Icons.person, 'Gender'),
+                listTile(Icons.person, AppLocalizations.of(context).gender),
                 genderChip(),
               ),
               // group(
@@ -86,21 +81,23 @@ class _FilterSheetState extends State<FilterSheet> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                        onPressed: () {
-                          state.reset();
-                          setState(() {});
-                          Navigator.pop(context);
-                        },
-                        child: Text('Resset')),
+                      onPressed: () {
+                        state.reset();
+                        setState(() {});
+                        Navigator.pop(context);
+                      },
+                      child: Text(AppLocalizations.of(context).reset),
+                    ),
                     SizedBox(
                       width: 50,
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          state.apply();
-                          Navigator.pop(context);
-                        },
-                        child: Text('Apply'))
+                      onPressed: () {
+                        state.apply();
+                        Navigator.pop(context);
+                      },
+                      child: Text(AppLocalizations.of(context).apply),
+                    )
                   ],
                 ),
               )
@@ -169,7 +166,8 @@ class _FilterSheetState extends State<FilterSheet> {
               if (snapshot.connectionState == ConnectionState.done) {
                 List<Specialization> list = snapshot.data;
                 return DropdownButtonFormField<Specialization>(
-                  hint: Text('Select Specialization'),
+                  hint:
+                      Text(AppLocalizations.of(context).select_specialization),
                   items: <Specialization>[...list].map((Specialization value) {
                     return new DropdownMenuItem<Specialization>(
                       value: value,
@@ -193,7 +191,7 @@ class _FilterSheetState extends State<FilterSheet> {
               if (snapshot.connectionState == ConnectionState.done) {
                 List<Language> list = snapshot.data;
                 return DropdownButtonFormField<Language>(
-                  hint: Text('Select Language'),
+                  hint: Text(AppLocalizations.of(context).select_language),
                   items: <Language>[...list].map((Language value) {
                     return new DropdownMenuItem<Language>(
                       value: value,
@@ -218,7 +216,7 @@ class _FilterSheetState extends State<FilterSheet> {
                   snapshot.hasData) {
                 List<Job> list = snapshot.data;
                 return DropdownButtonFormField<Job>(
-                  hint: Text('Select Job'),
+                  hint: Text(AppLocalizations.of(context).select_job),
                   items: <Job>[...list].map((Job value) {
                     return new DropdownMenuItem<Job>(
                       value: value,
@@ -237,6 +235,13 @@ class _FilterSheetState extends State<FilterSheet> {
 
   datePicker() => padding(CustomDatePicker(widget._dateController));
 
+  getLocaleGender(gender) {
+    if (gender == 'male')
+      return AppLocalizations.of(context).male;
+    else if (gender == 'female') return AppLocalizations.of(context).female;
+    return AppLocalizations.of(context).any;
+  }
+
   genderChip() => Consumer<FilterState>(
         builder: (context, state, child) => Align(
           alignment: Alignment.center,
@@ -249,7 +254,7 @@ class _FilterSheetState extends State<FilterSheet> {
             choiceItems: C2Choice.listFrom<int, String>(
                 source: genders,
                 value: (i, v) => i,
-                label: (i, v) => v,
+                label: (i, v) => getLocaleGender(v),
                 tooltip: (i, v) => v,
                 style: (i, v) {
                   return C2ChoiceStyle(
@@ -262,27 +267,6 @@ class _FilterSheetState extends State<FilterSheet> {
             ),
             wrapped: true,
           ),
-        ),
-      );
-
-  feesChip() => Align(
-        alignment: Alignment.center,
-        child: ChipsChoice<int>.single(
-          value: feesTag,
-          onChanged: (val) => feesTag = val,
-          choiceItems: C2Choice.listFrom<int, String>(
-              source: fees,
-              value: (i, v) => i,
-              label: (i, v) => v,
-              tooltip: (i, v) => v,
-              style: (i, v) {
-                return C2ChoiceStyle(labelStyle: TextStyle(fontSize: 18));
-              }),
-          choiceActiveStyle: C2ChoiceStyle(
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-            color: CustomColors.orange,
-          ),
-          wrapped: true,
         ),
       );
 }

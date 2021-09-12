@@ -3,6 +3,7 @@ import 'package:esma3ny/ui/pages/patient/settings.dart';
 import 'package:esma3ny/ui/pages/patient/upcomin_session_page.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../theme/colors.dart';
 import 'Profile.dart';
@@ -61,10 +62,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
         currentIndex: _selectedIndex,
         items: [
           // FloatingNavbarItem(icon: Icons.home, title: 'Home'),
-          FloatingNavbarItem(icon: Icons.group, title: 'Thirapists'),
-          FloatingNavbarItem(icon: Icons.notifications, title: 'Sessions'),
-          FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
-          FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
+          FloatingNavbarItem(
+            icon: Icons.group,
+            title: AppLocalizations.of(context).therapists,
+          ),
+          FloatingNavbarItem(
+            icon: Icons.notifications,
+            title: AppLocalizations.of(context).sessions,
+          ),
+          FloatingNavbarItem(
+            icon: Icons.person,
+            title: AppLocalizations.of(context).profile,
+          ),
+          FloatingNavbarItem(
+            icon: Icons.settings,
+            title: AppLocalizations.of(context).settings,
+          ),
         ],
       ),
     );

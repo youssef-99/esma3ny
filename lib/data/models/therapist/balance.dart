@@ -25,9 +25,9 @@ class Transaction {
   final id;
   final double amount;
   final String currency;
-  final String transferred;
-  final String doctorId;
-  final String chargeId;
+  final bool transferred;
+  final int doctorId;
+  final int chargeId;
   final String createdAt;
 
   Transaction({

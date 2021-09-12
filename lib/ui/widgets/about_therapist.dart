@@ -6,6 +6,7 @@ import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_in
 import 'package:esma3ny/data/models/public/specialization.dart';
 import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AbouTherapist extends StatelessWidget {
   final Therapist therapist;
@@ -39,28 +40,33 @@ class AbouTherapist extends StatelessWidget {
                 .getCounry(therapist.countryId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done)
-                return customListTile(
-                    Icons.location_city, 'Region', snapshot.data);
+                return customListTile(Icons.location_city,
+                    AppLocalizations.of(context).region, snapshot.data);
 
               return SizedBox();
             },
           ),
+          customListTile(Icons.search, AppLocalizations.of(context).main_focus,
+              mianFocusString(therapist.mainFocus)),
           customListTile(
-              Icons.search, 'Main Focus', mianFocusString(therapist.mainFocus)),
-          customListTile(Icons.star, 'Specialized in',
-              mianFocusString(therapist.specializations)),
-          customListTile(Icons.timer_rounded, 'Joining Date',
+            Icons.star,
+            AppLocalizations.of(context).specialized_in,
+            mianFocusString(therapist.specializations),
+          ),
+          customListTile(
+              Icons.timer_rounded,
+              AppLocalizations.of(context).joining_date,
               dateFormat.format(DateTime.parse(therapist.joiningDate))),
           ListTile(
             leading: Icon(
               Icons.language,
               color: CustomColors.orange,
             ),
-            title: Text('Language'),
+            title: Text(AppLocalizations.of(context).languages),
             subtitle: language(),
           ),
-          customListTile(
-              Icons.person, 'Bio', therapist.biography.getLocalizedString())
+          customListTile(Icons.person, AppLocalizations.of(context).bio,
+              therapist.biography.getLocalizedString())
         ],
       );
 

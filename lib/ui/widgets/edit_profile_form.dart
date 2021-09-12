@@ -19,6 +19,7 @@ import 'package:intl/intl.dart';
 import '../theme/colors.dart';
 import 'textFields/TextField.dart';
 import 'textFields/passwordField.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProfileForm extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   int selectedCountry;
   String profileImage;
 
-  List<String> genderOptions = ['male', 'female', 'other'];
+  List<String> genderOptions = ['male', 'female'];
   List<Country> countries = [];
   EditProfileState _editProfileState;
 
@@ -85,6 +86,10 @@ class _EditProfileFormState extends State<EditProfileForm> {
                 nameField(),
                 emailField(),
                 passwordField(),
+                Text(
+                  AppLocalizations.of(context).password_requirments,
+                  style: Theme.of(context).textTheme.caption,
+                ),
                 confirmPasswordField(),
                 genderPicker(),
                 datePicker(),
@@ -103,7 +108,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
                             await state.edit(await toClient(), true);
                             if (state.exception == null) {
                               Fluttertoast.showToast(
-                                  msg: 'Profile Updated Successfully',
+                                  msg: AppLocalizations.of(context)
+                                      .profile_updated_message,
                                   backgroundColor: Colors.green);
 
                               Navigator.pop(context);
@@ -116,7 +122,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
                           padding: EdgeInsets.symmetric(vertical: 10),
                         ),
                         child: Text(
-                          'Edit',
+                          AppLocalizations.of(context).edit,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
@@ -141,10 +147,10 @@ class _EditProfileFormState extends State<EditProfileForm> {
   changeImage() => TextButton(
       onPressed: () =>
           showDialog(context: context, builder: (context) => choosePick()),
-      child: Text('Change Your Profile Picture'));
+      child: Text(AppLocalizations.of(context).change_prof_pic));
 
   choosePick() => AlertDialog(
-        title: Text('Choose Way'),
+        // title: Text('Choose Way'),
         titleTextStyle: TextStyle(
             color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
         content: SizedBox(
@@ -154,14 +160,14 @@ class _EditProfileFormState extends State<EditProfileForm> {
             children: [
               ListTile(
                   leading: Icon(Icons.camera),
-                  title: Text('Camera'),
+                  title: Text(AppLocalizations.of(context).camera),
                   onTap: () {
                     pickImage(ImageSource.camera);
                     Navigator.pop(context);
                   }),
               ListTile(
                 leading: Icon(Icons.photo),
-                title: Text('Gallery'),
+                title: Text(AppLocalizations.of(context).gallery),
                 onTap: () {
                   pickImage(ImageSource.gallery);
                   Navigator.pop(context);
@@ -174,7 +180,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   nameField() => ValidationError(
         textField: TextFieldForm(
-          hint: 'Name',
+          hint: AppLocalizations.of(context).name,
           validate: FormBuilderValidators.required(context),
           prefixIcon: Icons.person,
           controller: name,
@@ -186,7 +192,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
   emailField() => ValidationError(
         textField: TextFieldForm(
           prefixIcon: Icons.email,
-          hint: 'Email',
+          hint: AppLocalizations.of(context).email,
           validate: FormBuilderValidators.compose([
             FormBuilderValidators.required(context),
             FormBuilderValidators.email(context)
@@ -199,7 +205,9 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   passwordField() => ValidationError(
         textField: PasswordFormField(
-            controller: password, label: 'Password', require: false),
+            controller: password,
+            label: AppLocalizations.of(context).password,
+            require: false),
         error: Provider.of<EditProfileState>(context, listen: false)
             .errors['password'],
       );
@@ -207,18 +215,25 @@ class _EditProfileFormState extends State<EditProfileForm> {
   confirmPasswordField() => ValidationError(
         textField: PasswordFormField(
           controller: confirmPassword,
-          label: 'Confirm Password',
+          label: AppLocalizations.of(context).confirm_password,
           require: false,
         ),
         error: Provider.of<EditProfileState>(context, listen: false)
             .errors['password_confirmation'],
       );
 
+  getLocaleGender(String gender) {
+    if (gender == 'male') return AppLocalizations.of(context).male;
+    return AppLocalizations.of(context).female;
+  }
+
   genderPicker() => ValidationError(
         textField: FormBuilderDropdown(
           name: 'gender',
           decoration: InputDecoration(
-              prefixIcon: prefixIcon(Icons.person), labelText: 'Gender'),
+            prefixIcon: prefixIcon(Icons.person),
+            labelText: AppLocalizations.of(context).gender,
+          ),
           allowClear: true,
           validator: FormBuilderValidators.compose(
               [FormBuilderValidators.required(context)]),
@@ -226,7 +241,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
           items: genderOptions
               .map((gender) => DropdownMenuItem(
                     value: gender,
-                    child: Text('$gender'),
+                    child: Text(getLocaleGender(gender)),
                   ))
               .toList(),
           onSaved: (String value) {
@@ -247,7 +262,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
           initialDatePickerMode: DatePickerMode.year,
           decoration: InputDecoration(
             prefixIcon: prefixIcon(Icons.date_range),
-            labelText: 'Date Of Birth',
+            labelText: AppLocalizations.of(context).date_of_birth,
           ),
           enabled: true,
           validator: FormBuilderValidators.required(context),
@@ -261,7 +276,8 @@ class _EditProfileFormState extends State<EditProfileForm> {
           name: 'country',
           initialValue: countries[selectedCountry - 1].id,
           decoration: InputDecoration(
-              prefixIcon: prefixIcon(Icons.person), labelText: 'Country'),
+              prefixIcon: prefixIcon(Icons.person),
+              labelText: AppLocalizations.of(context).country),
           allowClear: true,
           validator: FormBuilderValidators.compose(
               [FormBuilderValidators.required(context)]),
@@ -281,7 +297,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
 
   phoneField() => ValidationError(
         textField: TextFieldForm(
-          hint: 'Phone Number',
+          hint: AppLocalizations.of(context).phone_number,
           validate: FormBuilderValidators.compose([
             FormBuilderValidators.required(context),
             FormBuilderValidators.numeric(context),
@@ -314,7 +330,7 @@ class _EditProfileFormState extends State<EditProfileForm> {
       phone: phone.text,
       gender: selectedGender,
       dateOfBirth: dateOfBirth.text,
-      countryId: selectedCountry.toString(),
+      countryId: selectedCountry,
       password: password.text,
       confirmPassword: confirmPassword.text,
       deviceName: await getDeviceName(),
@@ -328,13 +344,17 @@ class _EditProfileFormState extends State<EditProfileForm> {
     if (exceptions == Exceptions.NetworkError) {
       print(exceptions);
       Fluttertoast.showToast(
-          msg: 'Network error check your internet connection');
+          msg: AppLocalizations.of(context)
+              .network_error_check_your_internet_connection);
     } else if (exceptions == Exceptions.ServerError) {
-      Fluttertoast.showToast(msg: 'Server error try again later');
+      Fluttertoast.showToast(
+          msg: AppLocalizations.of(context).server_error_try_again_later);
     } else if (exceptions == Exceptions.Timeout) {
-      Fluttertoast.showToast(msg: 'time out try again');
+      Fluttertoast.showToast(
+          msg: AppLocalizations.of(context).time_out_try_again);
     } else {
-      Fluttertoast.showToast(msg: 'Something went wrong');
+      Fluttertoast.showToast(
+          msg: AppLocalizations.of(context).something_went_wrong);
     }
   }
 }

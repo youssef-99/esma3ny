@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HealthProfile extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _HealthProfileState extends State<HealthProfile> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Health Profile',
+          AppLocalizations.of(context).health_profile,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -59,19 +60,21 @@ class _HealthProfileState extends State<HealthProfile> {
                           CheckboxListTile(
                             contentPadding: EdgeInsets.zero,
                             value: state.isMe,
-                            title: Text('For another one'),
+                            title: Text(
+                              AppLocalizations.of(context).for_another_one,
+                            ),
                             onChanged: (val) => state.changeForME(),
                           ),
                           state.isMe ? additionalFields() : SizedBox(),
                           TextFieldForm(
-                            hint: 'Who referred you',
+                            hint: AppLocalizations.of(context).who_referred_you,
                             validate: FormBuilderValidators.required(context),
                             prefixIcon: Icons.person_add,
                             controller: state.referController,
                           ),
                           countryList(),
                           dropDown(
-                            'Marital Status',
+                            AppLocalizations.of(context).marital_status,
                             snapshot.data.maritalStatus,
                             (val) {
                               state.maritalStatus = val;
@@ -79,14 +82,14 @@ class _HealthProfileState extends State<HealthProfile> {
                           ),
                           numberOfChildrenDropDown(),
                           dropDown(
-                            'Education',
+                            AppLocalizations.of(context).education,
                             snapshot.data.education,
                             (val) {
                               state.education = val;
                             },
                           ),
                           dropDown(
-                            'Degree',
+                            AppLocalizations.of(context).degree,
                             snapshot.data.degree,
                             (val) {
                               state.degree = val;
@@ -94,7 +97,8 @@ class _HealthProfileState extends State<HealthProfile> {
                           ),
                           SizedBox(height: 20),
                           Text(
-                            'Which services are you looking for?',
+                            AppLocalizations.of(context)
+                                .which_services_are_you_looking_for,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
@@ -117,15 +121,18 @@ class _HealthProfileState extends State<HealthProfile> {
                                 .values
                                 .toList(),
                           ),
-                          Text('What problem(s) are you seeking help for? *'),
+                          Text(AppLocalizations.of(context)
+                              .what_problems_are_you_seeking_help_for),
                           problems(snapshot.data.problems),
-                          Text('Problems Started Date *'),
+                          Text(AppLocalizations.of(context)
+                              .problems_started_date),
                           datePicker(),
                           SizedBox(height: 20),
                           CheckboxListTile(
                             contentPadding: EdgeInsets.zero,
                             title: Text(
-                              'Have any of your family members been diagnosed or treated for a psychiatric problem?',
+                              AppLocalizations.of(context)
+                                  .have_any_of_your_family_members_been_diagnosed_or_treated_for_a_psychiatric_problem,
                             ),
                             value: state.isFamilyProblem,
                             onChanged: (value) {
@@ -150,7 +157,9 @@ class _HealthProfileState extends State<HealthProfile> {
                                                 decoration: InputDecoration(
                                                   errorText: state
                                                           .validateFamily[i]
-                                                      ? 'Field Can\'t Be Empty'
+                                                      ? AppLocalizations.of(
+                                                              context)
+                                                          .field_cant_be_empty
                                                       : null,
                                                 )),
                                             onChanged: (value) {
@@ -164,8 +173,8 @@ class _HealthProfileState extends State<HealthProfile> {
                                 )
                               : SizedBox(),
                           SizedBox(height: 20),
-                          Text(
-                              'Is there anything else you want your psychologist to know?'),
+                          Text(AppLocalizations.of(context)
+                              .is_there_anything_else_you_want_your_psychologist_to_know),
                           TextFormField(
                             minLines: 1,
                             maxLines: 10,
@@ -188,7 +197,7 @@ class _HealthProfileState extends State<HealthProfile> {
                               },
                               child: state.loading
                                   ? CustomProgressIndicator()
-                                  : Text('submit')),
+                                  : Text(AppLocalizations.of(context).submit)),
                         ],
                       ),
                     ),
@@ -233,7 +242,7 @@ class _HealthProfileState extends State<HealthProfile> {
           name: 'Number of children',
           decoration: InputDecoration(
             prefixIcon: prefixIcon(Icons.person),
-            labelText: 'Number of children',
+            labelText: AppLocalizations.of(context).number_of_children,
           ),
           allowClear: true,
           validator: FormBuilderValidators.compose(
@@ -337,7 +346,7 @@ class _HealthProfileState extends State<HealthProfile> {
               validator: FormBuilderValidators.required(context),
             ),
             TextFieldForm(
-              hint: 'Relation to client',
+              hint: AppLocalizations.of(context).relation_to_client,
               validate: FormBuilderValidators.required(context),
               prefixIcon: Icons.person,
               controller: state.relation,

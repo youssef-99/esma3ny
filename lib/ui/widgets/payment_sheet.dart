@@ -6,6 +6,7 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:stripe_payment/stripe_payment.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaymentSheet extends StatefulWidget {
   final int timeSlotId;
@@ -47,8 +48,10 @@ class PaymentSheetState extends State<PaymentSheet> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Payment',
-            style: Theme.of(context).appBarTheme.titleTextStyle),
+        title: Text(
+          AppLocalizations.of(context).payment,
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
@@ -73,22 +76,22 @@ class PaymentSheetState extends State<PaymentSheet> {
               cardHolderName: cardHolderName,
               expiryDate: expiryDate,
               themeColor: Colors.blue,
-              cardNumberDecoration: const InputDecoration(
+              cardNumberDecoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey)),
-                labelText: 'Number',
+                labelText: AppLocalizations.of(context).number,
                 hintText: 'XXXX XXXX XXXX XXXX',
                 labelStyle: TextStyle(color: Colors.blue),
                 hintStyle: TextStyle(color: Colors.grey),
               ),
-              expiryDateDecoration: const InputDecoration(
+              expiryDateDecoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey)),
-                labelText: 'Expired Date',
+                labelText: AppLocalizations.of(context).expired_date,
                 labelStyle: TextStyle(color: Colors.blue),
                 hintText: 'MM/YY',
                 hintStyle: TextStyle(color: Colors.grey),
@@ -103,13 +106,13 @@ class PaymentSheetState extends State<PaymentSheet> {
                 hintText: 'XXX',
                 hintStyle: TextStyle(color: Colors.grey),
               ),
-              cardHolderDecoration: const InputDecoration(
+              cardHolderDecoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
                 enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey)),
                 labelStyle: TextStyle(color: Colors.blue),
-                labelText: 'Card Holder',
+                labelText: AppLocalizations.of(context).card_holder,
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               onCreditCardModelChange: onCreditCardModelChange,
@@ -125,8 +128,8 @@ class PaymentSheetState extends State<PaymentSheet> {
                       child: ElevatedButton(
                         child: state.loading
                             ? CircularProgressIndicator()
-                            : const Text(
-                                'Submit',
+                            : Text(
+                                AppLocalizations.of(context).submit,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'halter',

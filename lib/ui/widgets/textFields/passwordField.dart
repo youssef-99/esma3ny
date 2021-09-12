@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../theme/colors.dart';
 
@@ -28,13 +29,13 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
               [
                 FormBuilderValidators.required(context),
                 FormBuilderValidators.minLength(context, 8,
-                    errorText: 'Password must be at least 8 charachters'),
+                    errorText: AppLocalizations.of(context).password_8_char),
                 (String val) {
                   if (!val.contains(RegExp(r'[A-Z]'))) {
-                    return 'Password must contain uppercase charachter';
+                    return AppLocalizations.of(context).password_upper_char;
                   }
                   if (!val.contains(RegExp(r'[a-z]'))) {
-                    return 'Password must contain lowercase charachter';
+                    return AppLocalizations.of(context).password_lower_char;
                   }
                   return null;
                 }

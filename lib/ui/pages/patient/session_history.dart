@@ -5,6 +5,7 @@ import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:esma3ny/ui/widgets/session_history_card.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SessionHistory extends StatefulWidget {
   @override
@@ -62,7 +63,7 @@ class _SessionHistoryState extends State<SessionHistory> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Sessions History',
+          AppLocalizations.of(context).session_history,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),

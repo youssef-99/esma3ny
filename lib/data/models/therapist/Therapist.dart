@@ -10,7 +10,7 @@ class Therapist {
   final String phone;
   final String gender;
   final String dateOfBirth;
-  final String countryId;
+  final int countryId;
   final deviceName;
   final String image;
   final String stripeId;

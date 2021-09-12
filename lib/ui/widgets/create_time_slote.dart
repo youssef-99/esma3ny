@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateTimeSlot extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _CreateTimeSlotState extends State<CreateTimeSlot> {
                     controller: _startDay,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.calendar_today),
-                      hintText: 'Start Day',
+                      hintText: AppLocalizations.of(context).start_day,
                     ),
                     validator: FormBuilderValidators.required(context),
                     format: DateFormat('yyyy-MM-dd'),
@@ -49,7 +50,7 @@ class _CreateTimeSlotState extends State<CreateTimeSlot> {
                     controller: _startTime,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.lock_clock),
-                      hintText: 'Start Time',
+                      hintText: AppLocalizations.of(context).strat_time,
                     ),
                     validator: FormBuilderValidators.required(context),
                     inputType: InputType.time,
@@ -62,15 +63,16 @@ class _CreateTimeSlotState extends State<CreateTimeSlot> {
                     name: 'duration',
                     validator: FormBuilderValidators.required(context),
                     decoration: InputDecoration(
-                        hintText: 'Duration', prefixIcon: Icon(Icons.timer)),
+                        hintText: AppLocalizations.of(context).duration,
+                        prefixIcon: Icon(Icons.timer)),
                     items: <DropdownMenuItem<String>>[
                       DropdownMenuItem(
                         value: '60',
-                        child: Text('60 Minutes'),
+                        child: Text('60 ${AppLocalizations.of(context).min}'),
                       ),
                       DropdownMenuItem(
                         value: '30',
-                        child: Text('30 Minutes'),
+                        child: Text('30 ${AppLocalizations.of(context).min}'),
                       ),
                     ],
                     onChanged: (String value) => state.setDuration(value),
@@ -85,7 +87,7 @@ class _CreateTimeSlotState extends State<CreateTimeSlot> {
                           controller: _endDay,
                           decoration: InputDecoration(
                             prefixIcon: Icon(Icons.calendar_today),
-                            hintText: 'End Day',
+                            hintText: AppLocalizations.of(context).end_day,
                           ),
                           format: DateFormat('yyyy-MM-dd'),
                           validator: FormBuilderValidators.required(context),
@@ -98,7 +100,7 @@ class _CreateTimeSlotState extends State<CreateTimeSlot> {
                 FormBuilderCheckbox(
                   name: 'is bulk',
                   initialValue: state.isBulk,
-                  title: Text('Create Bulk'),
+                  title: Text(AppLocalizations.of(context).create_bulk),
                   onChanged: (value) {
                     state.setIsBulk(value);
                   },
@@ -118,7 +120,7 @@ class _CreateTimeSlotState extends State<CreateTimeSlot> {
                   },
                   child: state.isCreating
                       ? CustomProgressIndicator()
-                      : Text('Submit'),
+                      : Text(AppLocalizations.of(context).submit),
                 )
               ],
             ),

@@ -15,6 +15,7 @@ import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TherapistProfilePage extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          AppLocalizations.of(context).profile,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -67,7 +68,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
           children: [
             customListTile(
               Icons.info,
-              'Basic Information',
+              AppLocalizations.of(context).basic_info,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -77,7 +78,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             customListTile(
               Icons.person,
-              'About Me',
+              AppLocalizations.of(context).about_me,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -87,7 +88,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             customListTile(
               Icons.sticky_note_2,
-              'Experience',
+              AppLocalizations.of(context).experience,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -97,7 +98,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             customListTile(
               CupertinoIcons.pen,
-              'Specialities',
+              AppLocalizations.of(context).specialization,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -107,7 +108,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             customListTile(
               Icons.monetization_on_outlined,
-              'Fees',
+              AppLocalizations.of(context).fees,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -117,7 +118,7 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             customListTile(
               Icons.money,
-              'Balance',
+              AppLocalizations.of(context).balance,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -128,12 +129,12 @@ class _TherapistProfilePageState extends State<TherapistProfilePage> {
             ),
             customListTile(
               Icons.history,
-              'Session History',
+              AppLocalizations.of(context).session_history,
               () => Navigator.pushNamed(context, 'therapist_session_history'),
             ),
             customListTile(
               Icons.people,
-              'Clients',
+              AppLocalizations.of(context).clients,
               () => Navigator.push(
                 context,
                 MaterialPageRoute(

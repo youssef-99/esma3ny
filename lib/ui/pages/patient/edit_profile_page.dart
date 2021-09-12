@@ -1,5 +1,6 @@
 import 'package:esma3ny/ui/widgets/edit_profile_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -11,8 +12,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile',
-            style: Theme.of(context).appBarTheme.titleTextStyle),
+        title: Text(
+          AppLocalizations.of(context).edit_profile,
+          style: Theme.of(context).appBarTheme.titleTextStyle,
+        ),
       ),
       body: Column(
         children: [

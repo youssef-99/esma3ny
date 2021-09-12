@@ -121,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen>
                 Opacity(
                   opacity: _animationController.value,
                   child: SvgPicture.asset(
-                    'assets/images/you_talk.svg',
+                    'assets/images/we_are_here_to_hear.svg',
                   ),
                 ),
               ],

@@ -12,6 +12,7 @@ import 'package:esma3ny/ui/widgets/textFields/validation_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditAboutMePage extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Edit About Me',
+          AppLocalizations.of(context).edit,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -85,7 +86,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
                       },
                       child: aboutMeState.loading
                           ? CustomProgressIndicator()
-                          : Text('Edit')),
+                          : Text(AppLocalizations.of(context).edit)),
                 ],
               ),
             ),
@@ -95,7 +96,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
 
   jobEn(String title) => ValidationError(
         textField: TextFieldForm(
-          hint: 'Job Title in English',
+          hint: AppLocalizations.of(context).job_title_in_english,
           prefixIcon: Icons.work,
           validate: FormBuilderValidators.required(context),
           controller: _jobEn,
@@ -105,7 +106,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
 
   jobAr(String title) => ValidationError(
         textField: TextFieldForm(
-          hint: 'Job Title in Arabic',
+          hint: AppLocalizations.of(context).job_title_in_arabic,
           prefixIcon: Icons.work,
           validate: FormBuilderValidators.required(context),
           controller: _jobAr,
@@ -124,7 +125,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
                 Icons.person,
                 color: CustomColors.blue,
               ),
-              labelText: 'Prefix',
+              labelText: AppLocalizations.of(context).prefix,
             ),
             items: state.prefixes
                 .map(
@@ -164,7 +165,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
               Icons.work_outline_rounded,
               color: CustomColors.blue,
             ),
-            labelText: 'Job Name',
+            labelText: AppLocalizations.of(context).job_name,
           ),
           items: _aboutMeState.jobs
               .map(
@@ -184,7 +185,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
 
   bioEn(String bio) => ValidationError(
         textField: TextFieldForm(
-          hint: 'Bio in English',
+          hint: AppLocalizations.of(context).bio_in_english,
           prefixIcon: Icons.menu_book_sharp,
           validate: FormBuilderValidators.compose([
             FormBuilderValidators.minLength(context, 100),
@@ -199,7 +200,7 @@ class _EditAboutMePageState extends State<EditAboutMePage> {
 
   bioAr(String bio) => ValidationError(
         textField: TextFieldForm(
-          hint: 'Bio in Arabic',
+          hint: AppLocalizations.of(context).bio_in_arabic,
           prefixIcon: Icons.menu_book_sharp,
           controller: _bioAr,
           maxLines: 3,

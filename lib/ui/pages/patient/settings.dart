@@ -10,6 +10,7 @@ import 'package:esma3ny/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Settings',
+          AppLocalizations.of(context).settings,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -52,7 +53,8 @@ class _SettingsPageState extends State<SettingsPage> {
                 : SizedBox(),
           ),
           Divider(),
-          customListTile(Icons.person, 'Profile', () {
+          customListTile(Icons.person, AppLocalizations.of(context).profile,
+              () {
             if (role == CLIENT)
               Navigator.pushNamed(context, 'client_profile');
             else
@@ -61,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
           Consumer<CustomThemes>(
               builder: (context, state, child) => customListTile(
                     Icons.brightness_4,
-                    'Mode',
+                    AppLocalizations.of(context).mode,
                     () async {},
                     Switch(
                       onChanged: (bool value) {
@@ -70,7 +72,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       value: state.isDark,
                     ),
                   )),
-          customListTile(Icons.language, 'Language', () {
+          customListTile(Icons.language, AppLocalizations.of(context).language,
+              () {
             showDialog(
                 context: context,
                 builder: (context) => Consumer<LanguageState>(
@@ -81,7 +84,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           children: <Widget>[
                             Material(
                               child: CheckboxListTile(
-                                title: Text('Arabic'),
+                                title:
+                                    Text(AppLocalizations.of(context).arabic),
                                 controlAffinity:
                                     ListTileControlAffinity.platform,
                                 value: state.isArabic,
@@ -97,7 +101,8 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                             Material(
                               child: CheckboxListTile(
-                                title: Text('English'),
+                                title:
+                                    Text(AppLocalizations.of(context).english),
                                 controlAffinity:
                                     ListTileControlAffinity.platform,
                                 value: state.isEnglish,
@@ -117,14 +122,17 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ));
           }, null),
-          customListTile(Icons.phone, 'Contact Us', () {
+          customListTile(Icons.phone, AppLocalizations.of(context).contact_us,
+              () {
             launch('mailto:esma3ny@support.com');
           }, null),
-          customListTile(Icons.error_outline_outlined, 'About Us', () {
+          customListTile(Icons.error_outline_outlined,
+              AppLocalizations.of(context).about_us, () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => AboutUs()));
           }, null),
-          customListTile(Icons.logout, 'Log out', () async {
+          customListTile(Icons.logout, AppLocalizations.of(context).logout,
+              () async {
             if (role == CLIENT) {
               _clientRepositoryImpl.logout();
             } else {

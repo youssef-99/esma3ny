@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddExperience extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _AddExperienceState extends State<AddExperience> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Experience',
+          AppLocalizations.of(context).add_experience,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -62,7 +63,7 @@ class _AddExperienceState extends State<AddExperience> {
               children: [
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Organization in English',
+                    hint: AppLocalizations.of(context).organization_in_english,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _organizationEn,
@@ -71,7 +72,7 @@ class _AddExperienceState extends State<AddExperience> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Organization in Arabic',
+                    hint: AppLocalizations.of(context).organization_in_arabic,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _organizationAr,
@@ -80,7 +81,7 @@ class _AddExperienceState extends State<AddExperience> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Job Title in English',
+                    hint: AppLocalizations.of(context).job_title_in_english,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _jobTitleEn,
@@ -89,7 +90,7 @@ class _AddExperienceState extends State<AddExperience> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Job Title in Arabic',
+                    hint: AppLocalizations.of(context).job_title_in_arabic,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _jobTitleAr,
@@ -101,7 +102,7 @@ class _AddExperienceState extends State<AddExperience> {
                 country(),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'City',
+                    hint: AppLocalizations.of(context).city,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _city,
@@ -117,7 +118,7 @@ class _AddExperienceState extends State<AddExperience> {
                       if (state.isUpdated) Navigator.pop(context);
                     }
                   },
-                  child: Text('Add Experience'),
+                  child: Text(AppLocalizations.of(context).add_experience),
                 )
               ],
             ),
@@ -134,7 +135,7 @@ class _AddExperienceState extends State<AddExperience> {
               Icons.calendar_today,
               color: CustomColors.blue,
             ),
-            labelText: 'From',
+            labelText: AppLocalizations.of(context).from,
           ),
           format: DateFormat('yyyy-MM-dd'),
           controller: _from,
@@ -153,7 +154,7 @@ class _AddExperienceState extends State<AddExperience> {
               Icons.calendar_today,
               color: CustomColors.blue,
             ),
-            labelText: 'To',
+            labelText: AppLocalizations.of(context).to,
           ),
           format: DateFormat('yyyy-MM-dd'),
           controller: _to,
@@ -174,7 +175,7 @@ class _AddExperienceState extends State<AddExperience> {
                           Icons.public,
                           color: CustomColors.blue,
                         ),
-                        labelText: 'Country',
+                        labelText: AppLocalizations.of(context).country,
                       ),
                       validator: FormBuilderValidators.required(context),
                       items: snapshot.data

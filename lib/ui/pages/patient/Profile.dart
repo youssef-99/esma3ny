@@ -9,6 +9,7 @@ import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Profile',
+          AppLocalizations.of(context).profile,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,
@@ -109,7 +110,7 @@ class _ProfileState extends State<Profile> {
                   Navigator.pushNamed(context, 'edit_profile');
                 },
                 child: Text(
-                  'Edit',
+                  AppLocalizations.of(context).edit,
                   style: TextStyle(
                       fontSize: 20,
                       decoration: TextDecoration.underline,
@@ -135,16 +136,18 @@ class _ProfileState extends State<Profile> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                // ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, 'health_profile');
+                //   },
+                //   child: Text('Health Profile'),
+                // ),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'health_profile');
-                    },
-                    child: Text('Health Profile')),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'session_history');
-                    },
-                    child: Text('Session List')),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'session_history');
+                  },
+                  child: Text(AppLocalizations.of(context).session_list),
+                ),
               ],
             )
           ],

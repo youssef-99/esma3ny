@@ -1,5 +1,6 @@
 import 'package:esma3ny/ui/widgets/exception_indicators/exception_indicator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Indicates that an unknown error occurred.
 class GenericErrorIndicator extends StatelessWidget {
@@ -12,9 +13,8 @@ class GenericErrorIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ExceptionIndicator(
-        title: 'Something went wrong',
-        message: 'The application has encountered an unknown error.\n'
-            'Please try again later.',
+        title: AppLocalizations.of(context).something_went_wrong,
+        message: AppLocalizations.of(context).the_application_encounter,
         assetName: 'assets/confused-face.png',
         onTryAgain: onTryAgain,
       );

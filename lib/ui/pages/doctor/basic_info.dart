@@ -2,6 +2,7 @@ import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:esma3ny/ui/widgets/basic_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BasicInfoPage extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class BasicInfoPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Basic Information',
+          AppLocalizations.of(context).basic_info,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,

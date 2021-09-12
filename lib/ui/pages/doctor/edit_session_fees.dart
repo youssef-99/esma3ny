@@ -6,6 +6,7 @@ import 'package:esma3ny/ui/widgets/textFields/TextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditSessionFees extends StatefulWidget {
   @override
@@ -97,11 +98,11 @@ class _EditSessionFeesState extends State<EditSessionFees> {
                   FormBuilderDropdown(
                     items: [
                       DropdownMenuItem(
-                        child: Text('Local Fees'),
+                        child: Text(AppLocalizations.of(context).local_account),
                         value: LOCAL,
                       ),
                       DropdownMenuItem(
-                        child: Text('Foreign Fees'),
+                        child: Text(AppLocalizations.of(context).foreign_fees),
                         value: FOREIGN,
                       ),
                     ],
@@ -110,91 +111,93 @@ class _EditSessionFeesState extends State<EditSessionFees> {
                       state.setAccountValue(value);
                     },
                     name: 'account type',
-                    decoration: InputDecoration(labelText: 'Account Type'),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context).account_type,
+                    ),
                   ),
                   Text(
-                    'Video Fees',
+                    AppLocalizations.of(context).video_fees,
                     style: TextStyle(
                         fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
                   ),
                   TextFieldForm(
-                    hint: 'Price for 60 Minute [USD]',
+                    hint: AppLocalizations.of(context).price_for_60_min_usd,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _fullVideoUsd,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 30 Minute [USD]',
+                    hint: AppLocalizations.of(context).price_for_30_min_usd,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _halfVideoUsd,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 60 Minute [EGP]',
+                    hint: AppLocalizations.of(context).price_for_60_min_egp,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _fullVideoEgp,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 30 Minute [EGP]',
+                    hint: AppLocalizations.of(context).price_for_30_min_egp,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _halfVideoEgp,
                   ),
                   Text(
-                    'Audio Fees',
+                    AppLocalizations.of(context).audio_fees,
                     style: TextStyle(
                         fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
                   ),
                   TextFieldForm(
-                    hint: 'Price for 60 Minute [USD]',
+                    hint: AppLocalizations.of(context).price_for_60_min_usd,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _fullAudioUsd,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 30 Minute [USD]',
+                    hint: AppLocalizations.of(context).price_for_30_min_usd,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _halfAudioUsd,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 60 Minute [EGP]',
+                    hint: AppLocalizations.of(context).price_for_60_min_egp,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _fullAudioEgp,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 30 Minute [EGP]',
+                    hint: AppLocalizations.of(context).price_for_30_min_egp,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _halfAudioEgp,
                   ),
                   Text(
-                    'Chat Fees',
+                    AppLocalizations.of(context).chat_fees,
                     style: TextStyle(
                         fontWeight: FontWeight.bold, height: 2.5, fontSize: 20),
                   ),
                   TextFieldForm(
-                    hint: 'Price for 60 Minute [USD]',
+                    hint: AppLocalizations.of(context).price_for_60_min_usd,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _fullChatUsd,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 30 Minute [USD]',
+                    hint: AppLocalizations.of(context).price_for_30_min_usd,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _halfChatUsd,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 60 Minute [EGP]',
+                    hint: AppLocalizations.of(context).price_for_60_min_egp,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _fullChatEgp,
                   ),
                   TextFieldForm(
-                    hint: 'Price for 30 Minute [EGP]',
+                    hint: AppLocalizations.of(context).price_for_30_min_egp,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.monetization_on,
                     controller: _halfChatEgp,
@@ -209,7 +212,7 @@ class _EditSessionFeesState extends State<EditSessionFees> {
                           }
                         }
                       },
-                      child: Text('edit'))
+                      child: Text(AppLocalizations.of(context).edit))
                 ],
               ),
             ),

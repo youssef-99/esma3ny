@@ -9,6 +9,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookingOptionModalSheet extends StatefulWidget {
   final Therapist therapist;
@@ -54,7 +55,7 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                       state.getToDaySessions(true);
                     },
                     child: Text(
-                      'Today',
+                      AppLocalizations.of(context).today,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -67,7 +68,7 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                       state.getTomorrowSessions();
                     },
                     child: Text(
-                      'Tomorrow',
+                      AppLocalizations.of(context).tomorrow,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -84,7 +85,7 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     builder: (context) => Calender(),
                   );
                 },
-                child: Text('Or Choose Date'),
+                child: Text(AppLocalizations.of(context).or_choose_date),
               ),
               Container(
                 width: 200,
@@ -114,15 +115,15 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                   options: [
                     FormBuilderFieldOption(
                       value: SessionType.Video,
-                      child: Text('Video Call'),
+                      child: Text(AppLocalizations.of(context).video),
                     ),
                     FormBuilderFieldOption(
                       value: SessionType.Audio,
-                      child: Text('Audio Call'),
+                      child: Text(AppLocalizations.of(context).audio),
                     ),
                     FormBuilderFieldOption(
                       value: SessionType.Chat,
-                      child: Text('Chat'),
+                      child: Text(AppLocalizations.of(context).chat),
                     ),
                   ],
                   orientation: OptionsOrientation.horizontal,
@@ -146,14 +147,14 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
               //   ),
               // ),
               Text(
-                'Choose Time',
+                AppLocalizations.of(context).choose_time,
                 style: Theme.of(context).textTheme.headline5,
               ),
               SizedBox(height: 20),
               SizedBox(
                 height: state.selectedTimeSlots.length == 0 ? 50 : 100,
                 child: state.selectedTimeSlots.length == 0
-                    ? Text('No Available Time Slots')
+                    ? Text(AppLocalizations.of(context).no_available_time_slot)
                     : GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -172,15 +173,18 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
               Text(
                 state.sessionPriceResponse != null
                     ? state.isFree
-                        ? 'Free'
+                        ? AppLocalizations.of(context).free
                         : '${state.sessionPriceResponse.price} ${state.sessionPriceResponse.currency}'
-                    : 'Fees',
+                    : '-----',
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 3),
               ),
               ElevatedButton(
                 onPressed: () {
                   if (state.selectedTimeSlot == null)
-                    Fluttertoast.showToast(msg: 'Choose Time Slot To Continue');
+                    Fluttertoast.showToast(
+                      msg: AppLocalizations.of(context)
+                          .choose_time_slot_to_continue,
+                    );
                   else
                     showMaterialModalBottomSheet(
                       context: context,
@@ -195,7 +199,7 @@ class _BookingOptionModalSheetState extends State<BookingOptionModalSheet> {
                     );
                 },
                 child: Text(
-                  'Conintue',
+                  AppLocalizations.of(context).continue_next,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,

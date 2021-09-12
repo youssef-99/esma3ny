@@ -11,6 +11,7 @@ import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppointmentCard extends StatelessWidget {
   final Appointment appointment;
@@ -50,7 +51,7 @@ class AppointmentCard extends StatelessWidget {
                   clientName(),
                   SizedBox(height: 20),
                   customListTile(Icons.timer,
-                      '${appointment.duration} Min / ${appointment.type}'),
+                      '${appointment.duration} ${AppLocalizations.of(context).min} / ${appointment.type}'),
                 ],
               ),
             ],
@@ -152,9 +153,11 @@ class AppointmentCard extends StatelessWidget {
           );
         }
       } else {
-        Fluttertoast.showToast(msg: 'Session didn\'t started yet!');
+        Fluttertoast.showToast(
+            msg: AppLocalizations.of(context).session_didnt_start_yet);
       }
-    }, 'Start', isStarted ? Colors.green : CustomColors.grey);
+    }, AppLocalizations.of(context).start,
+        isStarted ? Colors.green : CustomColors.grey);
   }
 
   button(onPressed, String text, Color color) => ElevatedButton(

@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TherapistInfoCard extends StatefulWidget {
   final Therapist therapist;
@@ -143,7 +144,8 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                         builder: (context) =>
                             BookingOptionModalSheet(widget.therapist),
                       );
-                    }, 'Start your free session', CustomColors.orange)
+                    }, AppLocalizations.of(context).strat_your_free_session,
+                      CustomColors.orange)
                   : SizedBox(),
               SizedBox(width: 10),
               button(
@@ -164,7 +166,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                         BookingOptionModalSheet(widget.therapist),
                   );
                 },
-                'Book',
+                AppLocalizations.of(context).book,
                 CustomColors.blue,
               ),
             ],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Basic layout for indicating that an exception occurred.
 class ExceptionIndicator extends StatelessWidget {
@@ -59,8 +60,8 @@ class ExceptionIndicator extends StatelessWidget {
                       Icons.refresh,
                       color: Colors.white,
                     ),
-                    label: const Text(
-                      'Try Again',
+                    label: Text(
+                      AppLocalizations.of(context).try_again,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white,

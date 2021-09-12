@@ -4,6 +4,7 @@ import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ExperiencePage extends StatelessWidget {
   @override
@@ -11,7 +12,7 @@ class ExperiencePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Experience',
+          AppLocalizations.of(context).experience,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -24,14 +25,23 @@ class ExperiencePage extends StatelessWidget {
           children: [
             Column(
               children: [
-                titleTile('Experience',
-                    () => Navigator.pushNamed(context, 'add_experience')),
+                titleTile(
+                  AppLocalizations.of(context).experience,
+                  () => Navigator.pushNamed(context, 'add_experience'),
+                  context,
+                ),
                 experienceTileList(state.therapistProfileResponse.experience),
-                titleTile('Education',
-                    () => Navigator.pushNamed(context, 'add_education')),
+                titleTile(
+                  AppLocalizations.of(context).education,
+                  () => Navigator.pushNamed(context, 'add_education'),
+                  context,
+                ),
                 educationTileList(state.therapistProfileResponse.educations),
-                titleTile('Certificate',
-                    () => Navigator.pushNamed(context, 'add_certificate')),
+                titleTile(
+                  AppLocalizations.of(context).certificates,
+                  () => Navigator.pushNamed(context, 'add_certificate'),
+                  context,
+                ),
                 certificateTileList(
                     state.therapistProfileResponse.certificates),
               ],
@@ -88,11 +98,11 @@ class ExperiencePage extends StatelessWidget {
         ),
       );
 
-  Widget titleTile(String title, Function onTap) => ListTile(
+  Widget titleTile(String title, Function onTap, context) => ListTile(
         title: Text(title),
         trailing: ElevatedButton(
           onPressed: () => onTap(),
-          child: Text('Add More +'),
+          child: Text(AppLocalizations.of(context).add_more),
         ),
       );
 

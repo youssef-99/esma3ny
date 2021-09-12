@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import 'chached_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpcomingSessionCard extends StatefulWidget {
   final TimeSlotResponse timeSlot;
@@ -136,14 +137,14 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                      content:
-                          Text('Are you sure you want to canel this session ?'),
+                      content: Text(AppLocalizations.of(context)
+                          .are_you_sure_you_want_to_cancel_this_session),
                       actions: [
                         TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('No')),
+                            child: Text(AppLocalizations.of(context).no)),
                         TextButton(
                             onPressed: () {
                               Provider.of<UpcommingSessionState>(context,
@@ -151,10 +152,10 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
                                   .cancelSession(timeSlot.id);
                               Navigator.pop(context);
                             },
-                            child: Text('yes')),
+                            child: Text(AppLocalizations.of(context).yes)),
                       ],
                     ));
-          }, 'Cancel', CustomColors.orange),
+          }, AppLocalizations.of(context).cancel, CustomColors.orange),
           // button(() {}, 'Reschedule', CustomColors.blue),
           checkforPayment(),
         ],
@@ -203,9 +204,11 @@ class _UpcomingSessionCardState extends State<UpcomingSessionCard> {
                       room: timeSlot.room, endTime: timeSlot.endTime)));
         }
       } else {
-        Fluttertoast.showToast(msg: 'Session didn\'t started yet!');
+        Fluttertoast.showToast(
+            msg: AppLocalizations.of(context).session_didnt_start_yet);
       }
-    }, 'Start', isStarted ? Colors.green : CustomColors.grey);
+    }, AppLocalizations.of(context).start,
+        isStarted ? Colors.green : CustomColors.grey);
   }
 
   button(onPressed, String text, Color color) => ElevatedButton(

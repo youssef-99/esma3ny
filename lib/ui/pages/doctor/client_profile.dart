@@ -9,6 +9,7 @@ import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClientProfile extends StatelessWidget {
   final TherapistRepository _therapistRepository = TherapistRepository();
@@ -20,7 +21,7 @@ class ClientProfile extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Client Profile',
+          AppLocalizations.of(context).client_profile,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         centerTitle: true,
@@ -52,33 +53,36 @@ class ClientProfile extends StatelessWidget {
                       phone: snapshot.data.phone,
                       gender: snapshot.data.gender,
                       dateOfBirth: snapshot.data.dateOfBirth,
-                      countryId: snapshot.data.countryId.toString(),
+                      countryId: snapshot.data.countryId,
                       profileImage: snapshot.data.profilImage.small,
                       isEditable: false,
                       widget: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           ElevatedButton(
-                              onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          PrevClientHealthProfilePage(
-                                        id: id,
-                                      ),
-                                    ),
-                                  ),
-                              child: Text('Health Profile')),
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PrevClientHealthProfilePage(
+                                  id: id,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context).health_profile,
+                            ),
+                          ),
                           ElevatedButton(
-                              onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => PreviousSessions(
-                                        id: id,
-                                      ),
-                                    ),
-                                  ),
-                              child: Text('Sessions')),
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PreviousSessions(
+                                  id: id,
+                                ),
+                              ),
+                            ),
+                            child: Text(AppLocalizations.of(context).sessions),
+                          ),
                         ],
                       ),
                     ),

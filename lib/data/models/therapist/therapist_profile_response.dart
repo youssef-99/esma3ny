@@ -16,7 +16,7 @@ class TherapistProfileResponse {
   final phone;
   final gender;
   final dateOfBirth;
-  final countryId;
+  final int countryId;
   final prefix;
   final LocaleString biography;
   final joiningDate;
@@ -106,7 +106,7 @@ class TherapistProfileResponse {
       fees: json['fees'] == null ? null : Fees.fromJson(json['fees']),
       gender: json['gender'],
       joiningDate: json['created_at'],
-      jobId: int.parse(json['job_id']),
+      jobId: json['job_id'],
       job: json['job'] == null ? null : Job.fromJson(json['job']),
       phone: json['phone'],
       prefix: json['prefix'],
@@ -117,8 +117,8 @@ class TherapistProfileResponse {
       certificates: certificateList,
       educations: educationList,
       experience: experienceList,
-      hasForeignAccount: json['has_foreign_account'] == '1',
-      isStripeActivated: json['stripe_connect_activated'] == '1',
+      hasForeignAccount: json['has_foreign_account'],
+      isStripeActivated: json['stripe_connect_activated'],
     );
   }
 }

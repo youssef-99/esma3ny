@@ -1,5 +1,6 @@
 import 'package:esma3ny/data/models/therapist/client_health_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HealthProfileWidget extends StatelessWidget {
   final ClientHealthProfile _clientHealthProfile;
@@ -15,40 +16,41 @@ class HealthProfileWidget extends StatelessWidget {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    title('Name:'),
+                    title('${AppLocalizations.of(context).name}:'),
                     text(_clientHealthProfile.name),
                     Divider(),
-                    title('Date of Birth:'),
+                    title('${AppLocalizations.of(context).date_of_birth}:'),
                     text(_clientHealthProfile.dateOfBirth),
                     Divider(),
-                    title('Gender:'),
+                    title('${AppLocalizations.of(context).client}:'),
                     text(_clientHealthProfile.gender),
                     Divider(),
-                    title('Relation to Client:'),
+                    title(
+                        '${AppLocalizations.of(context).relation_to_client}:'),
                     text(_clientHealthProfile.relation),
                     Divider(),
                   ],
                 )
               : SizedBox(),
-          title('Refered by:'),
+          title('${AppLocalizations.of(context).referred_by}:'),
           text(_clientHealthProfile.refer),
           Divider(),
-          title('Nationality:'),
+          title('${AppLocalizations.of(context).nationality}:'),
           text(_clientHealthProfile.nationality),
           Divider(),
-          title('Marital Status:'),
+          title('${AppLocalizations.of(context).marital_status}:'),
           text(_clientHealthProfile.maritalStatus),
           Divider(),
-          title('Children:'),
+          title('${AppLocalizations.of(context).number_of_children}:'),
           text(_clientHealthProfile.children),
           Divider(),
-          title('Education:'),
+          title('${AppLocalizations.of(context).education}:'),
           text(_clientHealthProfile.education.type),
           Divider(),
-          title('Degree:'),
+          title('${AppLocalizations.of(context).degree}:'),
           text(_clientHealthProfile.education.degree),
           Divider(),
-          title('Services:'),
+          title('${AppLocalizations.of(context).services}:'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: _clientHealthProfile.services
@@ -56,7 +58,7 @@ class HealthProfileWidget extends StatelessWidget {
                 .toList(),
           ),
           Divider(),
-          title('Problems:'),
+          title('${AppLocalizations.of(context).problems}:'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: _clientHealthProfile.problems
@@ -64,7 +66,7 @@ class HealthProfileWidget extends StatelessWidget {
                 .toList(),
           ),
           Divider(),
-          title('Family Problems:'),
+          title('${AppLocalizations.of(context).family_problems}:'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: _clientHealthProfile.familyProblem
@@ -74,8 +76,9 @@ class HealthProfileWidget extends StatelessWidget {
                 .toList(),
           ),
           Divider(),
-          title('Extra Notes:'),
-          text(_clientHealthProfile.note ?? 'No extra notes'),
+          title('${AppLocalizations.of(context).extra_notes}:'),
+          text(_clientHealthProfile.note ??
+              '${AppLocalizations.of(context).no_extra_notes}'),
         ],
       ),
     );

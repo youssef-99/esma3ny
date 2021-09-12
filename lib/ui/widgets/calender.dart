@@ -5,6 +5,7 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Calender extends StatefulWidget {
   @override
@@ -104,7 +105,7 @@ class _CalenderState extends State<Calender> {
                     ),
                   )),
                   TextButton(
-                    child: Text('PREV'),
+                    child: Text(AppLocalizations.of(context).prev),
                     onPressed: () {
                       setState(() {
                         _targetDateTime = DateTime(
@@ -115,7 +116,7 @@ class _CalenderState extends State<Calender> {
                     },
                   ),
                   TextButton(
-                    child: Text('NEXT'),
+                    child: Text(AppLocalizations.of(context).next),
                     onPressed: () {
                       _targetDateTime = DateTime(
                           _targetDateTime.year, _targetDateTime.month + 1);
@@ -142,7 +143,7 @@ class _CalenderState extends State<Calender> {
                     Navigator.pop(context);
                   },
                   child: Text(
-                    'Confirm',
+                    AppLocalizations.of(context).submit,
                     style: TextStyle(fontSize: 24),
                   )),
             ),

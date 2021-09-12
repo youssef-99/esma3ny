@@ -8,6 +8,7 @@ import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrevSessionNotesPage extends StatelessWidget {
   final clientId, sessionId;
@@ -21,7 +22,7 @@ class PrevSessionNotesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Notes',
+          AppLocalizations.of(context).notes,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -46,10 +47,10 @@ class PrevSessionNotesPage extends StatelessWidget {
                       note('Objective', snapshot.data.objective),
                       note('assessment', snapshot.data.assessment),
                       note('plan', snapshot.data.plan),
-                      boldText('Notes'),
+                      boldText(AppLocalizations.of(context).notes),
                       Text(snapshot.data.notes),
                       Divider(),
-                      boldText('Public Notes'),
+                      boldText(AppLocalizations.of(context).public_notes),
                       Text(snapshot.data.publicNotes),
                     ],
                   ),

@@ -7,6 +7,7 @@ import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/something_went_wrong.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PrevClientHealthProfilePage extends StatelessWidget {
   final TherapistRepository _therapistRepository = TherapistRepository();
@@ -18,7 +19,7 @@ class PrevClientHealthProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Health Profile',
+          AppLocalizations.of(context).health_profile,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),

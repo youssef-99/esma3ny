@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:esma3ny/data/models/therapist/note_model.dart';
 import 'package:esma3ny/ui/pages/doctor/preview_session_notes.dart';
 import 'package:esma3ny/ui/provider/therapist/call_state.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SessionNotes extends StatefulWidget {
   @override
@@ -28,7 +27,7 @@ class _SessionNotesState extends State<SessionNotes> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Session Notes',
+            AppLocalizations.of(context).notes,
             style: Theme.of(context).appBarTheme.titleTextStyle,
           ),
           bottom: const TabBar(
@@ -79,7 +78,9 @@ class _SessionNotesState extends State<SessionNotes> {
                 minLines: 3,
                 maxLines: 10,
                 controller: _callState.clientNotes,
-                decoration: InputDecoration(labelText: 'Client Notes'),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context).client_notes,
+                ),
                 onSubmitted: (value) => state.updateNotes('notes'),
               ),
               SizedBox(height: 10),
@@ -87,13 +88,15 @@ class _SessionNotesState extends State<SessionNotes> {
                 minLines: 3,
                 maxLines: 10,
                 controller: _callState.publicNotes,
-                decoration: InputDecoration(labelText: 'Public Notes'),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context).public_notes,
+                ),
                 onSubmitted: (value) => state.updateNotes('public_notes'),
               ),
               CheckboxListTile(
                 value: state.isCompelete,
                 onChanged: (value) => state.setProfileComplete(value),
-                title: Text('Notes Compeleted'),
+                title: Text(AppLocalizations.of(context).notes_completed),
               ),
             ],
           ),

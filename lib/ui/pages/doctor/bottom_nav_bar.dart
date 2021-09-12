@@ -6,6 +6,7 @@ import 'package:esma3ny/ui/pages/patient/settings.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TherapistBottomNavBar extends StatefulWidget {
   @override
@@ -23,12 +24,6 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
     SettingsPage(),
   ];
 
-  List<FloatingNavbarItem> items = [
-    FloatingNavbarItem(icon: Icons.group, title: 'Appointments'),
-    FloatingNavbarItem(icon: Icons.calendar_today, title: 'Calender'),
-    FloatingNavbarItem(icon: Icons.person, title: 'Profile'),
-    FloatingNavbarItem(icon: Icons.settings, title: 'Settings'),
-  ];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -37,6 +32,25 @@ class _TherapistBottomNavBarState extends State<TherapistBottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    List<FloatingNavbarItem> items = [
+      FloatingNavbarItem(
+        icon: Icons.group,
+        title: AppLocalizations.of(context).appointments,
+      ),
+      FloatingNavbarItem(
+        icon: Icons.calendar_today,
+        title: AppLocalizations.of(context).calendar,
+      ),
+      FloatingNavbarItem(
+        icon: Icons.person,
+        title: AppLocalizations.of(context).profile,
+      ),
+      FloatingNavbarItem(
+        icon: Icons.settings,
+        title: AppLocalizations.of(context).settings,
+      ),
+    ];
+
     return Scaffold(
       extendBody: true,
       body: SafeArea(

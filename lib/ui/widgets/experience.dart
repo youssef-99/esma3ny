@@ -1,6 +1,7 @@
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Experience extends StatelessWidget {
   final Therapist therapist;
@@ -11,7 +12,7 @@ class Experience extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SingleChildScrollView(
-        child: layout('Experience', context),
+        child: layout(AppLocalizations.of(context).experience, context),
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:esma3ny/ui/provider/therapist/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_select/smart_select.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutMePage extends StatefulWidget {
   @override
@@ -17,14 +18,14 @@ class _AboutMePageState extends State<AboutMePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'About Me',
+          AppLocalizations.of(context).about_me,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
           TextButton(
               onPressed: () =>
                   Navigator.pushNamed(context, 'edit_about_me_page'),
-              child: Text('Edit')),
+              child: Text(AppLocalizations.of(context).edit_profile)),
         ],
       ),
       body: body(),
@@ -79,5 +80,5 @@ class _AboutMePageState extends State<AboutMePage> {
           )
           .toList(),
       onTap: () {},
-      title: Text('Languages'));
+      title: Text(AppLocalizations.of(context).languages));
 }

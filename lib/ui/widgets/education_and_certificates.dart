@@ -1,6 +1,7 @@
 import 'package:esma3ny/data/models/client_models/therapist/therapist_profile_info.dart';
 import 'package:esma3ny/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EducationAndCertificate extends StatelessWidget {
   final Therapist therapist;
@@ -17,7 +18,7 @@ class EducationAndCertificate extends StatelessWidget {
         ),
         therapist.educations.isEmpty
             ? Center(
-                child: Text('No Education Found'),
+                child: Text(AppLocalizations.of(context).no_results_found),
               )
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +40,7 @@ class EducationAndCertificate extends StatelessWidget {
         ),
         therapist.certificates.isEmpty
             ? Center(
-                child: Text('No Certificats Found'),
+                child: Text(AppLocalizations.of(context).no_results_found),
               )
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

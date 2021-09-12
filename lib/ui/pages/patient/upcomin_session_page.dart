@@ -9,6 +9,7 @@ import 'package:esma3ny/ui/widgets/upcoming_session_card.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpComingSessions extends StatefulWidget {
   @override
@@ -69,7 +70,7 @@ class _UpComingSessionsState extends State<UpComingSessions> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Upcoming Sessions',
+          AppLocalizations.of(context).upcomming_sessions,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),

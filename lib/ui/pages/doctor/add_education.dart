@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddEducation extends StatefulWidget {
   @override
@@ -41,7 +42,7 @@ class _AddEducationState extends State<AddEducation> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Experience',
+          AppLocalizations.of(context).add_experience,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -58,7 +59,7 @@ class _AddEducationState extends State<AddEducation> {
               children: [
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'School in English ',
+                    hint: AppLocalizations.of(context).school_in_english,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _schoolEn,
@@ -67,7 +68,7 @@ class _AddEducationState extends State<AddEducation> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'School in Arabic',
+                    hint: AppLocalizations.of(context).school_in_arabic,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _schoolAr,
@@ -76,7 +77,7 @@ class _AddEducationState extends State<AddEducation> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Degree in English',
+                    hint: AppLocalizations.of(context).degree_in_arabic,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _degreeEn,
@@ -85,7 +86,7 @@ class _AddEducationState extends State<AddEducation> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Degree in Arabic',
+                    hint: AppLocalizations.of(context).degree_in_arabic,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _degreeAr,
@@ -103,7 +104,7 @@ class _AddEducationState extends State<AddEducation> {
                       if (state.isUpdated) Navigator.pop(context);
                     }
                   },
-                  child: Text('Add Experience'),
+                  child: Text(AppLocalizations.of(context).add_experience),
                 )
               ],
             ),
@@ -120,7 +121,7 @@ class _AddEducationState extends State<AddEducation> {
               Icons.calendar_today,
               color: CustomColors.blue,
             ),
-            labelText: 'From',
+            labelText: AppLocalizations.of(context).from,
           ),
           format: DateFormat('yyyy-MM-dd'),
           controller: _from,
@@ -139,7 +140,7 @@ class _AddEducationState extends State<AddEducation> {
               Icons.calendar_today,
               color: CustomColors.blue,
             ),
-            labelText: 'To',
+            labelText: AppLocalizations.of(context).to,
           ),
           format: DateFormat('yyyy-MM-dd'),
           controller: _to,

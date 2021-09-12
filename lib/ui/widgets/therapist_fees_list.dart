@@ -2,6 +2,7 @@ import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/ui/provider/client/therapist_profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TherapistFeesList extends StatelessWidget {
   final Fees fees;
@@ -17,7 +18,7 @@ class TherapistFeesList extends StatelessWidget {
         builder: (context, state, child) => ListView(
           children: [
             customListTile(
-              'Video',
+              AppLocalizations.of(context).video,
               isEgp(state.client.realTimeZone)
                   ? fees.video.egp.half
                   : fees.video.usd.half,
@@ -25,9 +26,10 @@ class TherapistFeesList extends StatelessWidget {
                   ? fees.video.egp.full
                   : fees.video.usd.full,
               isEgp(state.client.realTimeZone),
+              context,
             ),
             customListTile(
-              'Audio',
+              AppLocalizations.of(context).audio,
               isEgp(state.client.realTimeZone)
                   ? fees.audio.egp.half
                   : fees.audio.usd.half,
@@ -35,9 +37,10 @@ class TherapistFeesList extends StatelessWidget {
                   ? fees.audio.egp.full
                   : fees.audio.usd.full,
               isEgp(state.client.realTimeZone),
+              context,
             ),
             customListTile(
-              'Chat',
+              AppLocalizations.of(context).chat,
               isEgp(state.client.realTimeZone)
                   ? fees.chat.egp.half
                   : fees.chat.usd.half,
@@ -45,6 +48,7 @@ class TherapistFeesList extends StatelessWidget {
                   ? fees.video.egp.full
                   : fees.video.usd.full,
               isEgp(state.client.realTimeZone),
+              context,
             ),
           ],
         ),
@@ -52,7 +56,8 @@ class TherapistFeesList extends StatelessWidget {
     );
   }
 
-  customListTile(String type, int halfPtice, int fullPrice, bool isEgp) =>
+  customListTile(
+          String type, int halfPtice, int fullPrice, bool isEgp, context) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -62,13 +67,15 @@ class TherapistFeesList extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.brightness_1_outlined),
-            title: Text('30 Min'),
-            trailing: Text('${halfPtice.toString()} ${isEgp ? 'EGP' : 'USD'}'),
+            title: Text('30 ${AppLocalizations.of(context).min}'),
+            trailing: Text(
+                '${halfPtice.toString()} ${isEgp ? AppLocalizations.of(context).egp : AppLocalizations.of(context).usd}'),
           ),
           ListTile(
             leading: Icon(Icons.brightness_1_outlined),
-            title: Text('60 Min'),
-            trailing: Text('${fullPrice.toString()} ${isEgp ? 'EGP' : 'USD'}'),
+            title: Text('60 ${AppLocalizations.of(context).min}'),
+            trailing: Text(
+                '${fullPrice.toString()} ${isEgp ? AppLocalizations.of(context).egp : AppLocalizations.of(context).usd}'),
           ),
         ],
       );

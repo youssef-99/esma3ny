@@ -8,6 +8,7 @@ import 'package:esma3ny/ui/widgets/exception_indicators/error_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PreviousClientsPage extends StatefulWidget {
   @override
@@ -70,14 +71,15 @@ class _PreviousClientsPageState extends State<PreviousClientsPage> {
           builder: (context, state, child) => state.isSearchPressed
               ? TextField(
                   controller: state.searchController,
-                  decoration: InputDecoration(hintText: 'Search'),
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context).search),
                   onSubmitted: (value) {
                     state.onSubmitted(value);
                     _pagingController.refresh();
                   },
                 )
               : Text(
-                  'Clients',
+                  AppLocalizations.of(context).clients,
                   style: Theme.of(context).appBarTheme.titleTextStyle,
                 ),
         ),

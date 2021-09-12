@@ -7,6 +7,7 @@ import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/session_status_mark.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ClientCard extends StatelessWidget {
   final SessionHistory sessionHistory;
@@ -22,12 +23,12 @@ class ClientCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Padding(
         padding: EdgeInsets.all(20),
-        child: body(),
+        child: body(context),
       ),
     );
   }
 
-  body() => Column(
+  body(context) => Column(
         children: [
           Align(
             alignment: AlignmentDirectional.topEnd,
@@ -48,7 +49,7 @@ class ClientCard extends StatelessWidget {
 
                   SizedBox(height: 20),
                   customListTile(Icons.timer,
-                      '${sessionHistory.duration} Min / ${sessionHistory.type}'),
+                      '${sessionHistory.duration} ${AppLocalizations.of(context).min} / ${sessionHistory.type}'),
                   // customListTile(
                   //     Icons.money, '${timeSlot.amount} / ${timeSlot.currency}'),
                 ],
@@ -106,7 +107,7 @@ class ClientCard extends StatelessWidget {
   bottomSection() => Align(
         alignment: AlignmentDirectional.bottomEnd,
         child: SessionStatusMark(
-          sessionStatus: sessionHistory.status == STARTED
+          sessionStatus: sessionHistory.status == FINIDHED
               ? SessionStatus.Finished
               : SessionStatus.Cancelled,
         ),

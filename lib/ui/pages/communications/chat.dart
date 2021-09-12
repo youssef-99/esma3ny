@@ -84,6 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   getInitData() async {
     isClient = await SharedPrefrencesHelper.isLogged() == CLIENT;
+    setState(() {});
     if (!isClient) {
       await Provider.of<CallState>(context, listen: false).getInitData(
           '${widget.room.id}-${widget.room.uuid}', widget.clientId);

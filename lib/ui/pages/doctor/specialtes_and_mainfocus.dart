@@ -5,6 +5,7 @@ import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:esma3ny/ui/widgets/textFields/validation_error.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SpecialitiesAndMainFocus extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class SpecialitiesAndMainFocus extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Specialties',
+          AppLocalizations.of(context).specialization,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -34,7 +35,7 @@ class SpecialitiesAndMainFocus extends StatelessWidget {
             // mainAxisAlignment: Main,
             children: [
               Text(
-                'Specialties',
+                AppLocalizations.of(context).specialization,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               ValidationError(
@@ -58,7 +59,7 @@ class SpecialitiesAndMainFocus extends StatelessWidget {
                 error: specialitiesState.errors['specializations'],
               ),
               Text(
-                'Main Focus',
+                AppLocalizations.of(context).main_focus,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               ValidationError(
@@ -86,7 +87,7 @@ class SpecialitiesAndMainFocus extends StatelessWidget {
                 },
                 child: specialitiesState.loading
                     ? CustomProgressIndicator()
-                    : Text('Edit'),
+                    : Text(AppLocalizations.of(context).edit),
               )
             ],
           ),

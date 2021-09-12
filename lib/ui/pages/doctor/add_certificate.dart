@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddCertificate extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _AddCertificateState extends State<AddCertificate> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Experience',
+          AppLocalizations.of(context).add_experience,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -59,7 +60,7 @@ class _AddCertificateState extends State<AddCertificate> {
               children: [
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Issuing Organization In English ',
+                    hint: AppLocalizations.of(context).issuing_org_en,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _orgEn,
@@ -68,7 +69,7 @@ class _AddCertificateState extends State<AddCertificate> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Issuing Organization In Arabic',
+                    hint: AppLocalizations.of(context).issuing_org_ar,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _orgAr,
@@ -77,7 +78,7 @@ class _AddCertificateState extends State<AddCertificate> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Name in English',
+                    hint: AppLocalizations.of(context).name_in_english,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _nameEn,
@@ -86,7 +87,7 @@ class _AddCertificateState extends State<AddCertificate> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Name in Arabic',
+                    hint: AppLocalizations.of(context).name_in_arabic,
                     validate: FormBuilderValidators.required(context),
                     prefixIcon: Icons.home,
                     controller: _nameAr,
@@ -97,7 +98,7 @@ class _AddCertificateState extends State<AddCertificate> {
                 datePickerTo(),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'Licensing Organization',
+                    hint: AppLocalizations.of(context).lencensing_org,
                     validate: null,
                     prefixIcon: Icons.home,
                     controller: _licensingOrg,
@@ -106,7 +107,7 @@ class _AddCertificateState extends State<AddCertificate> {
                 ),
                 ValidationError(
                   textField: TextFieldForm(
-                    hint: 'License Number',
+                    hint: AppLocalizations.of(context).lencensing_num,
                     validate: null,
                     prefixIcon: Icons.home,
                     controller: _licensingNum,
@@ -122,7 +123,7 @@ class _AddCertificateState extends State<AddCertificate> {
                       if (state.isUpdated) Navigator.pop(context);
                     }
                   },
-                  child: Text('Add Experience'),
+                  child: Text(AppLocalizations.of(context).add_experience),
                 )
               ],
             ),
@@ -139,7 +140,7 @@ class _AddCertificateState extends State<AddCertificate> {
               Icons.calendar_today,
               color: CustomColors.blue,
             ),
-            labelText: 'From',
+            labelText: AppLocalizations.of(context).from,
           ),
           format: DateFormat('yyyy-MM-dd'),
           controller: _from,
@@ -158,7 +159,7 @@ class _AddCertificateState extends State<AddCertificate> {
               Icons.calendar_today,
               color: CustomColors.blue,
             ),
-            labelText: 'To',
+            labelText: AppLocalizations.of(context).to,
           ),
           format: DateFormat('yyyy-MM-dd'),
           controller: _to,

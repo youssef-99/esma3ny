@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Calender extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _CalenderState extends State<Calender> {
           fallbackBuilder: (context) => Scaffold(
             appBar: AppBar(
               title: Text(
-                'Calendar',
+                AppLocalizations.of(context).calendar,
                 style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
               actions: [
@@ -119,7 +120,7 @@ class _CalenderState extends State<Calender> {
             color: session.client == null ? CustomColors.orange : Colors.green,
           ),
           title: session.client == null
-              ? Text('Available')
+              ? Text(AppLocalizations.of(context).availabile)
               : Text(
                   '${session.client.name}',
                 ),

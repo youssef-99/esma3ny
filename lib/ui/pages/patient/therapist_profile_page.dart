@@ -15,6 +15,7 @@ import 'package:esma3ny/ui/widgets/therapist_fees_list.dart';
 import 'package:esma3ny/ui/widgets/therapist_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TherapistProfile extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _TherapistProfileState extends State<TherapistProfile>
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Therapist Profile',
+          AppLocalizations.of(context).therapist_profile,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
       ),
@@ -92,10 +93,10 @@ class _TherapistProfileState extends State<TherapistProfile>
               labelColor: CustomColors.blue,
               controller: controller,
               tabs: [
-                tabText('About'),
-                tabText('Experience'),
-                tabText('Education'),
-                tabText('Fees'),
+                tabText(AppLocalizations.of(context).about),
+                tabText(AppLocalizations.of(context).experience),
+                tabText(AppLocalizations.of(context).education),
+                tabText(AppLocalizations.of(context).fees),
               ],
             ),
             Expanded(
@@ -105,7 +106,7 @@ class _TherapistProfileState extends State<TherapistProfile>
                   AbouTherapist(therapist),
                   therapist.experience.isEmpty
                       ? Center(
-                          child: Text('No Experience Found'),
+                          child: Text(AppLocalizations.of(context).no_ex_found),
                         )
                       : Experience(therapist),
                   EducationAndCertificate(therapist),

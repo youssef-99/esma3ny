@@ -9,6 +9,7 @@ import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppointmentsPage extends StatefulWidget {
   @override
@@ -68,7 +69,7 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Appointments',
+          AppLocalizations.of(context).appointments,
           style: Theme.of(context).appBarTheme.titleTextStyle,
         ),
         actions: [
@@ -77,11 +78,11 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
             items: <DropdownMenuItem<String>>[
               DropdownMenuItem(
                 value: 'today',
-                child: Text('To day'),
+                child: Text(AppLocalizations.of(context).today),
               ),
               DropdownMenuItem(
                 value: 'upcoming',
-                child: Text('Upcoming'),
+                child: Text(AppLocalizations.of(context).upcoming),
               ),
             ],
             onChanged: (value) {

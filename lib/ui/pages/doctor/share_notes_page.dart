@@ -6,6 +6,7 @@ import 'package:esma3ny/ui/widgets/chached_image.dart';
 import 'package:esma3ny/ui/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ShareNotesPage extends StatefulWidget {
   final String uid;
@@ -34,7 +35,9 @@ class _ShareNotesPageState extends State<ShareNotesPage> {
       loading = false;
       setState(() {});
     } else {
-      Fluttertoast.showToast(msg: 'Add search term');
+      Fluttertoast.showToast(
+        msg: AppLocalizations.of(context).search_for_therapist,
+      );
     }
   }
 
@@ -47,10 +50,12 @@ class _ShareNotesPageState extends State<ShareNotesPage> {
           'doctor/rooms/${widget.uid}/apply-therapist', {'doctor_id': id});
 
       Fluttertoast.showToast(
-          msg: 'Notes shared successfully', backgroundColor: Colors.green);
+          msg: AppLocalizations.of(context).notes_shared_successfully,
+          backgroundColor: Colors.green);
     } catch (e) {
       Fluttertoast.showToast(
-          msg: 'Client didn\'t authorized notes referral',
+          msg: AppLocalizations.of(context)
+              .client_didnt_authorized_notes_referral,
           backgroundColor: Colors.red);
     }
 
@@ -64,7 +69,8 @@ class _ShareNotesPageState extends State<ShareNotesPage> {
         appBar: AppBar(
           title: TextField(
             controller: search,
-            decoration: InputDecoration(hintText: 'Search'),
+            decoration:
+                InputDecoration(hintText: AppLocalizations.of(context).search),
             onSubmitted: (value) => onSearch(),
           ),
           actions: [

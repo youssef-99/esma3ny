@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CustomDatePicker extends StatefulWidget {
   final _dateController;
@@ -17,7 +18,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       controller: widget._dateController,
       keyboardType: TextInputType.datetime,
       decoration: InputDecoration(
-        hintText: 'Select date',
+        hintText: AppLocalizations.of(context).select_date,
         suffixIcon: Icon(Icons.calendar_today),
       ),
       readOnly: true,
