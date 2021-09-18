@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:esma3ny/core/constants.dart';
 import 'package:esma3ny/core/network/ApiBaseHelper.dart';
 import 'package:esma3ny/data/models/public/available_time_slot_response.dart';
 import 'package:esma3ny/data/shared_prefrences/shared_prefrences.dart';
@@ -48,9 +49,14 @@ class PublicRepository {
   }
 
   Future<dynamic> getSessionPics(id, token, uid) async {
-    print('patient/rooms/$id-$token/user/$uid');
     Response response =
         await _apiBaseHelper.getHTTP('patient/rooms/$id-$token/user/$uid');
+    return response.data;
+  }
+
+  Future<dynamic> forgetPassword(bool isClient, String email) async {
+    Response response = await _apiBaseHelper.postHTTP(
+        '${isClient ? "patient" : "doctor"}/auth/forget', {'email': email});
     return response.data;
   }
 }

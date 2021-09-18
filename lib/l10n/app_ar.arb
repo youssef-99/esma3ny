@@ -18,6 +18,7 @@
     "specialized_at": "متخصص في:",
     "see_more": "المذيد",
     "specialization": "التخصص",
+    "speciality": "التخصص",
     "languages": "اللغات",
     "jobs": "المسمي الوظيفي",
     "availability": "المتاح",
@@ -206,5 +207,10 @@
     "the_application_encounter": "التطبيق واجه خطا غير متوقع\n حاول مجددا",
     "try_again": "حاول مجددا",
     "no_connection": "لا يوجد اتصال",
-    "please_check_internert": "من فضلك تاكد من اتصالك بخدمة الانترنت وحاول مجددا"
+    "please_check_internert": "من فضلك تاكد من اتصالك بخدمة الانترنت وحاول مجددا",
+    "send_reset_email": "ارسال رابط اعادة التعيين",
+    "reset_email_sent": "تم إرسال تفاصيل استعادة كلمة المرور الخاصة بك إلى بريدك الإلكتروني!",
+    "your_session_booked": "تم حجز الجلسه بنجاح",
+    "cancel_session": "تم الغاء حجز الجلسه واسترجاع ثمنها",
+    "have_to_accept": "يجب ان تقبل الشروط والاحكام للمتابعه"
 }

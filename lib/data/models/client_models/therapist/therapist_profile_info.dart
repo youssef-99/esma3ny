@@ -3,6 +3,7 @@ import 'package:esma3ny/data/models/public/education.dart';
 import 'package:esma3ny/data/models/public/experience.dart';
 import 'package:esma3ny/data/models/public/fees.dart';
 import 'package:esma3ny/data/models/public/job.dart';
+import 'package:esma3ny/data/models/public/language.dart';
 import 'package:esma3ny/data/models/public/locale_string.dart';
 import 'package:esma3ny/data/models/public/profileImage.dart';
 import 'package:esma3ny/data/models/public/specialization.dart';
@@ -22,32 +23,33 @@ class Therapist {
   final Fees fees;
   final Job job;
   final ProfileImage profileImage;
+  final List<Language> languages;
   final List<Specialization> specializations;
   final List<Specialization> mainFocus;
   final List<Certificate> certificates;
   final List<Education> educations;
   final List<Experience> experience;
 
-  Therapist({
-    @required this.id,
-    @required this.email,
-    @required this.name,
-    @required this.biography,
-    @required this.countryId,
-    @required this.dateOfBirth,
-    @required this.fees,
-    @required this.gender,
-    @required this.job,
-    @required this.phone,
-    @required this.prefix,
-    @required this.profileImage,
-    @required this.joiningDate,
-    @required this.specializations,
-    @required this.mainFocus,
-    @required this.certificates,
-    @required this.educations,
-    @required this.experience,
-  });
+  Therapist(
+      {@required this.id,
+      @required this.email,
+      @required this.name,
+      @required this.biography,
+      @required this.countryId,
+      @required this.dateOfBirth,
+      @required this.fees,
+      @required this.gender,
+      @required this.job,
+      @required this.phone,
+      @required this.prefix,
+      @required this.profileImage,
+      @required this.joiningDate,
+      @required this.specializations,
+      @required this.mainFocus,
+      @required this.certificates,
+      @required this.educations,
+      @required this.experience,
+      @required this.languages});
 
   factory Therapist.fromJson(Map<String, dynamic> json) {
     List<Specialization> specializationList = [];
@@ -55,6 +57,7 @@ class Therapist {
     List<Certificate> certificateList = [];
     List<Education> educationList = [];
     List<Experience> experienceList = [];
+    List<Language> languages = [];
 
     if (json['specializations'].isNotEmpty)
       json['specializations'].forEach((specialization) =>
@@ -75,6 +78,10 @@ class Therapist {
     if (json['experiences'].isNotEmpty)
       json['experiences'].forEach(
           (experience) => experienceList.add(Experience.fromJson(experience)));
+
+    if (json['languages'].isNotEmpty)
+      json['languages']
+          .forEach((language) => languages.add(Language.fromJson(language)));
 
     return Therapist(
       id: json['id'],
@@ -101,6 +108,7 @@ class Therapist {
       certificates: certificateList,
       educations: educationList,
       experience: experienceList,
+      languages: languages,
     );
   }
 }

@@ -148,6 +148,7 @@ class PaymentSheetState extends State<PaymentSheet> {
                             StripePayment.createTokenWithCard(
                               testCard,
                             ).then((token) async {
+                              state.getContext(context);
                               state.setStripeToken(token);
 
                               if (widget.timeSlotId != null) {

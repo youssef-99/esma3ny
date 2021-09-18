@@ -59,23 +59,15 @@ class _FilterSheetState extends State<FilterSheet> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              specializationFilterColumn(
-                  Icons.apps, AppLocalizations.of(context).specialization),
-              languageFilterColumn(
-                  Icons.public, AppLocalizations.of(context).languages),
               jobsFilterColumn(Icons.work, AppLocalizations.of(context).jobs),
-              // group(
-              //   listTile(Icons.watch_later, 'Availability'),
-              //   datePicker(),
-              // ),
+              specializationFilterColumn(
+                  Icons.apps, AppLocalizations.of(context).speciality),
+              languageFilterColumn(
+                  Icons.public, AppLocalizations.of(context).language),
               group(
                 listTile(Icons.person, AppLocalizations.of(context).gender),
                 genderChip(),
               ),
-              // group(
-              //   listTile(Icons.attach_money_outlined, 'Fees'),
-              //   feesChip(),
-              // ),
               Consumer<FilterState>(
                 builder: (context, state, child) => Row(
                   mainAxisAlignment: MainAxisAlignment.center,

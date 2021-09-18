@@ -203,8 +203,7 @@ class _SignupFormState extends State<SignupForm> {
                   validator: FormBuilderValidators.equal(
                     context,
                     true,
-                    errorText:
-                        'You should accept the terms and condition to continue',
+                    errorText: AppLocalizations.of(context).have_to_accept,
                   ),
                   title: Row(
                     children: [
@@ -212,6 +211,7 @@ class _SignupFormState extends State<SignupForm> {
                         AppLocalizations.of(context).i_accept,
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
+                      Text(' '),
                       Text(
                         AppLocalizations.of(context).terms_and_conditions,
                         style: TextStyle(

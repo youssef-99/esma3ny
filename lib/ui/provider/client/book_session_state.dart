@@ -11,6 +11,7 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
 import 'package:stripe_payment/stripe_payment.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BookSessionState extends ChangeNotifier {
   DateFormat format = DateFormat('yyyy-MM-dd');
@@ -33,6 +34,11 @@ class BookSessionState extends ChangeNotifier {
   bool _isPaid = false;
   bool _isProfileCompelete;
   bool _isFree = false;
+  BuildContext context;
+
+  getContext(context) {
+    this.context = context;
+  }
 
   setProfileCompelete(bool isCompelete) {
     _isProfileCompelete = isCompelete;
@@ -229,7 +235,7 @@ class BookSessionState extends ChangeNotifier {
           _isPaid = true;
         }
       }
-    }, 'Your Session Booked Successfully', true);
+    }, AppLocalizations.of(context).your_session_booked, true);
 
     _loading = false;
     notifyListeners();
@@ -242,7 +248,7 @@ class BookSessionState extends ChangeNotifier {
 
     await ExceptionHandling.hanleToastException(() async {
       await _clientRepositoryImpl.payNow(id, _stripeToken.tokenId);
-    }, 'Your Session Booked Successfully', true);
+    }, AppLocalizations.of(context).your_session_booked, true);
 
     print(_stripeToken.tokenId);
     _loading = false;

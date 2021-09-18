@@ -9,8 +9,13 @@ class NetworkConnectionException implements Exception {}
 class InvalidData implements Exception {
   Map<String, dynamic> _errors;
   String msg;
+  int statusCode;
 
-  InvalidData(this._errors, {this.msg});
+  InvalidData(
+    this._errors, {
+    this.msg,
+    this.statusCode,
+  });
 
   Map<String, dynamic> get errors => this._errors;
 }
@@ -27,7 +32,7 @@ class ExceptionHandling {
       if (e.response.statusCode >= 400 && e.response.statusCode < 500) {
         print(e.response.data);
         throw InvalidData(e.response.data['errors'],
-            msg: e.response.data['msg']);
+            msg: e.response.data['msg'], statusCode: e.response.statusCode);
       }
       if (e.response.statusCode >= 500) {
         print(e.response.data);

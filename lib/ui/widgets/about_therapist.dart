@@ -1,3 +1,4 @@
+import 'package:esma3ny/data/models/public/language.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -54,9 +55,10 @@ class AbouTherapist extends StatelessWidget {
             mianFocusString(therapist.specializations),
           ),
           customListTile(
-              Icons.timer_rounded,
-              AppLocalizations.of(context).joining_date,
-              dateFormat.format(DateTime.parse(therapist.joiningDate))),
+            Icons.timer_rounded,
+            AppLocalizations.of(context).joining_date,
+            therapist.joiningDate,
+          ),
           ListTile(
             leading: Icon(
               Icons.language,
@@ -79,12 +81,13 @@ class AbouTherapist extends StatelessWidget {
         subtitle: Text(subTitle),
       );
 
-  language() => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text('arabic'),
-          Text('english'),
-          Text('italy'),
-        ],
-      );
+  language() {
+    List<String> langs = [];
+    for (Language lang in therapist.languages) {
+      langs.add(lang.name.getLocalizedString());
+    }
+    String strLang = langs.toString();
+    return SizedBox(
+        height: 50, child: Text(strLang.substring(1, strLang.length - 1)));
+  }
 }

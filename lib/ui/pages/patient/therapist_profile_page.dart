@@ -47,7 +47,9 @@ class _TherapistProfileState extends State<TherapistProfile>
 
   Future<Therapist> getData() async {
     await getProfile();
-    return await _clientRepositoryImpl.getDoctorInfo(id);
+    Therapist therapist = await _clientRepositoryImpl.getDoctorInfo(id);
+    print(id);
+    return therapist;
   }
 
   @override

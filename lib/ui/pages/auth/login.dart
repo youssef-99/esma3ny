@@ -1,4 +1,6 @@
 import 'package:esma3ny/core/constants.dart';
+import 'package:esma3ny/ui/pages/auth/forget_password.dart';
+import 'package:esma3ny/ui/pages/auth/verify_email.dart';
 import 'package:esma3ny/ui/provider/public/login_state.dart';
 import 'package:esma3ny/ui/provider/public/roleState.dart';
 import 'package:esma3ny/ui/widgets/progress_indicator.dart';
@@ -153,6 +155,7 @@ class _LoginState extends State<Login> {
                 validator: FormBuilderValidators.required(context),
                 controller: _password,
               ),
+              forgotPassword(),
               state.errors.isNotEmpty
                   ? Align(
                       alignment: Alignment.bottomLeft,
@@ -170,7 +173,10 @@ class _LoginState extends State<Login> {
   forgotPassword() => Align(
         alignment: Alignment.centerRight,
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => ForgetPassword()));
+          },
           child: Text(
             'Forget Password',
             style: Theme.of(context).textTheme.caption,
@@ -195,11 +201,20 @@ class _LoginState extends State<Login> {
                     _email.text, _password.text, roleState.client);
 
                 if (state.exception == null) {
-                  if (roleState.client)
-                    Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar');
-                  else
-                    Navigator.pushReplacementNamed(
-                        context, 'Bottom_Nav_Bar_therapist');
+                  if (!state.isVirified) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => EmailVerification()),
+                    );
+                  } else {
+                    if (roleState.client)
+                      Navigator.pushReplacementNamed(context, 'Bottom_Nav_Bar');
+                    else
+                      Navigator.pushReplacementNamed(
+                        context,
+                        'Bottom_Nav_Bar_therapist',
+                      );
+                  }
                 }
                 handleException(state.exception);
               }

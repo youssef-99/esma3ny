@@ -20,7 +20,8 @@ class _TherapistListCardState extends State<TherapistListCard> {
   @override
   void initState() {
     _therapist.mainFocus.forEach((mainFocus) {
-      this.mainFocus += ", " + mainFocus.name.getLocalizedString();
+      this.mainFocus += mainFocus.name.getLocalizedString();
+      this.mainFocus += _therapist.mainFocus.last == mainFocus ? "" : ", ";
     });
     super.initState();
   }

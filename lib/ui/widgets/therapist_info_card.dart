@@ -39,6 +39,7 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
             Row(
               children: [
                 therapistImage(),
+                SizedBox(width: 20),
                 Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,16 +53,16 @@ class _TherapistInfoCardState extends State<TherapistInfoCard> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    lanchUrl(
-                      'tel:${widget.therapist.phone}',
-                      Icons.phone,
-                      widget.therapist.phone,
-                    ),
-                    lanchUrl(
-                      'mailto:${widget.therapist.email}',
-                      Icons.email,
-                      widget.therapist.email,
-                    ),
+                    // lanchUrl(
+                    //   'tel:${widget.therapist.phone}',
+                    //   Icons.phone,
+                    //   widget.therapist.phone,
+                    // ),
+                    // lanchUrl(
+                    //   'mailto:${widget.therapist.email}',
+                    //   Icons.email,
+                    //   widget.therapist.email,
+                    // ),
                   ],
                 ),
               ],

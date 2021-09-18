@@ -14,6 +14,7 @@ class LoginState extends ChangeNotifier {
   bool _loading = false;
   ClientRepositoryImpl _clientRepositoryImpl = ClientRepositoryImpl();
   TherapistRepository _therapistRepository = TherapistRepository();
+  bool isVirified;
 
   changePsswordVisibilty() {
     _showPassword = !_showPassword;
@@ -23,18 +24,26 @@ class LoginState extends ChangeNotifier {
   login(String email, String pass, bool isClient) async {
     _vlidationErrors.clear();
     resetException();
+    isVirified = true;
     _loading = true;
     notifyListeners();
     try {
       Response response;
-      if (isClient)
+      if (isClient) {
         response = await _clientRepositoryImpl.login(email, pass);
-      else
+        await _clientRepositoryImpl.getProfile();
+      } else {
         response = await _therapistRepository.login(email, pass);
+        await _therapistRepository.getProfile();
+      }
       print(response.data);
     } on InvalidData catch (e) {
-      _vlidationErrors = e.errors;
-      exception = Exceptions.InvalidData;
+      if (e.statusCode == 403) {
+        isVirified = false;
+      } else {
+        _vlidationErrors = e.errors;
+        exception = Exceptions.InvalidData;
+      }
       notifyListeners();
     } on NetworkConnectionException catch (_) {
       exception = Exceptions.NetworkError;

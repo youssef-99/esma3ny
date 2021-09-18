@@ -43,7 +43,6 @@ class TimeSlotResponse {
   });
 
   factory TimeSlotResponse.fromJson(Map<String, dynamic> json) {
-    print(json['end_time']);
     SessionStatus sessionStatus;
     switch (json['status']) {
       case AVAILABLE:

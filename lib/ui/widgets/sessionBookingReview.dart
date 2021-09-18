@@ -59,6 +59,7 @@ class _SessionBookingReviewState extends State<SessionBookingReview> {
                 ? CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () async {
+                      state.getContext(context);
                       if (state.isProfileCmopelete) {
                         if (state.isFree) {
                           if (await state.reserveNewSession(false)) {
