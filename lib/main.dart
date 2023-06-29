@@ -23,7 +23,6 @@ import 'package:flutter_form_builder/localization/form_builder_localizations.dar
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:device_preview/device_preview.dart';
 
 import 'ui/pages/auth/login.dart';
 import 'ui/pages/auth/signup.dart';
