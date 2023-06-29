@@ -37,7 +37,7 @@ dependencies:
   stripe_payment: ^1.1.1
   flutter_credit_card: ^2.0.0
   cached_network_image: ^3.0.0
-  flutter_pusher: ^1.0.2
+  flutter_pusher:
   emoji_picker_flutter: ^1.0.6
   agora_rtc_engine: ^4.0.2
   permission_handler: ^8.0.1
